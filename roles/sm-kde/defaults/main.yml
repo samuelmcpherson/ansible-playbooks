@@ -1,0 +1,13 @@
+---
+- name: install kde plasma desktop
+  hosts: desktops
+
+  tasks:
+       - name: install plasma desktop
+         apt:  
+          name: 
+            - kde-plasma-desktop 
+            #- network-manager 
+            #- plasma-nm 
+            - plasma-workspace-wayland  
+          state: latest
