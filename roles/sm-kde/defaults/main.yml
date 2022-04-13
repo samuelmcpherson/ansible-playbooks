@@ -1,6 +1,7 @@
 ---
 - name: install kde plasma desktop
   hosts: desktops
+  become: true
 
   tasks:
        - name: install plasma desktop
