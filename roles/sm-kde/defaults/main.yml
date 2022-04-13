@@ -1,6 +1,6 @@
 ---
 - name: install kde plasma desktop
-  hosts: desktops
+  hosts: latitude-test
   become: true
 
   tasks:
