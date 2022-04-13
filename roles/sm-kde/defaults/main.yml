@@ -7,8 +7,62 @@
        - name: install plasma desktop
          apt:  
           name: 
-            - kde-plasma-desktop 
-            #- network-manager 
-            #- plasma-nm 
+            - kde-plasma-desktop
             - plasma-workspace-wayland  
           state: latest
+       - name: install extra kde apps
+         apt:
+          name:
+            - network-manager 
+            - plasma-nm
+            - accountwizard 
+            - acpid 
+            - akonadi-backend-postgresql 
+            - akonadi-server
+            - debconf-kde-data
+            - debconf-kde-helper 
+            - kde-config-fcitx5 
+            - kde-config-fcitx
+            - kdeaccessibility 
+            - kdepim-addons 
+            - kdepim-runtime 
+            - kdepim-themeeditors 
+            - keyutils 
+            - kio-ldap
+            - kmag 
+            - kmousetool 
+            - kmouth 
+            - konq-plugins 
+            - korganizer 
+            - inentry-qt 
+            - plasma-integration 
+            - plasma-runners-addons 
+            - plasma-wallpapers-addons 
+            - plasma-widgets-addons 
+            - powermgmt-base
+            - qtgstreamer-plugins-qt5
+            - plasma-discover-backend-flatpak 
+            - okular-extra-backends 
+            - libreoffice-plasma 
+            - ark 
+            - gwenview 
+            - kcalc 
+            - kmahjongg 
+            - kmines 
+            - krdc 
+            - ksudoku 
+            - kde-spectacle 
+            - ksystemlog 
+            - kate 
+            - okular 
+            - yakuake 
+            - marble 
+            - kdenlive 
+            - kigo 
+            - kompare 
+            - krfb 
+            - ktimer 
+            
+            #- node-typescript 
+            #- npm
+            #- powertop
