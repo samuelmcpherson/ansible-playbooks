@@ -1,11 +1,11 @@
 ---
 - name: pxe-boot setup
-  hosts: pxe-vm
+  hosts: pxe
   become: true
 
   tasks:
-       - name: install qemu guest agent
+       - name: install TFTP server
          apt:  
           name: 
-            - qemu-guest-agent
+            - tftpd-hpa
           state: latest

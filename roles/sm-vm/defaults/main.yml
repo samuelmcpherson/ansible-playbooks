@@ -1,6 +1,6 @@
 ---
 - name: qemu vm setup
-  hosts: pxe-vm
+  hosts: pxe
   become: true
 
   tasks:
