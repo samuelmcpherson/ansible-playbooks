@@ -1,7 +1,7 @@
 ---
 - name: pxe-boot setup
   hosts: pxe
-  become: true
+#  become: true
 
   tasks:
     - name: install TFTP server
@@ -12,7 +12,7 @@
 
     - name: Install default config
       copy:
-        src: files/pxe-tftp/tftpd-hpa
+        src: "{{ root_of_repo }}"/files/pxe-tftp/tftpd-hpa
         dest: /etc/default/tftpd-hpa
         owner: root
         group: root
