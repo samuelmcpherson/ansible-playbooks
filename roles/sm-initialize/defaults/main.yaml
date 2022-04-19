@@ -1,0 +1,80 @@
+---
+- name: post pxe-boot initialization
+  hosts: pxe-configured
+  become: true
+  become_pass: changeme
+  pre_tasks:
+    - name: update repositories
+      apt: 
+        update_cache: yes
+        upgrade: safe
+      changed_when: False
+  
+  tasks:
+    - name: default packages
+      apt:  
+        name: 
+          - vim
+          - git
+          - rsync
+          - dosfstools
+          - openssh-server
+          - curl
+          - wget
+          - apt-file
+          - software-properties-common
+          - apt-transport-https
+          - zsh
+          - zsh-antigen
+          - irssi
+          - lynx
+          - elinks
+          - lm-sensors
+          - net-tools
+          - screen
+          - tmux
+          - sysstat
+          - htop
+          - iotop
+          - ripgrep
+          - nmap
+          - iftop
+          - tcpdump
+          - smartmontools
+        state: latest
+
+    - name: Install default config
+      copy:
+        src: "{{ root_of_repo }}/files/pxe-tftp/tftpd-hpa"
+        dest: /etc/default/tftpd-hpa
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: create standard user
+      user:
+        name: "{{ user }}"
+        state: present
+        shell: /bin/zsh
+        uid: 1001
+        group: users
+        create_home: yes
+        home: "/home{{ user }}"
+        append: yes
+        groups: sudo
+        update_password: always
+        password: "{{ {{ user_passwd }} |password_hash('sha512') }}"
+
+    - name: change root password
+      user:
+        name: root
+        update_password: always
+        password: "{{ {{ root_passwd }} |password_hash('sha512') }}"
+
+    - name: change ansible user password
+      user:
+        name: "{{ ansible_user }}"
+        update_password: always
+        password: "{{ {{ ansible_passwd }} |password_hash('sha512') }}"
+
+    - include: "{{ root_of_repo }}/roles/sm-initialize/tasks/change-hostname.yaml"

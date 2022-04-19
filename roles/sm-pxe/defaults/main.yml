@@ -1,28 +1,31 @@
 ---
 - name: pxe-boot setup
-  hosts: pxe
-#  become: true
+  hosts: pxe-boot
+  become: true
 
   tasks:
-    - name: install TFTP server
-      apt:  
-        name: 
-          - tftpd-hpa
-        state: latest
 
-    - name: Install default config
-      copy:
-        src: "{{ root_of_repo }}"/files/pxe-tftp/tftpd-hpa
-        dest: /etc/default/tftpd-hpa
-        owner: root
-        group: root
-        mode: '0644'
 
-    - name: Restart service
-      systemd:
-        name: 
-          - tftpd-hpa.service
-        enabled:
-          - yes
-        state:
-          - restarted
+
+
+
+
+#    - name: install TFTP server
+#      apt:  
+#        name: 
+#          - tftpd-hpa
+#        state: latest
+
+#    - name: Install default config
+#      copy:
+#        src: "{{ root_of_repo }}/files/pxe-tftp/tftpd-hpa"
+#        dest: /etc/default/tftpd-hpa
+#        owner: root
+#        group: root
+#        mode: '0644'
+
+#    - name: Restart service
+#      systemd:
+#        name: tftpd-hpa.service
+#        enabled: yes
+#        state: restarted

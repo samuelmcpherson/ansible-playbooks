@@ -1,0 +1,10 @@
+---
+- name: post ansible initialization
+  hosts: pxe-configured
+  become: true
+  become_pass: "{{ ansible_passwd }}"
+  
+  tasks:
+    - name: change hostname
+        name: "{{ new_hostname }}"
+        use: systemd

@@ -1,0 +1,3 @@
+---
+dependencies:
+  - community.docker.docker_compose
