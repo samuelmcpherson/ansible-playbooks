@@ -3,7 +3,6 @@
   hosts: pxeconfigured
   become: true
   ignore_unreachable: yes
-  ansible_host_key_checking: False
   
   pre_tasks:
     - name: update repositories
@@ -53,7 +52,7 @@
         uid: 1001
         group: users
         create_home: yes
-        home: "/home{{ user }}"
+        home: "/home/{{ user }}"
         append: yes
         groups: sudo
         update_password: always
