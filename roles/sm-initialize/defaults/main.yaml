@@ -1,8 +1,8 @@
 ---
 - name: post pxe-boot initialization
-  hosts: pxe-configured
+  hosts: pxeconfigured
   become: true
-  become_pass: changeme
+  
   pre_tasks:
     - name: update repositories
       apt: 
@@ -43,12 +43,38 @@
           - smartmontools
         state: latest
 
-    - name: Install default config
+    - name: Copy zsh config
       copy:
-        src: "{{ root_of_repo }}/files/pxe-tftp/tftpd-hpa"
-        dest: /etc/default/tftpd-hpa
-        owner: root
-        group: root
+        src: "{{ root_of_repo }}/files/configs/.zshrc"
+        dest: "/home/{{ user }}/"
+        owner: "{{ user }}"
+        group: users
+        mode: '0644'
+    
+    - name: Copy zsh config
+      copy:
+        remote_src: yes
+        src: "/usr/share/zsh-antigen/antigen.zsh"
+        dest: "/home/{{ user }}/"
+        owner: "{{ user }}"
+        group: users
+        mode: '0644'
+/usr/share/zsh-antigen/antigen.zsh
+
+    - name: Copy git config
+      copy:
+        src: "{{ root_of_repo }}/files/configs/.gitconfig"
+        dest: "/home/{{ user }}/"
+        owner: "{{ user }}"
+        group: users
+        mode: '0644'
+
+    - name: Copy vim config
+      copy:
+        src: "{{ root_of_repo }}/files/configs/.vimrc"
+        dest: "/home/{{ user }}/"
+        owner: "{{ user }}"
+        group: users
         mode: '0644'
 
     - name: create standard user
@@ -63,18 +89,16 @@
         append: yes
         groups: sudo
         update_password: always
-        password: "{{ {{ user_passwd }} |password_hash('sha512') }}"
+        password: "{{ user_passwd |password_hash('sha512') }}"
 
     - name: change root password
       user:
         name: root
         update_password: always
-        password: "{{ {{ root_passwd }} |password_hash('sha512') }}"
+        password: "{{ root_passwd |password_hash('sha512') }}"
 
     - name: change ansible user password
       user:
         name: "{{ ansible_user }}"
         update_password: always
-        password: "{{ {{ ansible_passwd }} |password_hash('sha512') }}"
-
-    - include: "{{ root_of_repo }}/roles/sm-initialize/tasks/change-hostname.yaml"
+        password: "{{ ansible_passwd |password_hash('sha512') }}"
