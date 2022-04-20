@@ -44,6 +44,13 @@
           - smartmontools
         state: latest
 
+    - name: update hosts file
+      lineinfile: 
+        state: present
+        dest: /etc/zsh/zshenv
+        line: '        export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games"'
+        regexp: "*^export"
+
     - name: create standard user
       user:
         name: "{{ user }}"
