@@ -1,0 +1,10 @@
+/var/log/docker/*.log {
+    daily
+    rotate 31
+    missingok
+    notifempty
+    dateext
+    postrotate
+        /usr/lib/rsyslog/rsyslog-rotate
+    endscript
+}

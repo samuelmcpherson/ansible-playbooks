@@ -1,25 +1,57 @@
 ---
-- name: pxe-boot setup
-  hosts: pxe
+- name: docker setup
+  hosts: docker
   become: true
+  
+  pre_tasks:
+    - name: update repositories
+      apt: 
+        update_cache: yes
+        upgrade: safe
+      changed_when: False
 
   tasks:
-    - name: install TFTP server
+    - name: docker packages
       apt:  
         name: 
-          - tftpd-hpa
+          - docker.io
+          - docker-compose
         state: latest
 
-    - name: Install default config
+    - name: Install docker daemon config for persistent logging
       copy:
-        src: "{{ root_of_repo }}/files/pxe-tftp/tftpd-hpa"
-        dest: /etc/default/tftpd-hpa
+        src: "{{ root_of_repo }}/files/configs/docker/daemon.json"
+        dest: /etc/docker/daemon.json
         owner: root
         group: root
         mode: '0644'
 
-    - name: Restart service
+    - name: Install rsyslog config for docker daemon persistent logging
+      copy:
+        src: "{{ root_of_repo }}/files/configs/docker/49-docker-daemon.conf"
+        dest: /etc/rsyslog.d/49-docker-daemon.conf
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Install rsyslog config for docker container persistent logging
+      copy:
+        src: "{{ root_of_repo }}/files/configs/docker/48-docker-containers.conf"
+        dest: /etc/rsyslog.d/48-docker-containers.conf
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Install docker log rotation config
+      copy:
+        src: "{{ root_of_repo }}/files/configs/docker/docker"
+        dest: /etc/logrotate.d/docker
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Restart docker service
       systemd:
-        name: tftpd-hpa.service
+        name: docker.service
         enabled: yes
         state: restarted
