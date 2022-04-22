@@ -22,6 +22,18 @@
         dest: /srv/pxe-boot
         repo: https://github.com/samuelmcpherson/pxe-boot.git
 
+    - name: start docker-compose stack for nginx container serving installer preseed
+      docker_compose:
+        project_src: /srv/pxe-boot/nginx-preseed
+        services: present
+        restarted: yes
+
+    - name: start docker-compose stack for tftp container serving tftp pxe boot environment
+      docker_compose:
+        project_src: /srv/pxe-boot/tftp-pxe
+        services: present
+        restarted: yes
+
 
 
 
