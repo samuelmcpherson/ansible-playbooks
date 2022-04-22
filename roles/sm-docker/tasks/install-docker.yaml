@@ -7,7 +7,7 @@
     state: latest
 
 - name: Install docker daemon config for persistent logging
-    copy:
+  copy:
     src: "{{ root_of_repo }}/files/configs/docker/daemon.json"
     dest: /etc/docker/daemon.json
     owner: root
@@ -15,7 +15,7 @@
     mode: '0644'
 
 - name: Install rsyslog config for docker daemon persistent logging
-    copy:
+  copy:
     src: "{{ root_of_repo }}/files/configs/docker/49-docker-daemon.conf"
     dest: /etc/rsyslog.d/49-docker-daemon.conf
     owner: root
@@ -23,7 +23,7 @@
     mode: '0644'
 
 - name: Install rsyslog config for docker container persistent logging
-    copy:
+  copy:
     src: "{{ root_of_repo }}/files/configs/docker/48-docker-containers.conf"
     dest: /etc/rsyslog.d/48-docker-containers.conf
     owner: root
@@ -31,7 +31,7 @@
     mode: '0644'
 
 - name: Install docker log rotation config
-    copy:
+  copy:
     src: "{{ root_of_repo }}/files/configs/docker/docker"
     dest: /etc/logrotate.d/docker
     owner: root
@@ -39,7 +39,7 @@
     mode: '0644'
 
 - name: Restart docker service
-    systemd:
+  systemd:
     name: docker.service
     enabled: yes
     state: restarted
