@@ -6,8 +6,14 @@
   become: true
   
   pre_tasks:
+    - name: update repositories
+      apt: 
+        update_cache: yes
+        upgrade: safe
+      changed_when: False
+    
     - name: install and setup docker
-      include_tasks: "{{ root_of_repo }}/roles/sm-docker/defaults/main.yaml"
+      include_tasks: "{{ root_of_repo }}/roles/sm-docker/tasks/install-docker.yaml"
   
   tasks:
     - name: pull compose files from pxe-boot repo
