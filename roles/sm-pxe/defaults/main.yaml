@@ -7,7 +7,7 @@
   
   pre_tasks:
     - name: install and setup docker
-      include_task: "{{ root_of_repo }}/roles/sm-docker/defaults/main.yaml"
+      include_tasks: "{{ root_of_repo }}/roles/sm-docker/defaults/main.yaml"
   
   tasks:
     - name: pull compose files from pxe-boot repo
