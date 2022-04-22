@@ -1,9 +1,20 @@
 ---
+### Requires docker task
+
 - name: pxe-boot setup
   hosts: pxe-boot
   become: true
-
+  
+  pre_tasks:
+    - name: install and setup docker
+      include: "{{ root_of_repo }}/roles/sm-docker/default/main.yaml"
+  
   tasks:
+    - name: pull compose files from pxe-boot repo
+      git:
+        clone: yes
+        dest: /srv/pxe-boot
+        repo: https://github.com/samuelmcpherson/pxe-boot.git
 
 
 
