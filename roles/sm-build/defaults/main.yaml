@@ -1,0 +1,26 @@
+---
+- name: setup for custom debian installer build host
+  hosts: debian-build
+  become: true
+  
+  pre_tasks:
+    - name: update repositories
+      apt: 
+        update_cache: yes
+        upgrade: safe
+      changed_when: False
+
+  tasks:
+    - name: install required packages
+      apt:  
+        name:
+          - squashfs-tools
+          - isolinux
+          - xorriso
+
+    - name: pull remaster-iso repo
+      git:
+        clone: yes
+        dest: /srv/remaster-iso
+        repo: https://github.com/unixabg/remaster-iso.git
+
