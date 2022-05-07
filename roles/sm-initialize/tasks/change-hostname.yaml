@@ -1,6 +1,6 @@
 ---
 - name: post ansible initialization
-  hosts: pxeconfigured
+  hosts: unconfigured
   become: true
   ignore_unreachable: yes
 
