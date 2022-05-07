@@ -16,17 +16,34 @@
       include_tasks: "{{ root_of_repo }}/roles/sm-docker/tasks/install-docker.yaml"
   
   tasks:
-    - name: pull compose files from pxe-boot repo
+    - name: install iso build script dependencies
+      apt:
+        name:
+          - debootstrap 
+          - squashfs-tools 
+          - xorriso 
+          - isolinux 
+          - syslinux-efi 
+          - grub-pc-bin 
+          - grub-efi-amd64-bin 
+          - mtools
+    
+    - name: pull tftp compose stack from pxe-boot repo
       git:
         clone: yes
         dest: /srv/pxe-boot
         repo: https://github.com/samuelmcpherson/pxe-boot.git
 
-    - name: start docker-compose stack for nginx container serving installer preseed
-      docker_compose:
-        project_src: /srv/pxe-boot/nginx-preseed
-        state: present
-        restarted: yes
+    - name: pull iso build repo
+      git:
+        clone: yes
+        dest: /root/debian-custom-iso
+        repo: https://github.com/samuelmcpherson/debian-custom-iso.git
+
+    - name: run custom iso build script
+      command:
+        cmd: "/root/debian-custom-iso/debian-build.sh /srv/pxe-boot/tftp-pxe/tftp/debian-installer/amd64 {{ root_passwd }}" 
+        repo: https://github.com/samuelmcpherson/debian-custom-iso.git
 
     - name: start docker-compose stack for tftp container serving tftp pxe boot environment
       docker_compose:
