@@ -47,7 +47,7 @@
     - name: Copy zsh environment file
       copy:
         src: "{{ root_of_repo }}/files/configs/zshenv"
-        dest: "/home/etc/zsh/"
+        dest: "/etc/zsh/"
         owner: root
         group: root
         mode: '644'
@@ -55,7 +55,7 @@
     - name: Copy zsh profile
       copy:
         src: "{{ root_of_repo }}/files/configs/zprofile"
-        dest: "/home/etc/zsh/"
+        dest: "/etc/zsh/"
         owner: root
         group: root
         mode: '644'

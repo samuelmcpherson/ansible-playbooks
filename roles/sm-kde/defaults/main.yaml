@@ -61,8 +61,54 @@
             - kigo 
             - kompare 
             - krfb 
-            - ktimer 
-            
+            - ktimer
+            - plasma-widgets-addons
+            - profile-sync-daemon
+            - print-manager
+            - cups-browsed
+            - make
+            - cmake
+            - build-essential
+            - libsystemd-dev
+            - libinput-tools
+            - libinput-dev
+        
             #- node-typescript 
             #- npm
             #- powertop
+
+
+       - name: pull gebaar gestures repo
+         git:
+           clone: yes
+           dest: "/home/{{ user }}"
+           repo: https://github.com/osleg/gebaar-libinput-fork
+
+#        - name: pull bismuth repo
+#          git:
+#            clone: yes
+#            dest: "/home/{{ user }}"
+#            repo: https://github.com/osleg/gebaar-libinput-fork
+
+# .config/kwinrc
+#[Compositing]
+#OpenGLIsUnsafe=false
+#
+#[Desktops]
+#Id_1=0f8bbc08-1b7d-4c56-bc8d-99b673d14ed2
+#Id_2=de599c8c-4de1-453e-b972-1e62357f8dce
+#Number=2
+#Rows=1
+#
+#[Effect-PresentWindows]
+#BorderActivateAll=9
+#
+#[Plugins]
+#blurEnabled=false
+#overviewEnabled=true
+#zoomEnabled=false
+#
+#[Windows]
+#FocusPolicy=FocusFollowsMouse
+
+            
