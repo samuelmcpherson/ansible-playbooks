@@ -22,7 +22,6 @@
         state: present
         keyring: /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg
         url: https://enterprise.proxmox.com/debian/proxmox-release-bullseye.gpg
-        id: 7fb03ec8a1675723d2853b84aa4fdb49a46a3bb72b9951361488bfd19b29aab0a789a4f8c7406e71a69aabbc727c936d3549731c4659ffa1a08f44db8fdcebfa
     
     - name: add proxmox repo
       apt_repository: 
@@ -56,13 +55,13 @@
         dest: "/tmp/"
         owner: root
         group: root
-        mode: '644'
+        mode: '755'
 
     - name: run proxmox patch script
       command:
         cmd: /tmp/proxmox-patch.sh
 
-    - name: add proxmox repo
+    - name: remove enterprise repo
       apt_repository: 
         state: absent
-        filename: /etc/apt/sources.list.d/pve-install-repo
+        repo: "deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise"
