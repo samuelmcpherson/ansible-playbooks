@@ -1,0 +1,68 @@
+---
+- name: pxe-boot setup
+  hosts: proxmox
+  become: true
+  
+  pre_tasks:
+    - name: update repositories
+      apt: 
+        update_cache: yes
+        upgrade: safe
+      changed_when: False
+    - name: update hosts file
+      lineinfile: 
+        state: present
+        dest: /etc/hosts
+        line: "{{ ansible_default_ipv4.address }}       {{ ansible_hostname }}.{{ ansible_dns.domain }} {{ ansible_hostname }}"
+        regexp: "^127.0.1.1"
+
+  tasks:    
+    - name: add proxmox repo gpg key
+      apt_key: 
+        state: present
+        keyring: /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg
+        url: https://enterprise.proxmox.com/debian/proxmox-release-bullseye.gpg
+        id: 7fb03ec8a1675723d2853b84aa4fdb49a46a3bb72b9951361488bfd19b29aab0a789a4f8c7406e71a69aabbc727c936d3549731c4659ffa1a08f44db8fdcebfa
+    
+    - name: add proxmox repo
+      apt_repository: 
+        state: present
+        filename: /etc/apt/sources.list.d/pve-install-repo
+        repo: "deb [arch=amd64] http://download.proxmox.com/debian/pve bullseye pve-no-subscription"
+
+    - name: update repositories
+      apt: 
+        update_cache: yes
+        upgrade: full
+
+    - name: install proxmox ve
+      ignore_errors: yes
+      apt:
+        name: 
+          - proxmox-ve
+          - postfix
+          - open-iscsi
+        state: latest
+    
+    - name: stop and disable proxmox-boot-cleanup service
+      systemd:
+        name: proxmox-boot-cleanup.service
+        enabled: no
+        state: stopped
+    
+    - name: copy proxmox patch script
+      copy:
+        src: "{{ root_of_repo }}/files/proxmox-patch.sh"
+        dest: "/tmp/"
+        owner: root
+        group: root
+        mode: '644'
+
+    - name: run proxmox patch script
+      command:
+        cmd: /tmp/proxmox-patch.sh
+
+    - name: add proxmox repo
+      apt_repository: 
+        state: absent
+        filename: /etc/apt/sources.list.d/pve-install-repo
