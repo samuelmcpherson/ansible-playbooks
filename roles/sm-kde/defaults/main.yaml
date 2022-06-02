@@ -10,6 +10,7 @@
             - kde-plasma-desktop
             - plasma-workspace-wayland  
           state: latest
+       
        - name: install extra kde apps
          apt:
           name:
@@ -72,43 +73,28 @@
             - libsystemd-dev
             - libinput-tools
             - libinput-dev
-        
-            #- node-typescript 
-            #- npm
-            #- powertop
-
 
        - name: pull gebaar gestures repo
          git:
            clone: yes
            dest: "/home/{{ user }}"
-           repo: https://github.com/osleg/gebaar-libinput-fork
+           repo: https://github.com/NICHOLAS85/gebaar-libinput
+        
+       - name: add volian repo gpg key
+         apt_key: 
+           state: present
+           keyring: /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg
+           url: https://deb.volian.org/volian/scar.key
 
-#        - name: pull bismuth repo
-#          git:
-#            clone: yes
-#            dest: "/home/{{ user }}"
-#            repo: https://github.com/osleg/gebaar-libinput-fork
+       - name: add volian repo
+         apt_repository: 
+           state: present
+           filename: /etc/apt/sources.list.d/volian-archive-scar-unstable
+           repo: "deb http://deb.volian.org/volian/ scar main"
+       
+       - name: install bismuth
+         apt:  
+          name: 
+            - kwin-bismuth
+          state: latest
 
-# .config/kwinrc
-#[Compositing]
-#OpenGLIsUnsafe=false
-#
-#[Desktops]
-#Id_1=0f8bbc08-1b7d-4c56-bc8d-99b673d14ed2
-#Id_2=de599c8c-4de1-453e-b972-1e62357f8dce
-#Number=2
-#Rows=1
-#
-#[Effect-PresentWindows]
-#BorderActivateAll=9
-#
-#[Plugins]
-#blurEnabled=false
-#overviewEnabled=true
-#zoomEnabled=false
-#
-#[Windows]
-#FocusPolicy=FocusFollowsMouse
-
-            

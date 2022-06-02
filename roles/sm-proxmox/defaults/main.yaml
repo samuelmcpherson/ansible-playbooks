@@ -34,10 +34,18 @@
         update_cache: yes
         upgrade: full
 
+    - name: remove zfs dkms
+      ignore_errors: yes
+      apt:
+        name:
+          - zfs-dkms
+        state: absent
+    
     - name: install proxmox ve
       ignore_errors: yes
       apt:
         name: 
+          - zfs-initramfs
           - proxmox-ve
           - postfix
           - open-iscsi
@@ -65,3 +73,16 @@
       apt_repository: 
         state: absent
         repo: "deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise"
+
+    - name: remove uneeded debian-packages
+      ignore_errors: yes
+      apt:
+        name: 
+          - linux-image-amd64
+          - linux-headers-amd64
+          - grub-common
+          - grub2-common
+          - grub-pc
+          - grub-pc-bin
+          - os-prober
+        state: absent
