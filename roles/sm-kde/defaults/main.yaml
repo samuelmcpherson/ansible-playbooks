@@ -77,7 +77,7 @@
        - name: pull gebaar gestures repo
          git:
            clone: yes
-           dest: "/home/{{ user }}"
+           dest: "/home/{{ user }}/gebaar-libinput"
            repo: https://github.com/NICHOLAS85/gebaar-libinput
         
        - name: add volian repo gpg key
