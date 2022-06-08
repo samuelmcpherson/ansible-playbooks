@@ -13,7 +13,7 @@
       changed_when: False
     
     - name: install and setup docker
-      include_tasks: "{{ root_of_repo }}/roles/sm-docker/tasks/install-docker.yaml"
+      include_tasks: "{{ root_of_repo }}/tasks/docker/setup-docker.yaml"
   
   tasks:
     - name: install iso build script dependencies

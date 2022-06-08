@@ -1,0 +1,264 @@
+---
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak"
+    state: present
+        extra_zfs_properties:
+            canmount: on
+            mountpoint: "/var/lib/flatpak"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/appstream"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/appstream"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/repo"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/appstream"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/org.freedesktop.Platform.GL.default"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/org.freedesktop.Platform.GL.default"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/org.freedesktop.Platform.VAAPI.Intel"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/org.freedesktop.Platform.VAAPI.Intel"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/org.freedesktop.Platform.openh264"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/org.freedesktop.Platform.openh264"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/org.gnome.Platform.Locale"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/org.gnome.Platform.Locale"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/org.gnome.Platform"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/org.gnome.Platform"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/com.github.Eloston.UngoogledChromium.Codecs"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/com.github.Eloston.UngoogledChromium.Codecs"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/org.freedesktop.Platform.Locale"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/org.freedesktop.Platform.Locale"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/org.freedesktop.Platform"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/org.freedesktop.Platform"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/com.github.Eloston.UngoogledChromium"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/com.github.Eloston.UngoogledChromium"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/org.mozilla.firefox.Locale"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/org.mozilla.firefox.Locale"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/org.mozilla.firefox"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/org.mozilla.firefox"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/org.freedesktop.Sdk.Locale"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/org.freedesktop.Sdk.Locale"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/com.github.xournalpp.xournalpp.Locale"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/com.github.xournalpp.xournalpp.Locale"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/com.belmoussaoui.Authenticator.Locale"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/com.belmoussaoui.Authenticator.Locale"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/app"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/app"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/app/com.github.tchx84.Flatseal"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/app/com.github.tchx84.Flatseal"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/app/com.github.eloston.ungoogledchromium"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/app/com.github.eloston.ungoogledchromium"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/app/com.vscodium.codium"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/app/com.vscodium.codium"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/app/com.jgraph.drawio.desktop"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/app/com.jgraph.drawio.desktop"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/app/com.discordapp.discord"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/app/com.discordapp.discord"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/app/com.github.xournalpp.xournalpp"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/app/com.github.xournalpp.xournalpp"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/app/us.zoom.zoom"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/app/us.zoom.zoom"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/app/com.axosoft.gitkraken"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/app/com.axosoft.gitkraken"
+  
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/app/com.belmoussaoui.Authenticator"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/app/com.belmoussaoui.Authenticator"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/app/net.cozic.joplin_desktop"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/app/net.cozic.joplin_desktop"
+
+
+      

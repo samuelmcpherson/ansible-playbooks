@@ -60,6 +60,14 @@
         group: root
         mode: '644'
 
+    - name: create zfs dataset for standard user home directory 
+      community.general.zfs:
+        name: "zroot/DATA/home/{{ user }}"
+        state: present
+        extra_zfs_properties:
+            canmount: on
+            mountpoint: "/home/{{ user }}"
+
     - name: create standard user
       user:
         name: "{{ user }}"
@@ -69,7 +77,6 @@
         group: users
         create_home: yes
         home: "/home/{{ user }}"
-        append: yes
         groups: sudo
         update_password: always
         password: "{{ user_passwd |password_hash('sha512') }}"
