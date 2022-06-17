@@ -13,10 +13,47 @@
       lineinfile: 
         state: present
         dest: /etc/hosts
-        line: "{{ ansible_default_ipv4.address }}       {{ ansible_hostname }}.{{ ansible_dns.domain }} {{ ansible_hostname }}"
+        line: "{{ ansible_default_ipv4.address }}       {{ hostname }}.{{ ansible_dns.domain }} {{ hostname }}"
         regexp: "^127.0.1.1"
 
-  tasks:    
+  tasks:  
+
+    when: ansible_group=zfs
+    - name: pve datasets
+      community.general.zfs:
+        name: 
+          - "zroot/DATA/var/lib/vz"
+        state: present
+        extra_zfs_properties:
+            canmount: off
+    
+    - name: pve datasets
+      community.general.zfs:
+        name: 
+          - "zroot/DATA/var/lib/vz/dump"
+        state: present
+        extra_zfs_properties:
+            canmount: on
+            mountpoint: /var/lib/vz/dump
+
+    - name: pve datasets
+      community.general.zfs:
+        name: 
+          - "zroot/DATA/var/lib/vz/images"
+        state: present
+        extra_zfs_properties:
+            canmount: on
+            mountpoint: /var/lib/vz/images
+    
+    - name: pve datasets
+      community.general.zfs:
+        name: 
+          - "zroot/DATA/var/lib/vz/dump"
+        state: present
+        extra_zfs_properties:
+            canmount: on
+            mountpoint: /var/lib/vz/dump
+
     - name: add proxmox repo gpg key
       apt_key: 
         state: present
@@ -59,7 +96,7 @@
     
     - name: copy proxmox patch script
       copy:
-        src: "{{ root_of_repo }}/files/proxmox-patch.sh"
+        src: "../files/proxmox-patch.sh"
         dest: "/tmp/"
         owner: root
         group: root

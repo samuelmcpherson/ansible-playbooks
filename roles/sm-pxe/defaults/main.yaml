@@ -1,6 +1,4 @@
 ---
-### Requires docker task
-
 - name: pxe-boot setup
   hosts: pxe-boot
   become: true
@@ -11,9 +9,6 @@
         update_cache: yes
         upgrade: safe
       changed_when: False
-    
-    - name: install and setup docker
-      include_tasks: "{{ root_of_repo }}/tasks/docker/setup-docker.yaml"
   
   tasks:
     - name: install iso build script dependencies

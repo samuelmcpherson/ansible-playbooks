@@ -1,4 +1,15 @@
 ---
+- name: install and configure docker
+  hosts: all
+  become: true
+  
+  pre_tasks:
+    - name: update repositories
+      apt: 
+        update_cache: yes
+        upgrade: safe
+      changed_when: False
+
 - name: docker packages
   apt:  
     name: 
@@ -8,7 +19,7 @@
 
 - name: Install docker daemon config for persistent logging
   copy:
-    src: "{{ root_of_repo }}/files/configs/docker/daemon.json"
+    src: "../files/daemon.json"
     dest: /etc/docker/daemon.json
     owner: root
     group: root
@@ -16,7 +27,7 @@
 
 - name: Install rsyslog config for docker daemon persistent logging
   copy:
-    src: "{{ root_of_repo }}/files/configs/docker/49-docker-daemon.conf"
+    src: "../files/49-docker-daemon.conf"
     dest: /etc/rsyslog.d/49-docker-daemon.conf
     owner: root
     group: root
@@ -24,7 +35,7 @@
 
 - name: Install rsyslog config for docker container persistent logging
   copy:
-    src: "{{ root_of_repo }}/files/configs/docker/48-docker-containers.conf"
+    src: "../files/48-docker-containers.conf"
     dest: /etc/rsyslog.d/48-docker-containers.conf
     owner: root
     group: root
@@ -32,7 +43,7 @@
 
 - name: Install docker log rotation config
   copy:
-    src: "{{ root_of_repo }}/files/configs/docker/docker"
+    src: "../files/docker"
     dest: /etc/logrotate.d/docker
     owner: root
     group: root

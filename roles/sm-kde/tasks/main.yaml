@@ -1,0 +1,193 @@
+---
+- name: install kde plasma desktop
+  hosts: latitude-test
+  become: true
+
+  tasks:  
+    - name: install plasma desktop
+      apt:  
+        name: 
+          - kde-plasma-desktop
+          - plasma-workspace-wayland  
+        state: latest
+       
+    - name: install extra kde apps
+      apt:
+        name:
+          - network-manager 
+          - plasma-nm
+          - accountwizard 
+          - acpid 
+          - akonadi-backend-postgresql 
+          - akonadi-server
+          - debconf-kde-data
+          - debconf-kde-helper 
+          - kde-config-fcitx5 
+          - kde-config-fcitx
+          - kdeaccessibility 
+          - kdepim-addons 
+          - kdepim-runtime 
+          - kdepim-themeeditors 
+          - keyutils 
+          - kio-ldap
+          - kmag 
+          - kmousetool 
+          - kmouth 
+          - konq-plugins 
+          - korganizer 
+          - pinentry-qt 
+          - plasma-integration 
+          - plasma-runners-addons 
+          - plasma-wallpapers-addons 
+          - plasma-widgets-addons 
+          - powermgmt-base
+          - qtgstreamer-plugins-qt5
+          - plasma-discover-backend-flatpak 
+          - okular-extra-backends 
+          - libreoffice-plasma 
+          - ark 
+          - gwenview 
+          - kcalc 
+          - kmahjongg 
+          - kmines 
+          - krdc 
+          - ksudoku 
+          - kde-spectacle 
+          - ksystemlog 
+          - kate 
+          - okular 
+          - yakuake 
+          - marble 
+          - kdenlive 
+          - kigo 
+          - kompare 
+          - krfb 
+          - ktimer
+          - plasma-widgets-addons
+          - profile-sync-daemon
+          - print-manager
+          - cups-browsed
+          - make
+          - cmake
+          - build-essential
+          - libsystemd-dev
+          - libinput-tools
+          - libinput-dev
+          - conky-all
+        state: latest
+
+    - name: add volian repo gpg key
+      apt_key: 
+        state: present
+        keyring: /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg
+        url: https://deb.volian.org/volian/scar.key
+
+    - name: add volian repo
+      apt_repository: 
+        state: present
+        filename: /etc/apt/sources.list.d/volian-archive-scar-unstable
+        repo: "deb http://deb.volian.org/volian/ scar main"
+    
+    - name: install bismuth
+      apt:  
+        name: 
+          - kwin-bismuth
+        state: latest
+
+    - name: add main user to additional groups 
+      user:
+        name: "{{ user }}"
+        groups: 
+          - audio
+          - video
+          - games 
+          - input
+        append: yes
+        create_home: no
+
+    - name: enable profile sync daemon service for main user
+      ignore_errors: yes
+      become: yes
+      become_user: "{{ user }}"
+      systemd:
+        name: psd.service
+        enabled: yes
+        scope: user
+
+    - name: create flatpak datasets
+      when: ansible_group == zfs
+      include_tasks: "{{ root_of_repo }}/tasks/zfs/create-datasets-flatpak.yaml"
+
+    - name: add the flathub flatpak repository remote to system
+      community.general.flatpak_remote:
+        name: flathub
+        state: present
+        flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+        method: system
+    
+    - name: add flatpaks to system
+      community.general.flatpak:
+        state: present
+        remote: flathub
+        method: system
+        name:
+          - app/com.github.tchx84.Flatseal
+          - app/com.github.eloston.ungoogledchromium
+          - app/org.mozilla.firefox
+          - app/com.vscodium.codium
+          - app/com.jgraph.drawio.desktop
+          - app/com.discordapp.discord
+          - app/com.github.xournalpp.xournalpp
+          - app/us.zoom.zoom
+          - app/com.axosoft.gitkraken
+          - app/com.belmoussaoui.Authenticator
+          - app/net.cozic.joplin_desktop
+
+  - name: create .config directory
+    file:
+      path: "/home/{{ user }}/.config"
+      state: directory
+      owner: "{{ user }}"
+      group: users
+      mode: '751'
+
+  - name: create .local directory
+    file:
+      path: "/home/{{ user }}/.local"
+      state: directory
+      owner: "{{ user }}"
+      group: users
+      mode: '751'
+
+  - name: copy kwinrc config file
+    copy:
+      src: "{{ root_of_repo }}/files/configs/user/authorized_keys"
+      dest: "/home/{{ user }}/.config/kwinrc"
+      owner: "{{ user }}"
+      group: users
+      mode: '600'
+
+  - name: copy kwinrc config file
+    copy:
+      src: "{{ root_of_repo }}/files/configs/user/authorized_keys"
+      dest: "/home/{{ user }}/.config/kwinrc"
+      owner: "{{ user }}"
+      group: users
+      mode: '600'
+
+  - name: pull gebaar gestures repo
+    git:
+      clone: yes
+      dest: "/home/{{ user }}/gebaar-libinput"
+      repo: https://github.com/NICHOLAS85/gebaar-libinput
+  
+    #cd /home/$USER/gebaar-libinput  && git submodule update --init
+    
+    #mkdir /home/$USER/gebaar-libinput-fork/build && cd /home/$USER/gebaar-libinput-fork/build && cmake .. && make -j$(nproc)
+
+    #mkdir -p $TEMPMOUNT/home/$USER/.config/gebaar
+
+    #cp $CONFIGDIR/home/.config/autostart/gebaard.desktop $TEMPMOUNT/home/$USER/.config/autostart
+
+    #echo "Run 'make install' from ~/gebaar-libinput-fork/build on boot"
+
