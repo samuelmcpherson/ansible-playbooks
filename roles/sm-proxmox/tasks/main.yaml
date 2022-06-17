@@ -1,0 +1,88 @@
+---
+- name: pxe-boot setup
+  hosts: proxmox
+  become: true
+  
+  pre_tasks:
+    - name: update repositories
+      apt: 
+        update_cache: yes
+        upgrade: safe
+      changed_when: False
+    - name: update hosts file
+      lineinfile: 
+        state: present
+        dest: /etc/hosts
+        line: "{{ ansible_default_ipv4.address }}       {{ ansible_hostname }}.{{ ansible_dns.domain }} {{ ansible_hostname }}"
+        regexp: "^127.0.1.1"
+
+  tasks:    
+    - name: add proxmox repo gpg key
+      apt_key: 
+        state: present
+        keyring: /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg
+        url: https://enterprise.proxmox.com/debian/proxmox-release-bullseye.gpg
+    
+    - name: add proxmox repo
+      apt_repository: 
+        state: present
+        filename: /etc/apt/sources.list.d/pve-install-repo
+        repo: "deb [arch=amd64] http://download.proxmox.com/debian/pve bullseye pve-no-subscription"
+
+    - name: update repositories
+      apt: 
+        update_cache: yes
+        upgrade: full
+
+    - name: remove zfs dkms
+      ignore_errors: yes
+      apt:
+        name:
+          - zfs-dkms
+        state: absent
+    
+    - name: install proxmox ve
+      ignore_errors: yes
+      apt:
+        name: 
+          - zfs-initramfs
+          - proxmox-ve
+          - postfix
+          - open-iscsi
+        state: latest
+    
+    - name: stop and disable proxmox-boot-cleanup service
+      systemd:
+        name: proxmox-boot-cleanup.service
+        enabled: no
+        state: stopped
+    
+    - name: copy proxmox patch script
+      copy:
+        src: "{{ root_of_repo }}/files/proxmox-patch.sh"
+        dest: "/tmp/"
+        owner: root
+        group: root
+        mode: '755'
+
+    - name: run proxmox patch script
+      command:
+        cmd: /tmp/proxmox-patch.sh
+
+    - name: remove enterprise repo
+      apt_repository: 
+        state: absent
+        repo: "deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise"
+
+    - name: remove uneeded debian-packages
+      ignore_errors: yes
+      apt:
+        name: 
+          - linux-image-amd64
+          - linux-headers-amd64
+          - grub-common
+          - grub2-common
+          - grub-pc
+          - grub-pc-bin
+          - os-prober
+        state: absent

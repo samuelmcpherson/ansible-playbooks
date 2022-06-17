@@ -142,7 +142,7 @@
           - app/com.axosoft.gitkraken
           - app/com.belmoussaoui.Authenticator
           - app/net.cozic.joplin_desktop
-          
+
   - name: create .config directory
     file:
       path: "/home/{{ user }}/.config"
@@ -158,6 +158,14 @@
       owner: "{{ user }}"
       group: users
       mode: '751'
+
+  - name: copy kwinrc config file
+    copy:
+      src: "{{ root_of_repo }}/files/configs/user/authorized_keys"
+      dest: "/home/{{ user }}/.config/kwinrc"
+      owner: "{{ user }}"
+      group: users
+      mode: '600'
 
   - name: copy kwinrc config file
     copy:

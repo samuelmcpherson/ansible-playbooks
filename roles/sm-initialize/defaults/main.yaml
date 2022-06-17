@@ -1,6 +1,6 @@
 ---
-- name: post pxe-boot initialization
-  hosts: unconfigured
+- name: post install initialization
+  hosts: all
   become: true
   ignore_unreachable: yes
   
@@ -46,7 +46,7 @@
 
     - name: Copy zsh environment file
       copy:
-        src: "{{ root_of_repo }}/files/configs/zshenv"
+        src: "../files/zshenv"
         dest: "/etc/zsh/"
         owner: root
         group: root
@@ -54,7 +54,7 @@
     
     - name: Copy zsh profile
       copy:
-        src: "{{ root_of_repo }}/files/configs/zprofile"
+        src: "../files/zprofile"
         dest: "/etc/zsh/"
         owner: root
         group: root
@@ -91,7 +91,7 @@
     
     - name: Copy ssh authorized_keys
       copy:
-        src: "{{ root_of_repo }}/files/configs/user/authorized_keys"
+        src: "../files/authorized_keys"
         dest: "/home/{{ user }}/.ssh/"
         owner: "{{ user }}"
         group: users
@@ -99,7 +99,7 @@
 
     - name: Copy zsh config
       copy:
-        src: "{{ root_of_repo }}/files/configs/user/.zshrc"
+        src: "../files/.zshrc"
         dest: "/home/{{ user }}/"
         owner: "{{ user }}"
         group: users
@@ -116,7 +116,7 @@
 
     - name: Copy git config
       copy:
-        src: "{{ root_of_repo }}/files/configs/user/.gitconfig"
+        src: "../files/.gitconfig"
         dest: "/home/{{ user }}/"
         owner: "{{ user }}"
         group: users
@@ -124,7 +124,7 @@
 
     - name: Copy vim config
       copy:
-        src: "{{ root_of_repo }}/files/configs/user/.vimrc"
+        src: "../files/.vimrc"
         dest: "/home/{{ user }}/"
         owner: "{{ user }}"
         group: users
