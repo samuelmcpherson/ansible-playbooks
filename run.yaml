@@ -1,0 +1,9 @@
+---
+- hosts: all
+    roles:
+      - role: sm-initialize
+
+- hosts: proxmox
+    roles:
+      - role: sm-proxmox
+    
