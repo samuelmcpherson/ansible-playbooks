@@ -18,8 +18,8 @@
 
   tasks:  
 
-    when: ansible_group=zfs
-    - name: pve datasets
+    - name: "create pve dataset: zroot/DATA/var/lib/vz"
+      when: zfs_root
       community.general.zfs:
         name: 
           - "zroot/DATA/var/lib/vz"
@@ -27,7 +27,8 @@
         extra_zfs_properties:
             canmount: off
     
-    - name: pve datasets
+    - name: "create pve dataset: zroot/DATA/var/lib/vz/dump"
+      when: zfs_root
       community.general.zfs:
         name: 
           - "zroot/DATA/var/lib/vz/dump"
@@ -36,7 +37,8 @@
             canmount: on
             mountpoint: /var/lib/vz/dump
 
-    - name: pve datasets
+    - name: "create pve dataset: zroot/DATA/var/lib/vz/images"
+      when: zfs_root
       community.general.zfs:
         name: 
           - "zroot/DATA/var/lib/vz/images"
@@ -45,14 +47,15 @@
             canmount: on
             mountpoint: /var/lib/vz/images
     
-    - name: pve datasets
+    - name: "create pve dataset: zroot/DATA/var/lib/vz/template"
+      when: zfs_root
       community.general.zfs:
         name: 
-          - "zroot/DATA/var/lib/vz/dump"
+          - "zroot/DATA/var/lib/vz/template"
         state: present
         extra_zfs_properties:
             canmount: on
-            mountpoint: /var/lib/vz/dump
+            mountpoint: /var/lib/vz/template
 
     - name: add proxmox repo gpg key
       apt_key: 
