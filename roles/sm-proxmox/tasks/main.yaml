@@ -27,20 +27,17 @@
     - name: copy /etc/network/interfaces.j2 template
       template:
         src: "../templates/interfaces.j2"
-        dest: "/etc/network"
+        dest: "/etc/network/interfaces"
         owner: root
         group: root
         mode: '644'
-
-
 
   tasks:  
 
     - name: "create pve dataset: zroot/DATA/var/lib/vz"
       when: zfs_root
       community.general.zfs:
-        name: 
-          - "zroot/DATA/var/lib/vz"
+        name: "zroot/DATA/var/lib/vz"
         state: present
         extra_zfs_properties:
             canmount: off
@@ -48,8 +45,7 @@
     - name: "create pve dataset: zroot/DATA/var/lib/vz/dump"
       when: zfs_root
       community.general.zfs:
-        name: 
-          - "zroot/DATA/var/lib/vz/dump"
+        name: "zroot/DATA/var/lib/vz/dump"
         state: present
         extra_zfs_properties:
             canmount: on
@@ -58,8 +54,7 @@
     - name: "create pve dataset: zroot/DATA/var/lib/vz/images"
       when: zfs_root
       community.general.zfs:
-        name: 
-          - "zroot/DATA/var/lib/vz/images"
+        name: "zroot/DATA/var/lib/vz/images"
         state: present
         extra_zfs_properties:
             canmount: on
@@ -68,8 +63,7 @@
     - name: "create pve dataset: zroot/DATA/var/lib/vz/template"
       when: zfs_root
       community.general.zfs:
-        name: 
-          - "zroot/DATA/var/lib/vz/template"
+        name: "zroot/DATA/var/lib/vz/template"
         state: present
         extra_zfs_properties:
             canmount: on
