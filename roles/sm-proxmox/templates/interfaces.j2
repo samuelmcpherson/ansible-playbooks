@@ -10,14 +10,15 @@
 # configuration from sourced files, so do not attempt to move any of
 # the PVE managed interfaces into external files!
 
+
+auto lo
+iface lo inet loopback
+
 {% for interface in ansible_interfaces %}
 {% if interface != loopback %}
 iface {{ interface }} inet manual
 {% endif %}
 {% endfor %}
-
-auto lo
-iface lo inet loopback
 
 auto vmbr0
 iface vmbr0 inet static
