@@ -23,6 +23,8 @@
         owner: root
         group: root
         mode: '644'
+      vars:
+        - loopback=lo
 
   tasks:  
 

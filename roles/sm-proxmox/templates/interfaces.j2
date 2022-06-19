@@ -11,7 +11,7 @@
 # the PVE managed interfaces into external files!
 
 {% for interface in ansible_interfaces %}
-{% if interface != lo %}
+{% if interface != loopback %}
 iface {{ interface }} inet manual
 {% endif %}
 {% endfor %}
