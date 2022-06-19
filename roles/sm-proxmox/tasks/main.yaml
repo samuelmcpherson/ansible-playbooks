@@ -1,6 +1,6 @@
 ---
-- name: pxe-boot setup
-  hosts: proxmox
+- name: proxmox setup
+  hosts: corenetworkcluster
   become: true
   
   pre_tasks:
@@ -15,6 +15,24 @@
         dest: /etc/hosts
         line: "{{ ansible_default_ipv4.address }}       {{ hostname }}.{{ ansible_dns.domain }} {{ hostname }}"
         regexp: "^127.0.1.1"
+
+    - name: find network interface config
+      find:
+        paths: /etc/network/
+        file_type: file
+        recurse: Yes
+        patterns: "*"
+      register: interfaces
+
+    - name: copy /etc/network/interfaces.j2 template
+      template:
+        src: "../templates/interfaces.j2"
+        dest: "/etc/network"
+        owner: root
+        group: root
+        mode: '644'
+
+
 
   tasks:  
 
