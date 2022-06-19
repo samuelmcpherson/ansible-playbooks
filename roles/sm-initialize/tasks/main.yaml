@@ -81,7 +81,7 @@
         groups: sudo
         append: yes
         
-    - name: change root password
+    - name: change user password
       user:
         name: "{{ user }}"
         update_password: always
