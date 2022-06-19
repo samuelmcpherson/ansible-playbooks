@@ -82,6 +82,13 @@
         update_password: always
         password: "{{ user_passwd |password_hash('sha512') }}"
 
+    - name: fix permissions on user home directory
+      file:
+        path: "/home/{{ user }}"
+        state: directory
+        owner: "{{ user }}"
+        group: users
+
     - name: Create .ssh directory
       file:
         path: "/home/{{ user }}/.ssh"
