@@ -1,0 +1,29 @@
+---
+default_packages:
+      - vim
+      - git
+      - rsync
+      - dosfstools
+      - openssh-server
+      - curl
+      - wget
+      - apt-file
+      - software-properties-common
+      - apt-transport-https
+      - zsh
+      - zsh-antigen
+      - irssi
+      - lynx
+      - elinks
+      - lm-sensors
+      - net-tools
+      - screen
+      - tmux
+      - sysstat
+      - htop
+      - iotop
+      - ripgrep
+      - nmap
+      - iftop
+      - tcpdump
+      - smartmontools

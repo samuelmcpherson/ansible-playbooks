@@ -1,0 +1,68 @@
+---
+- name: flatpak parent dataset
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak"
+    state: present
+        extra_zfs_properties:
+            canmount: on
+            mountpoint: "/var/lib/flatpak"
+
+- name: flatpak children datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/appstream"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/appstream"
+
+- name: flatpak children datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/repo"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/appstream"
+
+- name: flatpak children datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime"
+
+
+- name: flatpak children datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/app"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/app"
+
+
+- name: flatpak runtime datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/runtime/{{ item }}"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/runtime/{{ item }}"
+  loop: "{{ zfs_datasets_flatpak_runtimes }}"
+
+- name: flatpak datasets
+  community.general.zfs:
+    name: 
+      - "zroot/DATA/var/lib/flatpak/app/{{ item }}"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/flatpak/app/{{ item }}"
+  loop: "{{ zfs_datasets_flatpak_apps }}"
+     

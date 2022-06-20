@@ -1,0 +1,106 @@
+---
+kde_apps:
+      - network-manager 
+      - plasma-nm
+      - accountwizard 
+      - acpid 
+      - akonadi-backend-postgresql 
+      - akonadi-server
+      - debconf-kde-data
+      - debconf-kde-helper 
+      - kde-config-fcitx5 
+      - kde-config-fcitx
+      - kdeaccessibility 
+      - kdepim-addons 
+      - kdepim-runtime 
+      - kdepim-themeeditors 
+      - keyutils 
+      - kio-ldap
+      - kmag 
+      - kmousetool 
+      - kmouth 
+      - konq-plugins 
+      - korganizer 
+      - pinentry-qt 
+      - plasma-integration 
+      - plasma-runners-addons 
+      - plasma-wallpapers-addons 
+      - plasma-widgets-addons 
+      - powermgmt-base
+      - qtgstreamer-plugins-qt5
+      - plasma-discover-backend-flatpak 
+      - okular-extra-backends 
+      - libreoffice-plasma 
+      - ark 
+      - gwenview 
+      - kcalc 
+      - kmahjongg 
+      - kmines 
+      - krdc 
+      - ksudoku 
+      - kde-spectacle 
+      - ksystemlog 
+      - kate 
+      - okular 
+      - yakuake 
+      - marble 
+      - kdenlive 
+      - kigo 
+      - kompare 
+      - krfb 
+      - ktimer
+      - plasma-widgets-addons
+      - profile-sync-daemon
+      - print-manager
+      - cups-browsed
+      - make
+      - cmake
+      - build-essential
+      - libsystemd-dev
+      - libinput-tools
+      - libinput-dev
+      - conky-all
+
+flatpak_apps:
+      - app/com.github.tchx84.Flatseal
+      - app/com.github.eloston.ungoogledchromium
+      - app/org.mozilla.firefox
+      - app/com.vscodium.codium
+      - app/com.jgraph.drawio.desktop
+      - app/com.discordapp.discord
+      - app/com.github.xournalpp.xournalpp
+      - app/us.zoom.zoom
+      - app/com.axosoft.gitkraken
+      - app/com.belmoussaoui.Authenticator
+      - app/net.cozic.joplin_desktop
+
+zfs_datasets_flatpak_runtimes:
+      - "runtime/org.freedesktop.Platform.GL.default"
+      - "runtime/org.freedesktop.Platform.VAAPI.Intel"
+      - "runtime/org.freedesktop.Platform.openh264"
+      - "runtime/org.gnome.Platform.Locale"
+      - "runtime/org.gnome.Platform"
+      - "runtime/com.github.Eloston.UngoogledChromium.Codecs"
+      - "runtime/org.freedesktop.Platform.Locale"
+      - "runtime/org.freedesktop.Platform"
+      - "runtime/com.github.Eloston.UngoogledChromium"
+      - "runtime/org.mozilla.firefox.Locale"
+      - "runtime/org.mozilla.firefox"
+      - "runtime/org.freedesktop.Sdk.Locale"
+      - "runtime/com.github.xournalpp.xournalpp.Locale"
+      - "runtime/com.belmoussaoui.Authenticator.Locale"
+
+zfs_datasets_flatpak_apps:
+      - "app/com.github.tchx84.Flatseal"
+      - "app/com.github.eloston.ungoogledchromium"
+      - "app/com.vscodium.codium"
+      - "app/com.jgraph.drawio.desktop"
+      - "app/com.discordapp.discord"
+      - "app/com.github.xournalpp.xournalpp"
+      - "app/us.zoom.zoom"
+      - "app/com.axosoft.gitkraken"
+      - "app/com.belmoussaoui.Authenticator"
+      - "app/net.cozic.joplin_desktop"
+
+
+

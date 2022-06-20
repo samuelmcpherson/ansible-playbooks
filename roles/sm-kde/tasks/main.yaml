@@ -13,68 +13,9 @@
        
     - name: install extra kde apps
       apt:
-        name:
-          - network-manager 
-          - plasma-nm
-          - accountwizard 
-          - acpid 
-          - akonadi-backend-postgresql 
-          - akonadi-server
-          - debconf-kde-data
-          - debconf-kde-helper 
-          - kde-config-fcitx5 
-          - kde-config-fcitx
-          - kdeaccessibility 
-          - kdepim-addons 
-          - kdepim-runtime 
-          - kdepim-themeeditors 
-          - keyutils 
-          - kio-ldap
-          - kmag 
-          - kmousetool 
-          - kmouth 
-          - konq-plugins 
-          - korganizer 
-          - pinentry-qt 
-          - plasma-integration 
-          - plasma-runners-addons 
-          - plasma-wallpapers-addons 
-          - plasma-widgets-addons 
-          - powermgmt-base
-          - qtgstreamer-plugins-qt5
-          - plasma-discover-backend-flatpak 
-          - okular-extra-backends 
-          - libreoffice-plasma 
-          - ark 
-          - gwenview 
-          - kcalc 
-          - kmahjongg 
-          - kmines 
-          - krdc 
-          - ksudoku 
-          - kde-spectacle 
-          - ksystemlog 
-          - kate 
-          - okular 
-          - yakuake 
-          - marble 
-          - kdenlive 
-          - kigo 
-          - kompare 
-          - krfb 
-          - ktimer
-          - plasma-widgets-addons
-          - profile-sync-daemon
-          - print-manager
-          - cups-browsed
-          - make
-          - cmake
-          - build-essential
-          - libsystemd-dev
-          - libinput-tools
-          - libinput-dev
-          - conky-all
+        name: "{{ item }}"
         state: latest
+      loop: "{{ kde_apps }}"
 
     - name: add volian repo gpg key
       apt_key: 
@@ -116,7 +57,7 @@
 
     - name: create flatpak datasets
       when: ansible_group == zfs
-      include_tasks: "{{ root_of_repo }}/tasks/zfs/create-datasets-flatpak.yaml"
+      include_tasks: zfs-flatpak-datasets.yaml
 
     - name: add the flathub flatpak repository remote to system
       community.general.flatpak_remote:
@@ -130,18 +71,8 @@
         state: present
         remote: flathub
         method: system
-        name:
-          - app/com.github.tchx84.Flatseal
-          - app/com.github.eloston.ungoogledchromium
-          - app/org.mozilla.firefox
-          - app/com.vscodium.codium
-          - app/com.jgraph.drawio.desktop
-          - app/com.discordapp.discord
-          - app/com.github.xournalpp.xournalpp
-          - app/us.zoom.zoom
-          - app/com.axosoft.gitkraken
-          - app/com.belmoussaoui.Authenticator
-          - app/net.cozic.joplin_desktop
+        name: "{{ item }}"
+      loop: "{{ flatpak_apps }}"  
 
   - name: create .config directory
     file:
