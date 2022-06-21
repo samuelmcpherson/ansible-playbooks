@@ -1,13 +1,17 @@
 ---
 - hosts: all
+  become: True
+  ignore_unreachable: True
   roles:
     - role: sm-initialize
 
 - hosts: corenetworkcluster
+  become: True
   roles:
     - role: sm-proxmox
 
 - hosts: desktops
+  become: True
   roles:
     - role: sm-desktop
     
