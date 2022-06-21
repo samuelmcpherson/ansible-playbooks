@@ -24,6 +24,7 @@
     extra_zfs_properties:
         canmount: on
         mountpoint: /var/lib/vz/images
+        recordsize: 64K
 
 - name: "create pve dataset: zroot/DATA/var/lib/vz/template"
   when: zfs_root

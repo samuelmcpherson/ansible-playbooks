@@ -118,6 +118,18 @@
         group: users
         mode: '644'
 
+    - name: change hostname
+      hostname:  
+        name: "{{ hostname }}"
+        use: systemd
+
+    - name: update hosts file
+      lineinfile: 
+        state: present
+        dest: /etc/hosts
+        line: "127.0.1.1       {{ hostname }}.{{ ansible_dns.domain }} {{ hostname }}"
+        regexp: "^127.0.1.1"
+
     - name: change root password
       user:
         name: root

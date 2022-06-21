@@ -17,9 +17,9 @@ iface lo inet loopback
 {% for interface in ansible_interfaces %}
 {% if interface != loopback %}
 iface {{ interface }} inet manual
+
 {% endif %}
 {% endfor %}
-
 auto vmbr0
 iface vmbr0 inet static
         address {{ ansible_default_ipv4.address }}/24
@@ -27,5 +27,5 @@ iface vmbr0 inet static
         bridge-ports {{ ansible_default_ipv4.interface }}
         bridge-stp off
         bridge-fd 0
-        bridge-vlan-aware yes
-        bridge-vids 2-4094
+        #bridge-vlan-aware yes
+        #bridge-vids 2-4094
