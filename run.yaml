@@ -13,5 +13,5 @@
 - hosts: desktops
   become: True
   roles:
-    - role: sm-desktop
+    - role: sm-kde
     

@@ -4,6 +4,7 @@
     update_cache: yes
     upgrade: safe
   changed_when: False
+  
 - name: update hosts file
   lineinfile: 
     state: present
@@ -18,8 +19,6 @@
     owner: root
     group: root
     mode: '644'
-  vars:
-    - loopback=lo
 
 - name: "remove interface configs in /etc/network/interfaces.d"
   file:
