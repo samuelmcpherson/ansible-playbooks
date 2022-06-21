@@ -3,7 +3,11 @@
     roles:
       - role: sm-initialize
 
-- hosts: proxmox
+- hosts: corenetworkcluster
     roles:
       - role: sm-proxmox
+
+- hosts: desktops
+    roles:
+      - role: sm-desktop
     

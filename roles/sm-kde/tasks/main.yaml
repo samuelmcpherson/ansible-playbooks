@@ -1,7 +1,6 @@
 ---
 - name: install kde plasma desktop
-  hosts: latitude-test
-  become: true
+  become: True
 
   tasks:  
     - name: install plasma desktop
@@ -74,43 +73,43 @@
         name: "{{ item }}"
       loop: "{{ flatpak_apps }}"  
 
-  - name: create .config directory
-    file:
-      path: "/home/{{ user }}/.config"
-      state: directory
-      owner: "{{ user }}"
-      group: users
-      mode: '751'
+    - name: create .config directory
+      file:
+        path: "/home/{{ user }}/.config"
+        state: directory
+        owner: "{{ user }}"
+        group: users
+        mode: '751'
 
-  - name: create .local directory
-    file:
-      path: "/home/{{ user }}/.local"
-      state: directory
-      owner: "{{ user }}"
-      group: users
-      mode: '751'
+    - name: create .local directory
+      file:
+        path: "/home/{{ user }}/.local"
+        state: directory
+        owner: "{{ user }}"
+        group: users
+        mode: '751'
 
-  - name: copy kwinrc config file
-    copy:
-      src: "{{ root_of_repo }}/files/configs/user/authorized_keys"
-      dest: "/home/{{ user }}/.config/kwinrc"
-      owner: "{{ user }}"
-      group: users
-      mode: '600'
+    - name: copy kwinrc config file
+      copy:
+        src: "{{ root_of_repo }}/files/configs/user/authorized_keys"
+        dest: "/home/{{ user }}/.config/kwinrc"
+        owner: "{{ user }}"
+        group: users
+        mode: '600'
 
-  - name: copy kwinrc config file
-    copy:
-      src: "{{ root_of_repo }}/files/configs/user/authorized_keys"
-      dest: "/home/{{ user }}/.config/kwinrc"
-      owner: "{{ user }}"
-      group: users
-      mode: '600'
+    - name: copy kwinrc config file
+      copy:
+        src: "{{ root_of_repo }}/files/configs/user/authorized_keys"
+        dest: "/home/{{ user }}/.config/kwinrc"
+        owner: "{{ user }}"
+        group: users
+        mode: '600'
 
-  - name: pull gebaar gestures repo
-    git:
-      clone: yes
-      dest: "/home/{{ user }}/gebaar-libinput"
-      repo: https://github.com/NICHOLAS85/gebaar-libinput
+    - name: pull gebaar gestures repo
+      git:
+        clone: yes
+        dest: "/home/{{ user }}/gebaar-libinput"
+        repo: https://github.com/NICHOLAS85/gebaar-libinput
   
     #cd /home/$USER/gebaar-libinput  && git submodule update --init
     

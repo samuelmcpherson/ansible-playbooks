@@ -1,9 +1,7 @@
 ---
 - name: post install initialization
-  hosts: all
-  become: true
-  ignore_unreachable: 
-  host_key_checking: False
+  become: True
+  ignore_unreachable: True
   
   pre_tasks:
     - name: update repositories
@@ -141,15 +139,3 @@
         name: "{{ ansible_user }}"
         update_password: always
         password: "{{ ansible_passwd |password_hash('sha512') }}"
-
-    - name: change hostname
-      hostname:  
-        name: "{{ hostname }}"
-        use: systemd
-
-    - name: update hosts file
-      lineinfile: 
-        state: present
-        dest: /etc/hosts
-        line: "127.0.1.1       {{ hostname }}.{{ ansible_dns.domain }} {{ hostname }}"
-        regexp: "^127.0.1.1"

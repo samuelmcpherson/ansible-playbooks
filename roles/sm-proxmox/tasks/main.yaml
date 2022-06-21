@@ -1,7 +1,6 @@
 ---
 - name: proxmox setup
-  hosts: corenetworkcluster
-  become: true
+  become: True
   
   pre_tasks:
     - name: update repositories
