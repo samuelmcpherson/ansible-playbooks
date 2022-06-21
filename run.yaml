@@ -1,13 +1,13 @@
 ---
 - hosts: all
-    roles:
-      - role: sm-initialize
+  roles:
+    - role: sm-initialize
 
 - hosts: corenetworkcluster
-    roles:
-      - role: sm-proxmox
+  roles:
+    - role: sm-proxmox
 
 - hosts: desktops
-    roles:
-      - role: sm-desktop
+  roles:
+    - role: sm-desktop
     
