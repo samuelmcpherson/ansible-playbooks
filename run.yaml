@@ -1,7 +1,63 @@
 ---
 - hosts: all
+  gather_facts: True
+  run_once: True
+  tasks:
+    - name: register current list of available hosts
+      set_fact:
+        available_hosts: "{{ ansible_play_hosts }}" 
+      delegate_to: localhost
+      delegate_facts: True
+  
+- hosts: localhost
+  tasks:
+    - name: find all hosts with defined host_vars 
+      find:
+        paths: "/home/ansible/ansible-playbooks/inventories/host_vars"
+        file_type: directory
+      register: initialized_hosts
+    
+    - set_fact:
+        just_files: "{{ initialized_hosts.files | map(attribute='path') | map('basename') | list }}"
+    - set_fact:
+        uninitialized_hosts: "{{ available_hosts|difference(just_files) }}"
+    
+    - name: create host directory in host_vars
+      file:
+        path: "/home/ansible/ansible-playbooks/inventories/host_vars/{{ item }}"
+        state: directory
+      loop: "{{ uninitialized_hosts }}" 
+
+    - name: "set initialized state to false in vars.yaml"
+      lineinfile:
+        path: "/home/ansible/ansible-playbooks/inventories/host_vars/{{ item }}/vars.yaml"
+        line: "initialized: False"
+        state: present
+        create: yes
+      loop: "{{ uninitialized_hosts }}"
+
+- hosts: all
   become: True
   ignore_unreachable: True
+  when: not initialized
+  ansible_become_pass: "{{ ansible_temp_pass }}" 
+  roles:
+    - role: sm-initialize
+
+- hosts: localhost
+  tasks:
+    - name: "set initialized state to false in vars.yaml"
+      lineinfile:
+        path: "/home/ansible/ansible-playbooks/inventories/host_vars/{{ item }}/vars.yaml"
+        regexp: "^initialized:"
+        line: "initialized: True"
+        state: present
+      loop: "{{ uninitialized_hosts }}"
+
+- hosts: all
+  become: True
+  ignore_unreachable: True
+  when: initialized
   roles:
     - role: sm-initialize
 

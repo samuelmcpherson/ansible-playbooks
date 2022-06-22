@@ -87,15 +87,15 @@
 
 - name: copy kwinrc config file
   copy:
-    src: "{{ root_of_repo }}/files/configs/user/authorized_keys"
-    dest: "/home/{{ user }}/.config/kwinrc"
+    src: "../files/.config"
+    dest: "/home/{{ user }}/config"
     owner: "{{ user }}"
     group: users
     mode: '600'
 
 - name: copy kwinrc config file
   copy:
-    src: "{{ root_of_repo }}/files/configs/user/authorized_keys"
+    src: "../files/.config/kwinrc"
     dest: "/home/{{ user }}/.config/kwinrc"
     owner: "{{ user }}"
     group: users
