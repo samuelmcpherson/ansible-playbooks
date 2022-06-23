@@ -39,6 +39,7 @@
 - hosts: all
   become: True
   ignore_unreachable: True
+  gather_facts: False
   roles:
     - role: sm-initialize
       when: not initialized
