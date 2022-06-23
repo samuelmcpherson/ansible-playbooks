@@ -39,10 +39,10 @@
 - hosts: all
   become: True
   ignore_unreachable: True
-  when: not initialized
   ansible_become_pass: "{{ ansible_temp_pass }}" 
   roles:
     - role: sm-initialize
+      when: not initialized
 
 - hosts: localhost
   tasks:
@@ -57,9 +57,9 @@
 - hosts: all
   become: True
   ignore_unreachable: True
-  when: initialized
   roles:
     - role: sm-initialize
+      when: initialized
 
 - hosts: corenetworkcluster
   become: True

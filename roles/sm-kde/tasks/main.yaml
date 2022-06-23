@@ -106,10 +106,33 @@
     clone: yes
     dest: "/home/{{ user }}/gebaar-libinput"
     repo: https://github.com/NICHOLAS85/gebaar-libinput
-  
-    #cd /home/$USER/gebaar-libinput  && git submodule update --init
-    
-    #mkdir /home/$USER/gebaar-libinput-fork/build && cd /home/$USER/gebaar-libinput-fork/build && cmake .. && make -j$(nproc)
+    recursive: yes
+    update: yes
+
+- name: "fix library dependancy for gebaar in cpptoml.h"
+    lineinfile:
+      path: "/home/{{ user }}/gebaar-libinput/libs/cpptoml/include/cpptoml.h"
+      insertafter: "^#include"
+      line: "#include <limits>"
+      state: present
+
+- name: "fix library dependancy for gebaar in cxxopts.hpp"
+    lineinfile:
+      path: "/home/{{ user }}/gebaar-libinput/libs/cxxopts/include/cxxopts.hpp"
+      insertafter: "^#include"
+      line: "#include <limits>"
+      state: present
+
+- name: create gebaar build directory
+  file:
+    path: "/home/{{ user }}/gebaar-libinput/build"
+    state: directory
+    owner: "{{ user }}"
+    group: users
+    mode: '751'
+
+
+    #cd /home/$USER/gebaar-libinput-fork/build && cmake .. && make -j$(nproc)
 
     #mkdir -p $TEMPMOUNT/home/$USER/.config/gebaar
 
