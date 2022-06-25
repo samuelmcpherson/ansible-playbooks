@@ -7,22 +7,28 @@
 
 - hosts: corenetworkcluster
   become: True
+  ignore_unreachable: True
   roles:
     - role: sm-proxmox
 
 - hosts: desktops
   become: True
+  ignore_unreachable: True
   roles:
     - role: sm-kde
 
 - name: qemu vm setup
-  hosts: pxe
+  hosts: 
+    - corenetworkmanagementvms
+    - corenetworkproductionvms
   become: True
+  ignore_unreachable: True
   roles:
     - role: sm-vm
 
 - hosts: pxe-boot
   become: True
+  ignore_unreachable: True
   roles:
     - role: sm-pxe
     
