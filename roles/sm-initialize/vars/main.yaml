@@ -1,6 +1,4 @@
 ---
-ansible_become_pass: "{{ ansible_temp_pass }}"
-
 default_packages:
       - vim
       - git
