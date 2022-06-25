@@ -1,0 +1,47 @@
+---
+- name: update repositories
+  apt: 
+    update_cache: yes
+    upgrade: safe
+  changed_when: False
+
+- name: install iso build script dependencies
+  apt:
+    name:
+      - debootstrap 
+      - squashfs-tools 
+      - xorriso 
+      - isolinux 
+      - syslinux-efi 
+      - grub-pc-bin 
+      - grub-efi-amd64-bin 
+      - mtools
+
+- name: pull tftp compose stack from pxe-boot repo
+  git:
+    clone: yes
+    update: yes
+    dest: /srv/pxe-boot
+    repo: https://github.com/samuelmcpherson/pxe-boot.git
+
+- name: pull iso build repo
+  git:
+    clone: yes
+    update: yes
+    dest: /root/debian-custom-iso
+    repo: https://github.com/samuelmcpherson/debian-custom-iso.git
+
+- name: Clean up from previous build script runs
+  file:
+    path: /live-build
+    state: absent
+
+- name: run custom iso build script
+  command:
+    cmd: "/root/debian-custom-iso/debian-build.sh -l {{ root_passwd }}" -r {{ root_passwd }}" -u {{ ansible_user }} -p {{ ansible_passwd }} /srv/pxe-boot/tftp-pxe/tftp/debian-installer/amd64
+
+- name: start docker-compose stack for tftp container serving tftp pxe boot environment
+  docker_compose:
+    project_src: /srv/pxe-boot/tftp-pxe
+    state: present
+    restarted: yes

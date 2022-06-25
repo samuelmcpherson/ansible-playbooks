@@ -14,4 +14,15 @@
   become: True
   roles:
     - role: sm-kde
+
+- name: qemu vm setup
+  hosts: pxe
+  become: True
+  roles:
+    - role: sm-vm
+
+- hosts: pxe-boot
+  become: True
+  roles:
+    - role: sm-pxe
     
