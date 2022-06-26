@@ -26,7 +26,7 @@
     state: absent
 
 - name: create proxmox datasets
-  when: ansible_group == zfs
+  when: zfs_root
   include_tasks: zfs-proxmox-datasets.yaml
 
 - name: add proxmox repo gpg key

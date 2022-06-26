@@ -51,7 +51,7 @@
     scope: user
 
 - name: create flatpak datasets
-  when: ansible_group == zfs
+  when: zfs_root
   include_tasks: zfs-flatpak-datasets.yaml
 
 - name: add the flathub flatpak repository remote to system

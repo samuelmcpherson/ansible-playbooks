@@ -38,7 +38,7 @@
 
 - name: run custom iso build script
   command:
-    cmd: "/root/debian-custom-iso/debian-build.sh -l {{ root_passwd }}" -r {{ root_passwd }}" -u {{ ansible_user }} -p {{ ansible_passwd }} /srv/pxe-boot/tftp-pxe/tftp/debian-installer/amd64
+    cmd: "/root/debian-custom-iso/debian-build.sh -l {{ root_passwd }} -r {{ root_passwd }} -u {{ ansible_user }} -p {{ ansible_passwd }} /srv/pxe-boot/tftp-pxe/tftp/debian-installer/amd64"
 
 - name: start docker-compose stack for tftp container serving tftp pxe boot environment
   docker_compose:
