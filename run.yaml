@@ -4,12 +4,14 @@
   ignore_unreachable: True
   roles:
     - role: sm-initialize
+    - role: geerlingguy.ntp
 
 - hosts: corenetworkcluster
   become: True
   ignore_unreachable: True
   roles:
     - role: sm-proxmox
+    - role: lae.proxmox
 
 - hosts: desktops
   become: True
