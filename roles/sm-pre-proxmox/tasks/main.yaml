@@ -13,9 +13,9 @@
 #     regexp: "^127.0.1.1"
 
 - name: Install bridge-utils
-      apt:
-        name: bridge-utils
-        state: present
+  apt:
+    name: bridge-utils
+    state: present
 
 - name: copy /etc/network/interfaces.j2 template
   template:
@@ -40,4 +40,5 @@
     name:
       - zfs-dkms
     state: absent
+
 

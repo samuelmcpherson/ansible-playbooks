@@ -10,51 +10,9 @@
   become: True
   ignore_unreachable: True
   roles:
-    - role: sm-proxmox
+    - role: sm-pre-proxmox
     - role: lae.proxmox
-
-  tasks:
-    - name: stop and disable proxmox-boot-cleanup service
-      systemd:
-        name: proxmox-boot-cleanup.service
-        enabled: no
-        state: stopped
-
-    - name: copy proxmox patch script
-      copy:
-        src: "../files/proxmox-patch.sh"
-        dest: "/root/"
-        owner: root
-        group: root
-        mode: '755'
-
-    - name: run proxmox patch script
-      command:
-        cmd: /root/proxmox-patch.sh
-    
-    - block:
-      - name: Reboot for new kernel
-        shell: "sleep 5 && shutdown -r now 'Networking changes found, rebooting'"
-        async: 1
-        poll: 0
-
-      - name: Wait for server to come back online
-        wait_for_connection:
-          delay: 15
-        #when ... new kernel - first install
-
-    - name: remove uneeded debian-packages
-      ignore_errors: yes
-      apt:
-        name: 
-          - linux-image-amd64
-          - linux-headers-amd64
-          - grub-common
-          - grub2-common
-          - grub-pc
-          - grub-pc-bin
-          - os-prober
-        state: absent
+    - role: sm-post-proxmox
 
 - hosts: desktops
   become: True
