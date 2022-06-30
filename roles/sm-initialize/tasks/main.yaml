@@ -28,7 +28,7 @@
     mode: '644'
 
 - name: create zfs dataset for standard user home directory
-  when: zfs_root
+  when: "{{ zfs_root }}"
   community.general.zfs:
     name: "zroot/DATA/home/{{ user }}"
     state: present
