@@ -1,22 +1,24 @@
 ---
-  tasks:
-    - name: stop and disable proxmox-boot-cleanup service
-      systemd:
-        name: proxmox-boot-cleanup.service
-        enabled: no
-        state: stopped
+- name: stop and disable proxmox-boot-cleanup service
+  systemd:
+    name: proxmox-boot-cleanup.service
+    enabled: no
+    state: stopped
 
-    - name: "Comment out the line"
-      replace:
-        path: "{{ filestopatch }}"
-        regexp: '^[^#]'
-        replace: '#\1'
+- name: "Comment out the line"
+  replace:
+    path: "{{ item }}"
+    regexp: '^[^#]'
+    replace: '#\g<0>'
+  loop: "{{ filestopatch }}"
 
-    - name: "append successful exit"
-      lineinfile:
-        path: "{{ filestopatch }}"
-        regexp: '^#exit 0'
-        insertafter: EOF
+- name: "append successful exit"
+  lineinfile:
+    path: "{{ item }}"
+    regexp: '^#exit 0'
+    insertafter: EOF
+    line: "exit 0"
+  loop: "{{ filestopatch }}"
 
     # - block:
     #   - name: Reboot for new kernel
