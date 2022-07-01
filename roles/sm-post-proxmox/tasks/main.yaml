@@ -20,26 +20,15 @@
     line: "exit 0"
   loop: "{{ filestopatch }}"
 
-    # - block:
-    #   - name: Reboot for new kernel
-    #     shell: "sleep 5 && shutdown -r now 'Networking changes found, rebooting'"
-    #     async: 1
-    #     poll: 0
-
-    #   - name: Wait for server to come back online
-    #     wait_for_connection:
-    #       delay: 15
-    #     #when ... new kernel - first install
-
-    # - name: remove uneeded debian-packages
-    #   ignore_errors: yes
-    #   apt:
-    #     name: 
-    #       - linux-image-amd64
-    #       - linux-headers-amd64
-    #       - grub-common
-    #       - grub2-common
-    #       - grub-pc
-    #       - grub-pc-bin
-    #       - os-prober
-    #     state: absent
+- name: remove uneeded debian-packages
+  ignore_errors: yes
+  apt:
+    name: 
+      - linux-image-amd64
+      - linux-headers-amd64
+      - grub-common
+      - grub2-common
+      - grub-pc
+      - grub-pc-bin
+      - os-prober
+    state: absent

@@ -19,8 +19,15 @@
 
 - name: Check if  folder is empty before proceeding
   stat:
-    path: "/etc/network/interfaces.d/*"
+    path: "/etc/network/interfaces.d"
+  register: interfacesdir
+
+- name: Check if  folder is empty before proceeding
+  find:
+    path: "/etc/network/interfaces.d"
+    file_type: directory
   register: interfacesfound
+  when: interfacesdir.stat.exists
 
 - name: copy /etc/network/interfaces.j2 template
   template:
@@ -29,7 +36,7 @@
     owner: root
     group: root
     mode: '644'
-  when: "{{ interfacesfound.stat.exists }}" #interfacesfound.stat.exists == True
+  when: "{{ interfacesfound.examined }}" #interfacesfound.stat.exists == True
 
 - name: "remove interface configs in /etc/network/interfaces.d"
   file:
