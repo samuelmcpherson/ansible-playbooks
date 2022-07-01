@@ -1,4 +1,36 @@
 ---
+- name: create zfs user datasets
+  when: "{{ zfs_root }}"
+  block:
+    - name: create .config dataset
+      community.general.zfs:
+        name: 
+          - "zroot/DATA/home/{{ user }}/.config"
+        state: present
+        extra_zfs_properties:
+          canmount: on
+          mountpoint: "/home/{{ user }}/.config"
+    
+    - name: create .local/share/plasma dataset
+      community.general.zfs:
+        name: 
+          - "zroot/DATA/home/{{ user }}/.local/share/plasma"
+        state: present
+        extra_zfs_properties:
+          canmount: on
+          mountpoint: "/home/{{ user }}/.local/share/plasma"
+
+    - name: create flatpak datasets
+      include_tasks: zfs-flatpak-datasets.yaml
+  
+    - name: fix permissions on user home directory
+      file:
+      path: "/home/{{ user }}"
+      state: directory
+      owner: "{{ user }}"
+      group: users
+      recurse: yes
+
 - name: install plasma desktop
   apt:  
     name: 
@@ -8,9 +40,8 @@
     
 - name: install extra kde apps
   apt:
-    name: "{{ item }}"
+    name: "{{ kde_apps }}"
     state: latest
-  loop: "{{ kde_apps }}"
 
 - name: add volian repo gpg key
   apt_key: 
@@ -50,24 +81,23 @@
     enabled: yes
     scope: user
 
-- name: create flatpak datasets
-  when: "{{ zfs_root }}"
-  include_tasks: zfs-flatpak-datasets.yaml
-
 - name: add the flathub flatpak repository remote to system
+  become: yes
+  become_user: "{{ user }}"
   community.general.flatpak_remote:
     name: flathub
     state: present
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-    method: system
+    method: user
 
 - name: add flatpaks to system
+  become: yes
+  become_user: "{{ user }}"
   community.general.flatpak:
     state: present
     remote: flathub
-    method: system
-    name: "{{ item }}"
-  loop: "{{ flatpak_apps }}"  
+    method: user
+    name: "{{ flatpak_apps }}"
 
 - name: create .config directory
   file:

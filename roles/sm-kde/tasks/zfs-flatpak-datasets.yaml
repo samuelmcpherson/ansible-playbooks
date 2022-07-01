@@ -2,67 +2,67 @@
 - name: flatpak parent dataset
   community.general.zfs:
     name: 
-      - "zroot/DATA/var/lib/flatpak"
+      - "zroot/DATA/home/{{ user }}/.local/share/flatpak"
     state: present
-        extra_zfs_properties:
-            canmount: on
-            mountpoint: "/var/lib/flatpak"
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/home/{{ user }}/.local/share/flatpak"
 
 - name: flatpak children datasets
   community.general.zfs:
     name: 
-      - "zroot/DATA/var/lib/flatpak/appstream"
+      - "zroot/DATA/home/{{ user }}/.local/share/flatpak/appstream"
     state: present
     extra_zfs_properties:
       canmount: on
-      mountpoint: "/var/lib/flatpak/appstream"
+      mountpoint: "/home/{{ user }}/.local/share/flatpak/appstream"
 
 - name: flatpak children datasets
   community.general.zfs:
     name: 
-      - "zroot/DATA/var/lib/flatpak/repo"
+      - "zroot/DATA/home/{{ user }}/.local/share/flatpak/repo"
     state: present
     extra_zfs_properties:
       canmount: on
-      mountpoint: "/var/lib/flatpak/appstream"
+      mountpoint: "/home/{{ user }}/.local/share/flatpak/appstream"
 
 - name: flatpak children datasets
   community.general.zfs:
     name: 
-      - "zroot/DATA/var/lib/flatpak/runtime"
+      - "zroot/DATA/home/{{ user }}/.local/share/flatpak/runtime"
     state: present
     extra_zfs_properties:
       canmount: on
-      mountpoint: "/var/lib/flatpak/runtime"
+      mountpoint: "/home/{{ user }}/.local/share/flatpak/runtime"
 
 
 - name: flatpak children datasets
   community.general.zfs:
     name: 
-      - "zroot/DATA/var/lib/flatpak/app"
+      - "zroot/DATA/home/{{ user }}/.local/share/flatpak/app"
     state: present
     extra_zfs_properties:
       canmount: on
-      mountpoint: "/var/lib/flatpak/app"
+      mountpoint: "/home/{{ user }}/.local/share/flatpak/app"
 
 
 - name: flatpak runtime datasets
   community.general.zfs:
     name: 
-      - "zroot/DATA/var/lib/flatpak/runtime/{{ item }}"
+      - "zroot/DATA/home/{{ user }}/.local/share/flatpak/runtime/{{ item }}"
     state: present
     extra_zfs_properties:
       canmount: on
-      mountpoint: "/var/lib/flatpak/runtime/{{ item }}"
+      mountpoint: "/home/{{ user }}/.local/share/flatpak/runtime/{{ item }}"
   loop: "{{ zfs_datasets_flatpak_runtimes }}"
 
 - name: flatpak datasets
   community.general.zfs:
     name: 
-      - "zroot/DATA/var/lib/flatpak/app/{{ item }}"
+      - "zroot/DATA/home/{{ user }}/.local/share/flatpak/app/{{ item }}"
     state: present
     extra_zfs_properties:
       canmount: on
-      mountpoint: "/var/lib/flatpak/app/{{ item }}"
+      mountpoint: "/home/{{ user }}/.local/share/flatpak/app/{{ item }}"
   loop: "{{ zfs_datasets_flatpak_apps }}"
      

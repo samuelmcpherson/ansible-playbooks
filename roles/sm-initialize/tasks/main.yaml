@@ -7,9 +7,8 @@
 
 - name: default packages
   apt:  
-    name: "{{ item }}"
+    name: "{{ default_packages }}"
     state: latest
-  loop: "{{ default_packages }}"
 
 - name: Copy zsh environment file
   copy:
@@ -27,14 +26,34 @@
     group: root
     mode: '644'
 
-- name: create zfs dataset for standard user home directory
+- name: create zfs user datasets
   when: "{{ zfs_root }}"
-  community.general.zfs:
-    name: "zroot/DATA/home/{{ user }}"
-    state: present
-    extra_zfs_properties:
-        canmount: on
-        mountpoint: "/home/{{ user }}"
+  block:
+    - name: create zfs dataset for standard user home directory
+      community.general.zfs:
+        name: "zroot/DATA/home/{{ user }}"
+        state: present
+        extra_zfs_properties:
+          canmount: on
+          mountpoint: "/home/{{ user }}"
+
+    - name: create .local dataset
+      community.general.zfs:
+        name: 
+          - "zroot/DATA/home/{{ user }}/.local"
+        state: present
+        extra_zfs_properties:
+          canmount: on
+          mountpoint: "/home/{{ user }}/.local"
+
+    - name: create .local/share dataset
+      community.general.zfs:
+        name: 
+          - "zroot/DATA/home/{{ user }}/.local/share"
+        state: present
+        extra_zfs_properties:
+          canmount: on
+          mountpoint: "/home/{{ user }}/.local/share"
 
 - name: create standard user
   user:
@@ -60,6 +79,7 @@
     state: directory
     owner: "{{ user }}"
     group: users
+    recurse: yes
 
 - name: Create .ssh directory
   file:
