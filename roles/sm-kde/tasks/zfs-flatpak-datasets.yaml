@@ -52,8 +52,7 @@
 
 - name: flatpak datasets
   community.general.zfs:
-    name: 
-      - "zroot/DATA/home/{{ user }}/.local/share/flatpak/app/{{ item }}"
+    name: "zroot/DATA/home/{{ user }}/.local/share/flatpak/app/{{ item }}"
     state: present
     extra_zfs_properties:
       canmount: on
