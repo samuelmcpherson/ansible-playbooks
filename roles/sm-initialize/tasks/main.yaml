@@ -39,8 +39,7 @@
 
     - name: create .local dataset
       community.general.zfs:
-        name: 
-          - "zroot/DATA/home/{{ user }}/.local"
+        name: "zroot/DATA/home/{{ user }}/.local"
         state: present
         extra_zfs_properties:
           canmount: on
@@ -48,8 +47,7 @@
 
     - name: create .local/share dataset
       community.general.zfs:
-        name: 
-          - "zroot/DATA/home/{{ user }}/.local/share"
+        name: "zroot/DATA/home/{{ user }}/.local/share"
         state: present
         extra_zfs_properties:
           canmount: on
