@@ -1,8 +1,7 @@
 ---
 - name: flatpak parent dataset
   community.general.zfs:
-    name: 
-      - "zroot/DATA/home/{{ user }}/.local/share/flatpak"
+    name: "zroot/DATA/home/{{ user }}/.local/share/flatpak"
     state: present
     extra_zfs_properties:
       canmount: on
@@ -10,8 +9,7 @@
 
 - name: flatpak children datasets
   community.general.zfs:
-    name: 
-      - "zroot/DATA/home/{{ user }}/.local/share/flatpak/appstream"
+    name: "zroot/DATA/home/{{ user }}/.local/share/flatpak/appstream"
     state: present
     extra_zfs_properties:
       canmount: on
@@ -19,8 +17,7 @@
 
 - name: flatpak children datasets
   community.general.zfs:
-    name: 
-      - "zroot/DATA/home/{{ user }}/.local/share/flatpak/repo"
+    name: "zroot/DATA/home/{{ user }}/.local/share/flatpak/repo"
     state: present
     extra_zfs_properties:
       canmount: on
@@ -28,8 +25,7 @@
 
 - name: flatpak children datasets
   community.general.zfs:
-    name: 
-      - "zroot/DATA/home/{{ user }}/.local/share/flatpak/runtime"
+    name: "zroot/DATA/home/{{ user }}/.local/share/flatpak/runtime"
     state: present
     extra_zfs_properties:
       canmount: on
@@ -38,8 +34,7 @@
 
 - name: flatpak children datasets
   community.general.zfs:
-    name: 
-      - "zroot/DATA/home/{{ user }}/.local/share/flatpak/app"
+    name: "zroot/DATA/home/{{ user }}/.local/share/flatpak/app"
     state: present
     extra_zfs_properties:
       canmount: on
@@ -48,8 +43,7 @@
 
 - name: flatpak runtime datasets
   community.general.zfs:
-    name: 
-      - "zroot/DATA/home/{{ user }}/.local/share/flatpak/runtime/{{ item }}"
+    name: "zroot/DATA/home/{{ user }}/.local/share/flatpak/runtime/{{ item }}"
     state: present
     extra_zfs_properties:
       canmount: on

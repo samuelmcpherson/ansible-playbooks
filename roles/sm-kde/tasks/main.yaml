@@ -4,8 +4,7 @@
   block:
     - name: create .config dataset
       community.general.zfs:
-        name: 
-          - "zroot/DATA/home/{{ user }}/.config"
+        name: "zroot/DATA/home/{{ user }}/.config"
         state: present
         extra_zfs_properties:
           canmount: on
@@ -13,8 +12,7 @@
     
     - name: create .local/share/plasma dataset
       community.general.zfs:
-        name: 
-          - "zroot/DATA/home/{{ user }}/.local/share/plasma"
+        name: "zroot/DATA/home/{{ user }}/.local/share/plasma"
         state: present
         extra_zfs_properties:
           canmount: on
@@ -25,11 +23,11 @@
   
     - name: fix permissions on user home directory
       file:
-      path: "/home/{{ user }}"
-      state: directory
-      owner: "{{ user }}"
-      group: users
-      recurse: yes
+        path: "/home/{{ user }}"
+        state: directory
+        owner: "{{ user }}"
+        group: users
+        recurse: yes
 
 - name: install plasma desktop
   apt:  
