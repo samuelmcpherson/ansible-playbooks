@@ -95,7 +95,13 @@
     state: present
     remote: flathub
     method: user
-    name: "{{ flatpak_apps }}"
+    name: "{{ item }}"
+  loop: "{{ flatpak_apps }}"
+
+- name: remove old network configuration
+  file:
+    path: "/etc/network/interfaces.d"
+    state: absent
 
 - name: create .config directory
   file:
@@ -103,7 +109,15 @@
     state: directory
     owner: "{{ user }}"
     group: users
-    mode: '751'
+    mode: '755'
+
+- name: copy .config/autostart directory
+  copy:
+    src: "../files/.config/autostart"
+    dest: "/home/{{ user }}/.config/autostart"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
 
 - name: create .local directory
   file:
@@ -111,23 +125,70 @@
     state: directory
     owner: "{{ user }}"
     group: users
-    mode: '751'
+    mode: '755'
 
-- name: copy kwinrc config file
-  copy:
-    src: "../files/.config"
-    dest: "/home/{{ user }}/config"
+- name: create .local/share directory
+  file:
+    path: "/home/{{ user }}/.local/share"
+    state: directory
     owner: "{{ user }}"
     group: users
-    mode: '600'
+    mode: '755'
 
-- name: copy kwinrc config file
+- name: copy .local/share/plasma directory
   copy:
-    src: "../files/.config/kwinrc"
-    dest: "/home/{{ user }}/.config/kwinrc"
+    src: "../files/.local/share/plasma"
+    dest: "/home/{{ user }}/.local/share/plasma"
     owner: "{{ user }}"
     group: users
-    mode: '600'
+    mode: '755'
+
+- name: copy .local/share/aurorae directory
+  copy:
+    src: "../files/.local/share/aurorae"
+    dest: "/home/{{ user }}/.local/share/aurorae"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .local/share/color-schemes directory
+  copy:
+    src: "../files/.local/share/color-schemes"
+    dest: "/home/{{ user }}/.local/share/color-schemes"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .local/share/konsole directory
+  copy:
+    src: "../files/.local/share/konsole"
+    dest: "/home/{{ user }}/.local/share/konsole"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy wallpaper
+  copy:
+    src: "../files/debian-bg-fin.png"
+    dest: "/usr/share/wallpaper/wallpapers/debian-bg-fin.png"
+    mode: '644'
+
+
+#- name: copy kwinrc config file
+#  copy:
+#    src: "../files/.config"
+#    dest: "/home/{{ user }}/config"
+#    owner: "{{ user }}"
+#    group: users
+#    mode: '600'
+
+#- name: copy kwinrc config file
+#  copy:
+#    src: "../files/.config/kwinrc"
+#    dest: "/home/{{ user }}/.config/kwinrc"
+#    owner: "{{ user }}"
+#    group: users
+#    mode: '600'
 
 - name: pull gebaar gestures repo
   git:

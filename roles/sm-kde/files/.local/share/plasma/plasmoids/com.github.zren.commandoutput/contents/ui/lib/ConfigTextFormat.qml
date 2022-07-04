@@ -1,4 +1,4 @@
-// Version 2
+// Version 1
 
 import QtQuick 2.0
 import QtQuick.Controls 1.0
@@ -11,7 +11,6 @@ RowLayout {
 	property alias italicConfigKey: configItalic.configKey
 	property alias underlineConfigKey: configUnderline.configKey
 	property alias alignConfigKey: configTextAlign.configKey
-	property alias vertAlignConfigKey: configVertAlign.configKey
 
 	Button {
 		id: configBold
@@ -52,18 +51,6 @@ RowLayout {
 
 	ConfigTextAlign {
 		id: configTextAlign
-		visible: configKey
-	}
-
-	Item {
-		Layout.preferredWidth: units.smallSpacing
-		readonly property bool groupBeforeVisible: configBold.visible || configItalic.visible || configUnderline.visible || configTextAlign.visible
-		readonly property bool groupAfterVisible: configVertAlign.visible
-		visible: groupBeforeVisible && groupAfterVisible
-	}
-
-	ConfigVertAlign {
-		id: configVertAlign
 		visible: configKey
 	}
 }
