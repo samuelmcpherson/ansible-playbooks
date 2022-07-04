@@ -170,7 +170,7 @@
 - name: copy wallpaper
   copy:
     src: "../files/debian-bg-fin.png"
-    dest: "/usr/wallpapers/debian-bg-fin.png"
+    dest: "/usr/share/wallpapers/debian-bg-fin.png"
     mode: '644'
 
 
