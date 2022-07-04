@@ -79,24 +79,24 @@
     enabled: yes
     scope: user
 
-- name: add the flathub flatpak repository remote to system
-  become: yes
-  become_user: "{{ user }}"
-  community.general.flatpak_remote:
-    name: flathub
-    state: present
-    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-    method: user
+# - name: add the flathub flatpak repository remote to system
+#   become: yes
+#   become_user: "{{ user }}"
+#   community.general.flatpak_remote:
+#     name: flathub
+#     state: present
+#     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+#     method: user
 
-- name: add flatpaks to system
-  become: yes
-  become_user: "{{ user }}"
-  community.general.flatpak:
-    state: present
-    remote: flathub
-    method: user
-    name: "{{ item }}"
-  loop: "{{ flatpak_apps }}"
+# - name: add flatpaks to system
+#   become: yes
+#   become_user: "{{ user }}"
+#   community.general.flatpak:
+#     state: present
+#     remote: flathub
+#     method: user
+#     name: "{{ item }}"
+#   loop: "{{ flatpak_apps }}"
 
 - name: remove old network configuration
   file:
@@ -114,7 +114,7 @@
 - name: copy .config/autostart directory
   copy:
     src: "../files/.config/autostart"
-    dest: "/home/{{ user }}/.config/autostart"
+    dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
     mode: '755'
@@ -138,7 +138,7 @@
 - name: copy .local/share/plasma directory
   copy:
     src: "../files/.local/share/plasma"
-    dest: "/home/{{ user }}/.local/share/plasma"
+    dest: "/home/{{ user }}/.local/share"
     owner: "{{ user }}"
     group: users
     mode: '755'
@@ -146,7 +146,7 @@
 - name: copy .local/share/aurorae directory
   copy:
     src: "../files/.local/share/aurorae"
-    dest: "/home/{{ user }}/.local/share/aurorae"
+    dest: "/home/{{ user }}/.local/share"
     owner: "{{ user }}"
     group: users
     mode: '755'
@@ -154,7 +154,7 @@
 - name: copy .local/share/color-schemes directory
   copy:
     src: "../files/.local/share/color-schemes"
-    dest: "/home/{{ user }}/.local/share/color-schemes"
+    dest: "/home/{{ user }}/.local/share"
     owner: "{{ user }}"
     group: users
     mode: '755'
@@ -162,7 +162,7 @@
 - name: copy .local/share/konsole directory
   copy:
     src: "../files/.local/share/konsole"
-    dest: "/home/{{ user }}/.local/share/konsole"
+    dest: "/home/{{ user }}/.local/share"
     owner: "{{ user }}"
     group: users
     mode: '755'
