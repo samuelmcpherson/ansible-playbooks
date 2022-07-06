@@ -79,46 +79,6 @@
     enabled: yes
     scope: user
 
-# - name: add the flathub flatpak repository remote to system
-#   become: yes
-#   become_user: "{{ user }}"
-#   community.general.flatpak_remote:
-#     name: flathub
-#     state: present
-#     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-#     method: user
-
-# - name: add flatpaks to system
-#   become: yes
-#   become_user: "{{ user }}"
-#   community.general.flatpak:
-#     state: present
-#     remote: flathub
-#     method: user
-#     name: "{{ item }}"
-#   loop: "{{ flatpak_apps }}"
-
-- name: remove old network configuration
-  file:
-    path: "/etc/network/interfaces.d"
-    state: absent
-
-- name: create .config directory
-  file:
-    path: "/home/{{ user }}/.config"
-    state: directory
-    owner: "{{ user }}"
-    group: users
-    mode: '755'
-
-- name: copy .config/autostart directory
-  copy:
-    src: "../files/.config/autostart"
-    dest: "/home/{{ user }}/.config"
-    owner: "{{ user }}"
-    group: users
-    mode: '755'
-
 - name: create .local directory
   file:
     path: "/home/{{ user }}/.local"
@@ -173,22 +133,136 @@
     dest: "/usr/share/wallpapers/debian-bg-fin.png"
     mode: '644'
 
+- name: create .config directory
+  file:
+    path: "/home/{{ user }}/.config"
+    state: directory
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
 
-#- name: copy kwinrc config file
-#  copy:
-#    src: "../files/.config"
-#    dest: "/home/{{ user }}/config"
-#    owner: "{{ user }}"
-#    group: users
-#    mode: '600'
+- name: copy .config/gtk-3.0 directory
+  copy:
+    src: "../files/.config/gtk-3.0"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
 
-#- name: copy kwinrc config file
-#  copy:
-#    src: "../files/.config/kwinrc"
-#    dest: "/home/{{ user }}/.config/kwinrc"
-#    owner: "{{ user }}"
-#    group: users
-#    mode: '600'
+- name: copy .config/gtk-4.0 directory
+  copy:
+    src: "../files/.config/gtk-4.0"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .config/xsettingsd directory
+  copy:
+    src: "../files/.config/xsettingsd"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .config/kdeglobals directory
+  copy:
+    src: "../files/.config/kdeglobals"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .config/kglobalshortcutsrc directory
+  copy:
+    src: "../files/.config/kglobalshortcutsrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .config/khotkeysrc directory
+  copy:
+    src: "../files/.config/khotkeysrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .config/kscreenlockerrc directory
+  copy:
+    src: "../files/.config/kscreenlockerrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .config/ksmserverrc directory
+  copy:
+    src: "../files/.config/ksmserverrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .config/kwinrc directory
+  copy:
+    src: "../files/.config/kwinrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .config/Trolltech.conf directory
+  copy:
+    src: "../files/.config/Trolltech.conf"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .config/plasma-org.kde.plasma.desktop-appletsrc directory
+  copy:
+    src: "../files/.config/plasma-org.kde.plasma.desktop-appletsrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .config/autostart directory
+  copy:
+    src: "../files/.config/autostart"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: setup konsolerc config file
+  blockinfile: 
+    state: present
+    create: yes
+    dest: "/home/{{ user }}/.config/konsolerc"
+    block: |
+      
+      [Desktop Entry]
+      DefaultProfile=Profile 1.profile
+
+- name: setup kcminput config file
+  blockinfile:
+    state: present
+    create: yes
+    path: "/home/{{ user }}/.config/kcminputrc"
+    block: |
+      
+      [Libinput]
+      NaturalScroll=true
+      PointerAcceleration=0.400
+      ScrollFactor=5
+      TapToClick=true
+
+      [Mouse]
+      cursorTheme=Oxygen_Blue
+      
 
 - name: pull gebaar gestures repo
   git:
@@ -229,3 +303,27 @@
 
     #echo "Run 'make install' from ~/gebaar-libinput-fork/build on boot"
 
+
+# - name: add the flathub flatpak repository remote to system
+#   become: yes
+#   become_user: "{{ user }}"
+#   community.general.flatpak_remote:
+#     name: flathub
+#     state: present
+#     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+#     method: user
+
+# - name: add flatpaks to system
+#   become: yes
+#   become_user: "{{ user }}"
+#   community.general.flatpak:
+#     state: present
+#     remote: flathub
+#     method: user
+#     name: "{{ item }}"
+#   loop: "{{ flatpak_apps }}"
+
+- name: remove old network configuration
+  file:
+    path: "/etc/network/interfaces.d"
+    state: absent

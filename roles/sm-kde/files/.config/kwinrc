@@ -2,23 +2,19 @@
 update_info=bismuth_new_logger.upd:bismuth-new-logger,kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize,kwin.upd:animation-speed,kwin.upd:desktop-grid-click-behavior,kwin.upd:no-swap-encourage,kwin.upd:make-translucency-effect-disabled-by-default,kwin.upd:remove-flip-switch-effect,kwin.upd:remove-cover-switch-effect,kwin.upd:remove-cubeslide-effect,kwin.upd:remove-xrender-backend,kwin.upd:enable-scale-effect-by-default
 
 [Compositing]
-GLTextureFilter=1
 OpenGLIsUnsafe=false
 
 [Desktops]
-Id_1=22fc19d8-bda5-47ea-82de-af0cb224d86b
-Id_2=a5c6e363-09fa-4057-a093-34e88227cd6d
-Id_3=bf588bfe-eccc-4d40-872d-6027baffff24
-Id_4=0a1cad33-8fec-49c4-875e-0f4bad838158
-Id_5=0b142e40-3935-47dc-b269-1a1c7aead541
+Id_1=b11d2f94-84af-42d4-84ca-3199cc285390
+Id_2=39c11d81-f163-4c32-876d-9de92d6209c9
+Id_3=4487cbb2-4e2f-48b2-9e81-f0ac5e53f83e
+Id_4=5fdeb496-e23a-4a80-a9a3-0157de351e5d
+Id_5=b05e6570-73b1-46ea-b4cd-f7cd4d901eb6
 Number=5
 Rows=1
 
 [Effect-Overview]
 BorderActivate=7
-
-[Effect-PresentWindows]
-BorderActivateAll=9
 
 [KDE]
 AnimationDurationFactor=0.125
@@ -29,11 +25,7 @@ Meta=org.kde.kglobalaccel,/component/kwin,org.kde.kglobalaccel.Component,invokeS
 [Plugins]
 bismuthEnabled=true
 blurEnabled=false
-kwin4_effect_fadingpopupsEnabled=false
-kwin4_effect_morphingpopupsEnabled=false
 overviewEnabled=true
-screenedgeEnabled=false
-slidingpopupsEnabled=false
 zoomEnabled=false
 
 [Script-bismuth]
@@ -44,3 +36,7 @@ newWindowAsMaster=true
 
 [Windows]
 FocusPolicy=FocusFollowsMouse
+
+[org.kde.kdecoration2]
+library=org.kde.kwin.aurorae
+theme=__aurorae__svg__Gently

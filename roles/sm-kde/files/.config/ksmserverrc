@@ -3,3 +3,21 @@ update_info=ksmserver_update_loginMode_value.upd:ksmserver_update_loginMode_valu
 
 [General]
 loginMode=emptySession
+shutdownType=2
+
+[LegacySession: saved at previous logout]
+clientMachine1=localhost
+clientMachine2=localhost
+clientMachine3=localhost
+command1=/usr/bin/conky,--daemonize,--pause=1
+command2=/usr/bin/conky,--daemonize,--pause=1
+command3=/usr/bin/conky,--daemonize,--pause=1
+count=3
+
+[Session: saved at previous logout]
+clientId1=1018114a13d141000165697502600000030840002
+count=1
+program1=pulseaudio
+restartCommand1=
+restartStyleHint1=0
+userId1=oslander
