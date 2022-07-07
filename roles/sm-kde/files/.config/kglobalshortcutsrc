@@ -1,13 +1,47 @@
 [$Version]
 update_info=bismuth_shortcuts_category.upd:bismuth-shortcuts-category
 
-[ActivityManager]
-_k_friendly_name=Activity Manager
-switch-to-activity-b75fa1cb-e4cb-4ac1-a479-166e0b16b144=none,none,Switch to activity "Default"
-
 [KDE Keyboard Layout Switcher]
 Switch to Next Keyboard Layout=Ctrl+Alt+K,Ctrl+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=Keyboard Layout Switcher
+
+[bismuth]
+_k_friendly_name=Window Tiling
+decrease_master_size=none,,Decrease Master Area Size
+decrease_master_win_count=none,Meta+[,Decrease Master Area Window Count
+decrease_window_height=Meta+Ctrl+K,Meta+Ctrl+K,Decrease Window Height
+decrease_window_width=Meta+Ctrl+H,Meta+Ctrl+H,Decrease Window Width
+focus_bottom_window=Meta+J,Meta+J,Focus Bottom Window
+focus_left_window=Meta+H,Meta+H,Focus Left Window
+focus_next_window=none,,Focus Next Window
+focus_prev_window=none,,Focus Previous Window
+focus_right_window=Meta+L,Meta+L,Focus Right Window
+focus_upper_window=Meta+K,Meta+K,Focus Upper Window
+increase_master_size=none,,Increase Master Area Size
+increase_master_win_count=none,Meta+],Increase Master Area Window Count
+increase_window_height=Meta+Ctrl+J,Meta+Ctrl+J,Increase Window Height
+increase_window_width=Meta+Ctrl+L,Meta+Ctrl+L,Increase Window Width
+move_window_to_bottom_pos=Meta+Shift+J,Meta+Shift+J,Move Window Down
+move_window_to_left_pos=Meta+Shift+H,Meta+Shift+H,Move Window Left
+move_window_to_next_pos=none,,Move Window to the Next Position
+move_window_to_prev_pos=none,,Move Window to the Previous Position
+move_window_to_right_pos=Meta+Shift+L,Meta+Shift+L,Move Window Right
+move_window_to_upper_pos=Meta+Shift+K,Meta+Shift+K,Move Window Up
+next_layout=Meta+\\\\,Meta+\\\\,Switch to the Next Layout
+prev_layout=none,Meta+|,Switch to the Previous Layout
+push_window_to_master=Meta+Return,Meta+Return,Push Active Window to Master Area
+rotate=Meta+R,Meta+R,Rotate
+rotate_part=none,Meta+Shift+R,Rotate Part
+rotate_reverse=none,,Rotate (Reverse)
+toggle_float_layout=none,Meta+Shift+F,Toggle Floating Layout
+toggle_monocle_layout=none,Meta+M,Toggle Monocle Layout
+toggle_quarter_layout=none,,Toggle Quarter Layout
+toggle_spiral_layout=none,,Toggle Spiral Layout
+toggle_spread_layout=none,,Toggle Spread Layout
+toggle_stair_layout=none,,Toggle Stair Layout
+toggle_three_column_layout=none,,Toggle Three Column Layout
+toggle_tile_layout=none,Meta+T,Toggle Tile Layout
+toggle_window_floating=Meta+F,Meta+F,Toggle Active Window Floating
 
 [kaccess]
 Toggle Screen Reader On and Off=Meta+Alt+S,Meta+Alt+S,Toggle Screen Reader On and Off
@@ -39,7 +73,7 @@ mute=Volume Mute,Volume Mute,Mute
 
 [ksmserver]
 Halt Without Confirmation=none,,Halt Without Confirmation
-Lock Session=Ctrl+Alt+L\t\tScreensaver,Meta+L\tCtrl+Alt+L\tScreensaver,Lock Session
+Lock Session=Ctrl+Alt+L\tScreensaver,Meta+L\tCtrl+Alt+L\tScreensaver,Lock Session
 Log Out=Ctrl+Alt+Del,Ctrl+Alt+Del,Log Out
 Log Out Without Confirmation=none,,Log Out Without Confirmation
 Reboot Without Confirmation=none,,Reboot Without Confirmation
@@ -121,7 +155,7 @@ Walk Through Windows of Current Application Alternative=none,,Walk Through Windo
 Walk Through Windows of Current Application Alternative (Reverse)=none,,Walk Through Windows of Current Application Alternative (Reverse)
 Window Above Other Windows=none,,Keep Window Above Others
 Window Below Other Windows=none,,Keep Window Below Others
-Window Close=\tAlt+F4,Alt+F4,Close Window
+Window Close=Alt+F4\tMeta+D,Alt+F4,Close Window
 Window Fullscreen=none,,Make Window Fullscreen
 Window Grow Horizontal=none,,Expand Window Horizontally
 Window Grow Vertical=none,,Expand Window Vertically
@@ -247,7 +281,7 @@ activate task manager entry 6=Meta+6,Meta+6,Activate Task Manager Entry 6
 activate task manager entry 7=Meta+7,Meta+7,Activate Task Manager Entry 7
 activate task manager entry 8=Meta+8,Meta+8,Activate Task Manager Entry 8
 activate task manager entry 9=Meta+9,Meta+9,Activate Task Manager Entry 9
-activate widget 3=Alt+F1,none,Activate Application Launcher Widget
+activate widget 24=none,none,Activate Task Manager Widget
 clear-history=none,,Clear Clipboard History
 clipboard_action=Ctrl+Alt+X,Ctrl+Alt+X,Enable Clipboard Actions
 cycleNextAction=none,,Next History Item

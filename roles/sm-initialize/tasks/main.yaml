@@ -134,11 +134,22 @@
     use: systemd
 
 - name: update hosts file
-  lineinfile: 
-    state: present
+  lineinfile:
     dest: /etc/hosts
-    line: "127.0.1.1       {{ hostname }}.{{ ansible_dns.domain }} {{ hostname }}"
-    regexp: "^127.0.1.1"
+    regexp: "\
+      {# Match an IPv4/v6 address at the start #}\
+      ^\\s*[0-9a-f:.]+\
+      {# Match at least one whitespace, and any non-hostname names #}\
+      (\\s+.*)*\\s\
+      {# Match either our fqdn or hostname #}\
+      (({{ ansible_hostname | regex_escape() }}|unconfigured-host).({{ ansible_dns.domain | regex_escape() }}|managenet.lan)|({{ ansible_hostname | regex_escape() }}|unconfigured-host))\
+      (\\s+.*)*\\s\
+      (({{ ansible_hostname | regex_escape() }}|unconfigured-host).({{ ansible_dns.domain | regex_escape() }}|managenet.lan)|({{ ansible_hostname | regex_escape() }}|unconfigured-host))\
+      {# Require there be a word boundary at the end of the name(s). #}\
+      {# This can be any whitespace, or end-of-line. #}\
+      (\\s+.*|\\s*)$"
+    line: "{{ ansible_default_ipv4.address }} {{ hostname }}.{{ ansible_dns.domain }} {{ hostname }}"
+    backup: yes
 
 - name: change root password
   user:
