@@ -84,7 +84,7 @@ ToolBoxButtonState=topcenter
 ToolBoxButtonX=559
 ToolBoxButtonY=30
 
-[Containments][21][Wallpaper][org.kde.image][General]
+[Containments][21][Wallpaper][org.kde.image][General][$i]
 Image=file:///usr/share/wallpapers/debian-bg-fin.png
 SlidePaths=/usr/share/wallpapers
 

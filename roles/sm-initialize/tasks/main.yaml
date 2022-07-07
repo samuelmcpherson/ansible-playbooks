@@ -142,13 +142,13 @@
       {# Match at least one whitespace, and any non-hostname names #}\
       (\\s+.*)*\\s\
       {# Match either our fqdn or hostname #}\
-      (({{ ansible_hostname | regex_escape() }}|unconfigured-host).({{ ansible_dns.domain | regex_escape() }}|managenet.lan)|({{ ansible_hostname | regex_escape() }}|unconfigured-host))\
+      (({{ ansible_hostname | regex_escape() }}|unconfigured-host).({{ ansible_domain | regex_escape() }}|managenet.lan)|({{ ansible_hostname | regex_escape() }}|unconfigured-host))\
       (\\s+.*)*\\s\
-      (({{ ansible_hostname | regex_escape() }}|unconfigured-host).({{ ansible_dns.domain | regex_escape() }}|managenet.lan)|({{ ansible_hostname | regex_escape() }}|unconfigured-host))\
+      (({{ ansible_hostname | regex_escape() }}|unconfigured-host).({{ ansible_domain | regex_escape() }}|managenet.lan)|({{ ansible_hostname | regex_escape() }}|unconfigured-host))\
       {# Require there be a word boundary at the end of the name(s). #}\
       {# This can be any whitespace, or end-of-line. #}\
       (\\s+.*|\\s*)$"
-    line: "{{ ansible_default_ipv4.address }} {{ hostname }}.{{ ansible_dns.domain }} {{ hostname }}"
+    line: "{{ ansible_default_ipv4.address }} {{ hostname }}.{{ ansible_domain }} {{ hostname }}"
     backup: yes
 
 - name: change root password
