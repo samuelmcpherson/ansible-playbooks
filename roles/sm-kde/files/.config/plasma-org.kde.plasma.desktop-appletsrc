@@ -64,6 +64,10 @@ DialogWidth=1920
 [Containments][2][General]
 AppletOrder=24;6;25;7;19
 
+[Containments][21][Wallpaper][org.kde.image][General][$i]
+Image=file:///usr/share/wallpapers/debian-bg-fin.png
+SlidePaths=/usr/share/wallpapers
+
 [Containments][21]
 ItemGeometries-1920x1080=
 ItemGeometriesHorizontal=
@@ -75,6 +79,9 @@ location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
+[Containments][29][Wallpaper][org.kde.image][General]
+Image[$i]=file:///usr/share/wallpapers/debian-bg-fin.png
+
 [Containments][21][ConfigDialog]
 DialogHeight=540
 DialogWidth=720
@@ -83,10 +90,6 @@ DialogWidth=720
 ToolBoxButtonState=topcenter
 ToolBoxButtonX=559
 ToolBoxButtonY=30
-
-[Containments][21][Wallpaper][org.kde.image][General][$i]
-Image=file:///usr/share/wallpapers/debian-bg-fin.png
-SlidePaths=/usr/share/wallpapers
 
 [Containments][26]
 activityId=
