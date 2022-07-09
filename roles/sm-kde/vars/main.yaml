@@ -60,6 +60,17 @@ kde_apps:
       - libinput-tools
       - libinput-dev
       - conky-all
+      - gimp
+      - hugo
+      - texlive-base
+      - texlive-bibtex-extra
+      - texlive-fonts-extra
+      - texlive-latex-base-doc
+      - texlive-latex-base
+      - texlive-latex-extra-doc
+      - texlive-latex-extra
+      - calibre
+
 
 flatpak_apps:
       - app/com.github.tchx84.Flatseal

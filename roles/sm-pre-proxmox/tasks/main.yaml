@@ -17,7 +17,7 @@
     name: bridge-utils
     state: present
 
-- name: Check if  folder is empty before proceeding
+- name: Check if interfaces.d folder is empty before proceeding
   stat:
     path: "/etc/network/interfaces.d"
   register: interfacesdir

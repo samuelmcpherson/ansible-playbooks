@@ -70,6 +70,25 @@
     append: yes
     create_home: no
 
+- name: add the flathub flatpak repository remote to system
+  become: yes
+  become_user: "{{ user }}"
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: add flatpaks to system
+  become: yes
+  become_user: "{{ user }}"
+  community.general.flatpak:
+    state: present
+    remote: flathub
+    method: user
+    name: "{{ item }}"
+  loop: "{{ flatpak_apps }}"
+
 - name: enable profile sync daemon service for main user
   ignore_errors: yes
   become: yes
@@ -253,6 +272,30 @@
     group: users
     mode: '755'
 
+- name: copy .config/gebaar directory
+  copy:
+    src: "../files/.config/gebaar"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .conkyrc2 file
+  copy:
+    src: "../files/.conkyrc2"
+    dest: "/home/{{ user }}"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: copy .conkyrc.j2 template
+  template:
+    src: "../templates/.conkyrc.j2"
+    dest: "/home/{{ user }}"
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
 - name: setup konsolerc config file
   lineinfile: 
     state: present
@@ -275,7 +318,6 @@
     regexp: 'DefaultProfile=Profile 1.profile'
     line: 'DefaultProfile=Profile 1.profile'
       
-
 - name: setup kcminput config file
   lineinfile:
     state: present
@@ -298,36 +340,51 @@
     regexp: 'cursorTheme=Oxygen_Blue'
     line: 'cursorTheme=Oxygen_Blue'
 
-- name: pull gebaar gestures repo
-  git:
-    clone: yes
-    dest: "/home/{{ user }}/gebaar-libinput"
-    repo: https://github.com/NICHOLAS85/gebaar-libinput
-    recursive: yes
-    update: yes
-
-- name: "fix library dependancy for gebaar in cpptoml.h"
+- name: setup flatpak discovery in /etc/zsh/zprofile
   lineinfile:
-    path: "/home/{{ user }}/gebaar-libinput/libs/cpptoml/include/cpptoml.h"
-    insertafter: "^#include"
-    line: "#include <limits>"
     state: present
+    path: "/etc/zsh/zprofile"
+    regexp: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
+    line: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
 
-- name: "fix library dependancy for gebaar in cxxopts.hpp"
-  lineinfile:
-    path: "/home/{{ user }}/gebaar-libinput/libs/cxxopts/include/cxxopts.hpp"
-    insertafter: "^#include"
-    line: "#include <limits>"
-    state: present
+- name: check if gebaard binary exists on system
+  stat:
+    path: "/usr/local/bin/gebaard"
+  register: gebaard_present
 
-- name: create gebaar build directory
-  file:
-    path: "/home/{{ user }}/gebaar-libinput/build"
-    state: directory
-    owner: "{{ user }}"
-    group: users
-    mode: '751'
+- name: pull gebaard repo and make package
+  when: gebaard_present.stat.exists == False
+  block:
+    - name: pull gebaar gestures repo
+      git:
+        clone: yes
+        dest: "/home/{{ user }}/gebaar-libinput"
+        repo: https://github.com/NICHOLAS85/gebaar-libinput
+        recursive: yes
+        update: yes
+        force: yes
 
+    - name: "fix library dependancy for gebaar in cpptoml.h"
+      lineinfile:
+        path: "/home/{{ user }}/gebaar-libinput/libs/cpptoml/include/cpptoml.h"
+        insertafter: "^#include"
+        line: "#include <limits>"
+        state: present
+
+    - name: "fix library dependancy for gebaar in cxxopts.hpp"
+      lineinfile:
+        path: "/home/{{ user }}/gebaar-libinput/libs/cxxopts/include/cxxopts.hpp"
+        insertafter: "^#include"
+        line: "#include <limits>"
+        state: present
+
+    - name: create gebaar build directory
+      file:
+        path: "/home/{{ user }}/gebaar-libinput/build"
+        state: directory
+        owner: "{{ user }}"
+        group: users
+        mode: '751'
 
     #cd /home/$USER/gebaar-libinput-fork/build && cmake .. && make -j$(nproc)
 
@@ -336,26 +393,6 @@
     #cp $CONFIGDIR/home/.config/autostart/gebaard.desktop $TEMPMOUNT/home/$USER/.config/autostart
 
     #echo "Run 'make install' from ~/gebaar-libinput-fork/build on boot"
-
-
-- name: add the flathub flatpak repository remote to system
-  become: yes
-  become_user: "{{ user }}"
-  community.general.flatpak_remote:
-    name: flathub
-    state: present
-    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-    method: user
-
-- name: add flatpaks to system
-  become: yes
-  become_user: "{{ user }}"
-  community.general.flatpak:
-    state: present
-    remote: flathub
-    method: user
-    name: "{{ item }}"
-  loop: "{{ flatpak_apps }}"
 
 - name: remove old network configuration
   file:

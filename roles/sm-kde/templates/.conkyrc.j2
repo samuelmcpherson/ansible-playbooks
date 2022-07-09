@@ -1,3 +1,4 @@
+# {{ ansible_managed }}
 conky.config = {
 	alignment = 'top_right',
 	background = false,
@@ -22,7 +23,7 @@ conky.config = {
 	out_to_console = false,
 	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 	own_window_transparent = false,
-	own_window_type = 'desktop',
+	own_window_type = 'normal',
 	own_window = true,
 	stippled_borders = 2,
 	update_interval = 1,
@@ -32,9 +33,29 @@ conky.config = {
 	xftalpha = 0.8,
 	font = 'Bitstream Vera Sans Mono:size=10',
 
-
 };
 
+
+{% for interface in ansible_interfaces %}
+{% if interface != loopback %}
+iface {{ interface }} inet manual
+
+{% endif %}
+{% endfor %}
+auto vmbr0
+iface vmbr0 inet static
+        address {{ ansible_default_ipv4.address }}/24
+        gateway {{ ansible_default_ipv4.gateway }}
+        bridge-ports {{ ansible_default_ipv4.interface }}
+        bridge-stp off
+        bridge-fd 0
+        #bridge-vlan-aware yes
+        #bridge-vids 2-4094
+
+		ansible_processor_cores": 2,
+   
+
+		
 conky.text = [[
 ${color #0077ff}Uptime:$color $uptime ${color #0077ff} Load:$color $loadavg
 
@@ -44,32 +65,37 @@ Temperature: ${color}${execi 1 sensors | grep "Core 0" | cut -d '(' -f 1 | cut -
 ${color #0077FF}Load:
 ${color}Thread0:$color ${cpu cpu0}% ${color #0077FF}${cpubar 10,51}   ${color}Thread1:$color ${cpu cpu1}% ${color #0077FF}${cpubar 10,51}
 ${color #0077FF}${cpugraph cpu0 39,166 104E8B 0077ff} ${color #0077FF}${cpugraph cpu1 39,166 104E8B 0077ff}
+{% if ansible_processor_cores > 1 %}
 ${color #0077FF}CPU Core1:
 ${color #0077FF}${hr 2}
 Temperature:  ${color}${execi 1 sensors | grep "Core 1" | cut -d '(' -f 1 | cut -d '+' -f 2} ${execi 1000 sensors | grep "Core 1" | cut -d '(' -f 2 | cut -d ',' -f 1}
 Load:
 ${color}Thread2:$color ${cpu cpu2}% ${color #0077FF}${cpubar 10,51}   ${color}Thread3:$color ${cpu cpu3}% ${color #0077FF}${cpubar 10,51}
 ${color #0077FF}${cpugraph cpu2 39,166 104E8B 0077ff} ${color #0077FF}${cpugraph cpu3 39,166 104E8B 0077ff}
+{% endif %}
+{% if ansible_processor_cores > 2 %}
 ${color #0077FF}CPU Core2:
 ${color #0077FF}${hr 2}
 Temperature: ${color}${execi 1 sensors | grep "Core 2" | cut -d '(' -f 1 | cut -d '+' -f 2} ${execi 1000 sensors | grep "Core 2" | cut -d '(' -f 2 | cut -d ',' -f 1}
 ${color #0077FF}Load:
 ${color}Thread4:$color ${cpu cpu4}% ${color #0077FF}${cpubar 10,51}   ${color}Thread5:$color ${cpu cpu5}% ${color #0077FF}${cpubar 10,51}
 ${color #0077FF}${cpugraph cpu4 39,166 104E8B 0077ff} ${color #0077FF}${cpugraph cpu5 39,166 104E8B 0077ff}
+{% endif %}
+{% if ansible_processor_cores > 3 %}
 ${color #0077FF}CPU Core3:
 ${color #0077FF}${hr 2}
 Temperature:  ${color}${execi 1 sensors | grep "Core 3" | cut -d '(' -f 1 | cut -d '+' -f 2} ${execi 1000 sensors | grep "Core 3" | cut -d '(' -f 2 | cut -d ',' -f 1}
 Load:
 ${color}Thread6:$color ${cpu cpu6}% ${color #0077FF}${cpubar 10,51}   ${color}Thread7:$color ${cpu cpu7}% ${color #0077FF}${cpubar 10,51}
 ${color #0077FF}${cpugraph cpu6 39,166 104E8B 0077ff} ${color #0077FF}${cpugraph cpu7 39,166 104E8B 0077ff}
+{% endif %}
 #${color #0077ff}Disk I/O: $color${diskio} $alignr${color #0077ff}${diskiograph 50,270 104E8B 0077ff 750}
 ${color #0077ff}${hr 2}
 ${color #0077ff}ZFS ARC Usage: ${color}${exec arc_summary | grep 'ARC size' | tr -s ' ' | cut -d ' ' -f6,7}${color #0077ff}/${color}${exec arc_summary | grep 'Target size' | tr -s ' ' | cut -d ' ' -f7,8}  ${exec arc_summary | grep 'ARC size' | tr -s ' ' | cut -d ' ' -f4,5 | tr -d ' '}
 ${color #0077ff}RAM Usage:$color $mem${color #0077ff}/${color}$memmax $memperc% ${color #0077ff}${membar 10,70}
 ${memgraph 39,339}
-${color #0077ff}Swap Usage:$color $swap${color #0077ff}/${color}$swapmax $swapperc% ${color #0077ff}${swapbar 10,70}
-${color #0077ff}Net Down:$color ${downspeed NETDEVICE}/s       ${color #0077ff}Net Up:$color ${upspeed NETDEVICE}/s
-${color #0077ff}${downspeedgraph NETDEVICE 39,166 104E8B 0077ff} ${color #0077ff}${upspeedgraph NETDEVICE 39,166 104E8B 0077ff}
+${color #0077ff}Net Down:$color ${downspeed {{ ansible_default_ipv4.interface }}}/s       ${color #0077ff}Net Up:$color ${upspeed {{ ansible_default_ipv4.interface }}}/s
+${color #0077ff}${downspeedgraph {{ ansible_default_ipv4.interface }} 39,166 104E8B 0077ff} ${color #0077ff}${upspeedgraph {{ ansible_default_ipv4.interface }} 39,166 104E8B 0077ff}
 ${color #0077FF}${hr 2}
 ${color #0077ff}Top Processes:
 ${color #0077ff}Name                PID     CPU%   MEM%
