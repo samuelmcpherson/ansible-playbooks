@@ -291,7 +291,7 @@
 - name: copy .conkyrc.j2 template
   template:
     src: "../templates/.conkyrc.j2"
-    dest: "/home/{{ user }}"
+    dest: "/home/{{ user }}/.conkyrc"
     owner: "{{ user }}"
     group: users
     mode: '755'
