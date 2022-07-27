@@ -1,24 +1,23 @@
-[PlasmaViews][Panel 24][Defaults]
+[PlasmaTransientsConfig]
+PreloadWeight=42
+
+[PlasmaViews][Panel 24][Defaults][$i]
 thickness=36
 
-[PlasmaViews][Panel 24][Horizontal1920]
+[PlasmaViews][Panel 24][Horizontal1920][$i]
 thickness=36
 
 [PlasmaViews][Panel 26]
 alignment=132
 panelVisibility=1
 
-[PlasmaViews][Panel 26][Defaults]
-maxLength=865
+[PlasmaViews][Panel 26][Defaults][$i]
+maxLength=949
 minLength=863
 thickness=52
 
-[PlasmaViews][Panel 26][Horizontal1920]
-thickness=36
-
-[PlasmaViews][Panel 26][Vertical1080]
-maxLength=865
-minLength=863
+[PlasmaViews][Panel 26][Horizontal1920][$i]
+maxLength=949
 thickness=52
 
 [Updates]

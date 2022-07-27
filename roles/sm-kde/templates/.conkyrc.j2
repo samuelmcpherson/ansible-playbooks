@@ -38,6 +38,7 @@ conky.config = {
 conky.text = [[
 ${color #0077ff}Uptime:$color $uptime ${color #0077ff} Load:$color $loadavg
 
+{% if ansible_processor_threads_per_core = 2 %}
 ${color #0077FF}CPU Core0:
 ${color #0077FF}${hr 2}
 Temperature: ${color}${execi 1 sensors | grep "Core 0" | cut -d '(' -f 1 | cut -d '+' -f 2} ${execi 1000 sensors | grep "Core 0" | cut -d '(' -f 2 | cut -d ',' -f 1}
@@ -48,7 +49,7 @@ ${color #0077FF}${cpugraph cpu0 39,166 104E8B 0077ff} ${color #0077FF}${cpugraph
 ${color #0077FF}CPU Core1:
 ${color #0077FF}${hr 2}
 Temperature:  ${color}${execi 1 sensors | grep "Core 1" | cut -d '(' -f 1 | cut -d '+' -f 2} ${execi 1000 sensors | grep "Core 1" | cut -d '(' -f 2 | cut -d ',' -f 1}
-Load:
+${color #0077FF}Load:
 ${color}Thread2:$color ${cpu cpu2}% ${color #0077FF}${cpubar 10,51}   ${color}Thread3:$color ${cpu cpu3}% ${color #0077FF}${cpubar 10,51}
 ${color #0077FF}${cpugraph cpu2 39,166 104E8B 0077ff} ${color #0077FF}${cpugraph cpu3 39,166 104E8B 0077ff}
 {% endif %}
@@ -64,9 +65,30 @@ ${color #0077FF}${cpugraph cpu4 39,166 104E8B 0077ff} ${color #0077FF}${cpugraph
 ${color #0077FF}CPU Core3:
 ${color #0077FF}${hr 2}
 Temperature:  ${color}${execi 1 sensors | grep "Core 3" | cut -d '(' -f 1 | cut -d '+' -f 2} ${execi 1000 sensors | grep "Core 3" | cut -d '(' -f 2 | cut -d ',' -f 1}
-Load:
+${color #0077FF}Load:
 ${color}Thread6:$color ${cpu cpu6}% ${color #0077FF}${cpubar 10,51}   ${color}Thread7:$color ${cpu cpu7}% ${color #0077FF}${cpubar 10,51}
 ${color #0077FF}${cpugraph cpu6 39,166 104E8B 0077ff} ${color #0077FF}${cpugraph cpu7 39,166 104E8B 0077ff}
+{% endif %}
+{% endif %}
+{% if ansible_processor_threads_per_core = 1 %}
+${color #0077FF}CPU Core0:
+Temperature: ${color}${execi 1 sensors | grep "Core 0" | cut -d '(' -f 1 | cut -d '+' -f 2} ${execi 1000 sensors | grep "Core 0" | cut -d '(' -f 2 | cut -d ',' -f 1}
+${color}Thread0:$color ${cpu cpu0}% ${color #0077FF}${cpubar 10,51} ${color #0077FF}${cpugraph cpu0 30,166 104E8B 0077ff}
+{% if ansible_processor_cores > 1 %}
+${color #0077FF}CPU Core1:
+Temperature:  ${color}${execi 1 sensors | grep "Core 1" | cut -d '(' -f 1 | cut -d '+' -f 2} ${execi 1000 sensors | grep "Core 1" | cut -d '(' -f 2 | cut -d ',' -f 1}
+${color}Thread1:$color ${cpu cpu1}% ${color #0077FF}${cpubar 10,51} ${color #0077FF}${cpugraph cpu1 30,166 104E8B 0077ff}
+{% endif %}
+{% if ansible_processor_cores > 2 %}
+${color #0077FF}CPU Core2:
+Temperature: ${color}${execi 1 sensors | grep "Core 2" | cut -d '(' -f 1 | cut -d '+' -f 2} ${execi 1000 sensors | grep "Core 2" | cut -d '(' -f 2 | cut -d ',' -f 1}
+${color}Thread2:$color ${cpu cpu2}% ${color #0077FF}${cpubar 10,51} ${color #0077FF}${cpugraph cpu2 30,166 104E8B 0077ff}
+{% endif %}
+{% if ansible_processor_cores > 3 %}
+${color #0077FF}CPU Core3:
+Temperature:  ${color}${execi 1 sensors | grep "Core 3" | cut -d '(' -f 1 | cut -d '+' -f 2} ${execi 1000 sensors | grep "Core 3" | cut -d '(' -f 2 | cut -d ',' -f 1}
+${color}Thread3:$color ${cpu cpu3}% ${color #0077FF}${cpubar 10,51} ${color #0077FF}${cpugraph cpu3 30,166 104E8B 0077ff}
+{% endif %}
 {% endif %}
 #${color #0077ff}Disk I/O: $color${diskio} $alignr${color #0077ff}${diskiograph 50,270 104E8B 0077ff 750}
 ${color #0077ff}${hr 2}
@@ -74,7 +96,7 @@ ${color #0077ff}ZFS ARC Usage: ${color}${exec arc_summary | grep 'ARC size' | tr
 ${color #0077ff}RAM Usage:$color $mem${color #0077ff}/${color}$memmax $memperc% ${color #0077ff}${membar 10,70}
 ${memgraph 39,339}
 ${color #0077ff}Net Down:$color ${downspeed {{ ansible_default_ipv4.interface }}}/s       ${color #0077ff}Net Up:$color ${upspeed {{ ansible_default_ipv4.interface }}}/s
-${color #0077ff}${downspeedgraph {{ ansible_default_ipv4.interface }} 39,166 104E8B 0077ff} ${color #0077ff}${upspeedgraph {{ ansible_default_ipv4.interface }} 39,166 104E8B 0077ff}
+${color #0077ff}${downspeedgraph {{ ansible_default_ipv4.interface }} 35,166 104E8B 0077ff} ${color #0077ff}${upspeedgraph {{ ansible_default_ipv4.interface }} 35,166 104E8B 0077ff}
 ${color #0077FF}${hr 2}
 ${color #0077ff}Top Processes:
 ${color #0077ff}Name                PID     CPU%   MEM%

@@ -29,6 +29,30 @@
         group: users
         recurse: yes
 
+- name: create .local directory
+  file:
+    path: "/home/{{ user }}/.local"
+    state: directory
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: create .local/share directory
+  file:
+    path: "/home/{{ user }}/.local/share"
+    state: directory
+    owner: "{{ user }}"
+    group: users
+    mode: '755'
+
+- name: fix permissions on user home directory
+  file:
+    path: "/home/{{ user }}"
+    state: directory
+    owner: "{{ user }}"
+    group: users
+    recurse: yes
+
 - name: install plasma desktop
   apt:  
     name: 
@@ -70,6 +94,33 @@
     append: yes
     create_home: no
 
+- name: setup package architecture config file
+  lineinfile: 
+    state: present
+    create: yes
+    dest: "/var/lib/dpkg/arch"
+    regexp: "amd64"
+    line: "amd64"
+
+- name: setup architecture for games
+  lineinfile: 
+    state: present
+    create: yes
+    dest: "/var/lib/dpkg/arch"
+    regexp: "i386"
+    line: "i386"
+
+- name: update repositories
+  apt: 
+    update_cache: yes
+    upgrade: safe
+  changed_when: False
+
+- name: install game packages
+  apt:
+    name: "{{ game_apps }}"
+    state: latest
+
 - name: add the flathub flatpak repository remote to system
   become: yes
   become_user: "{{ user }}"
@@ -97,22 +148,6 @@
     name: psd.service
     enabled: yes
     scope: user
-
-- name: create .local directory
-  file:
-    path: "/home/{{ user }}/.local"
-    state: directory
-    owner: "{{ user }}"
-    group: users
-    mode: '755'
-
-- name: create .local/share directory
-  file:
-    path: "/home/{{ user }}/.local/share"
-    state: directory
-    owner: "{{ user }}"
-    group: users
-    mode: '755'
 
 - name: copy .local/share/plasma directory
   copy:
@@ -295,6 +330,17 @@
     owner: "{{ user }}"
     group: users
     mode: '755'
+
+- name: setup conky2 autostart config file
+  lineinfile: 
+    state: present
+    create: yes
+    dest: "/home/{{ user }}/.config/autostart/conky2.desktop"
+    owner: "{{ user }}"
+    group: users
+    mode: '644'
+    regexp: '^Exec='
+    line: "Exec=conky -c /home/{{ user }}/.conkyrc2 --daemonize --pause=1"
 
 - name: setup konsolerc config file
   lineinfile: 

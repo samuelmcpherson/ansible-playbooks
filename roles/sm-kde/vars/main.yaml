@@ -71,6 +71,12 @@ kde_apps:
       - texlive-latex-extra
       - calibre
 
+game_apps:
+      - libglx-mesa0:i386 
+      - mesa-vulkan-drivers:i386 
+      - libgl1-mesa-dri:i386
+      - lutris
+      - steam 
 
 flatpak_apps:
       - app/com.github.tchx84.Flatseal
@@ -84,6 +90,7 @@ flatpak_apps:
       - app/com.axosoft.gitkraken
       - app/com.belmoussaoui.Authenticator
       - app/net.cozic.joplin_desktop
+      - app/net.davidotek.pupgui2
 
 zfs_datasets_flatpak_runtimes:
       - "org.freedesktop.Platform.GL.default"
@@ -100,6 +107,9 @@ zfs_datasets_flatpak_runtimes:
       - "org.freedesktop.Sdk.Locale"
       - "com.github.xournalpp.xournalpp.Locale"
       - "com.belmoussaoui.Authenticator.Locale"
+      - "org.kde.KStyle.Adwaita"
+      - "org.kde.Platform"
+      - "org.kde.Platform.Locale"
 
 zfs_datasets_flatpak_apps:
       - "com.github.tchx84.Flatseal"
@@ -112,6 +122,7 @@ zfs_datasets_flatpak_apps:
       - "com.axosoft.gitkraken"
       - "com.belmoussaoui.Authenticator"
       - "net.cozic.joplin_desktop"
+      - "net.davidotek.pupgui2"
 
 
 
