@@ -38,7 +38,7 @@ conky.config = {
 conky.text = [[
 ${color #0077ff}Uptime:$color $uptime ${color #0077ff} Load:$color $loadavg
 
-{% if ansible_processor_threads_per_core = 2 %}
+{% if ansible_processor_threads_per_core == 2 %}
 ${color #0077FF}CPU Core0:
 ${color #0077FF}${hr 2}
 Temperature: ${color}${execi 1 sensors | grep "Core 0" | cut -d '(' -f 1 | cut -d '+' -f 2} ${execi 1000 sensors | grep "Core 0" | cut -d '(' -f 2 | cut -d ',' -f 1}
@@ -70,7 +70,7 @@ ${color}Thread6:$color ${cpu cpu6}% ${color #0077FF}${cpubar 10,51}   ${color}Th
 ${color #0077FF}${cpugraph cpu6 39,166 104E8B 0077ff} ${color #0077FF}${cpugraph cpu7 39,166 104E8B 0077ff}
 {% endif %}
 {% endif %}
-{% if ansible_processor_threads_per_core = 1 %}
+{% if ansible_processor_threads_per_core == 1 %}
 ${color #0077FF}CPU Core0:
 Temperature: ${color}${execi 1 sensors | grep "Core 0" | cut -d '(' -f 1 | cut -d '+' -f 2} ${execi 1000 sensors | grep "Core 0" | cut -d '(' -f 2 | cut -d ',' -f 1}
 ${color}Thread0:$color ${cpu cpu0}% ${color #0077FF}${cpubar 10,51} ${color #0077FF}${cpugraph cpu0 30,166 104E8B 0077ff}

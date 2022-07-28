@@ -116,6 +116,13 @@
     upgrade: safe
   changed_when: False
 
+- name: accept steam license
+  debconf:
+    name: "steam"
+    question: "steam/question"
+    value: "I AGREE"
+    vtype: "select"
+
 - name: install game packages
   apt:
     name: "{{ game_apps }}"
