@@ -37,7 +37,7 @@
     state: absent
 
 - name: create proxmox datasets
-  when: "{{ zfs_root }}"
+  when: zfs_root|bool == true
   include_tasks: zfs-proxmox-datasets.yaml
 
 - name: remove zfs dkms
