@@ -71,13 +71,15 @@
     update_password: always
     password: "{{ user_passwd |password_hash('sha512') }}"
 
-- name: fix permissions on user home directory
+- name: create directories or fix ownership on user zfs datasets
   file:
-    path: "/home/{{ user }}"
+    path: 
+      - "/home/{{ user }}"
+      - "/home/{{ user }}/.local"
+      - "/home/{{ user }}/.local/share"
     state: directory
     owner: "{{ user }}"
     group: users
-    recurse: yes
 
 - name: Create .ssh directory
   file:

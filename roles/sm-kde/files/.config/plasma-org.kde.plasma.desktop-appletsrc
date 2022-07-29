@@ -222,25 +222,6 @@ DialogWidth=1920
 [Containments][26][General]
 AppletOrder=28;31;32;35;37;36;39;38;41;40;43;47;48;34;42;33;44;30
 
-[Containments][46]
-ItemGeometries-1920x1080=
-ItemGeometriesHorizontal=
-activityId=7ae9a404-d19f-465f-a07f-dc454dece899
-formfactor=0
-immutability=1
-lastScreen=0
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][46][General]
-ToolBoxButtonState=topcenter
-ToolBoxButtonX=559
-ToolBoxButtonY=30
-
-[Containments][46][Wallpaper][org.kde.image][General]
-Image=file:///usr/share/wallpapers/debian-bg-fin.png
-
 [Containments][8]
 activityId=
 formfactor=2
