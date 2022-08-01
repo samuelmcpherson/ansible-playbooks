@@ -101,7 +101,7 @@ zfs_user_datasets:
       - "Games"
       - ".config"
       - ".local/share/plasma"
-      - ".local/share/flatpack"
+      - ".local/share/flatpak"
 
 zfs_flatpak_datasets:
       - ".local/share/flatpak/appstream"

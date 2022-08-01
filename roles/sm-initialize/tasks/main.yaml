@@ -73,13 +73,15 @@
 
 - name: create directories or fix ownership on user zfs datasets
   file:
-    path: 
-      - "/home/{{ user }}"
-      - "/home/{{ user }}/.local"
-      - "/home/{{ user }}/.local/share"
+    path: "/home/{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: users
+    mode: '755'
+  loop: 
+    - "{{ user }}"
+    - "{{ user }}/.local"
+    - "{{ user }}/.local/share"
 
 - name: Create .ssh directory
   file:
