@@ -78,6 +78,10 @@ game_apps:
       - lutris
       - steam 
 
+touchscreen_apps:
+      - maliit-keyboard
+      - qtvirtualkeyboard-plugin
+
 flatpak_apps:
       - app/com.github.tchx84.Flatseal
       - app/com.github.eloston.ungoogledchromium
@@ -104,8 +108,6 @@ zfs_user_datasets:
       - ".local/share/flatpak"
 
 zfs_flatpak_datasets:
-      - ".local/share/flatpak/appstream"
-      - ".local/share/flatpak/repo"
       - ".local/share/flatpak/runtime"  
       - ".local/share/flatpak/app"    
 

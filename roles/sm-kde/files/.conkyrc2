@@ -33,7 +33,7 @@ conky.config = {
 	xftalpha = 0.8,
 	font = 'Bitstream Vera Sans Mono:size=10',
     default_bar_height = 9,
-    default_bar_width = 234,
+    default_bar_width = 250,
 
 };
 
