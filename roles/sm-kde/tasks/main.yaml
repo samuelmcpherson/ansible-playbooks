@@ -372,7 +372,7 @@
 
 - name: copy kcminputrc.j2 template
   template:
-    src: "../templates/.kcminputrc.j2"
+    src: "../templates/kcminputrc.j2"
     dest: "/home/{{ user }}/.config/kcminputrc"
     owner: "{{ user }}"
     group: users
