@@ -13,8 +13,11 @@ Id_5=b05e6570-73b1-46ea-b4cd-f7cd4d901eb6
 Number=5
 Rows=1
 
-[Effect-Overview]
+[Effect-overview]
 BorderActivate=7
+
+[Effect-windowview]
+BorderActivateAll=9
 
 [KDE]
 AnimationDurationFactor=0.125
