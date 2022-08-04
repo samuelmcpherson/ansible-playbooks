@@ -75,7 +75,8 @@ game_apps:
       - libglx-mesa0:i386 
       - mesa-vulkan-drivers:i386 
       - libgl1-mesa-dri:i386
-      - lutris
+      - mesa-vulkan-drivers
+      - wine
       - steam 
 
 touchscreen_apps:
@@ -94,7 +95,6 @@ flatpak_apps:
       - app/com.axosoft.gitkraken
       - app/com.belmoussaoui.Authenticator
       - app/net.cozic.joplin_desktop
-      - app/net.davidotek.pupgui2
 
 zfs_user_datasets:
       - "Documents"
@@ -112,7 +112,6 @@ zfs_flatpak_datasets:
       - ".local/share/flatpak/app"    
 
 zfs_extra_datasets:
-      - "Games/battle.net"
       - "Games/windiams"
       - ".local/share/flatpak/runtime/org.freedesktop.Platform.GL.default"
       - ".local/share/flatpak/runtime/org.freedesktop.Platform.VAAPI.Intel"
@@ -141,7 +140,6 @@ zfs_extra_datasets:
       - ".local/share/flatpak/app/com.axosoft.gitkraken"
       - ".local/share/flatpak/app/com.belmoussaoui.Authenticator"
       - ".local/share/flatpak/app/net.cozic.joplin_desktop"
-      - ".local/share/flatpak/app/net.davidotek.pupgui2"
 
 
 
