@@ -4,13 +4,6 @@
     update_cache: yes
     upgrade: safe
   changed_when: False
-  
-# - name: update hosts file
-#   lineinfile: 
-#     state: present
-#     dest: /etc/hosts
-#     line: "{{ ansible_default_ipv4.address }}       {{ hostname }}.{{ ansible_dns.domain }} {{ hostname }}"
-#     regexp: "^127.0.1.1"
 
 - name: Install bridge-utils
   apt:
@@ -43,8 +36,25 @@
 - name: remove zfs dkms
   ignore_errors: yes
   apt:
-    name:
-      - zfs-dkms
+    name: zfs-dkms
     state: absent
 
+- name: set mailname for postfix
+  debconf: 
+    name: postifx
+    question: postfix/mailname
+    value: "{{ hostname }}.{{ ansible_domain }}"
+    vtype: string
+
+- name: set mailer type for postfix
+  debconf: 
+    name: postfix
+    question: postfix/main_mailer_type
+    value: "Local Only"
+    vtype: string
+
+- name: install postfix
+  apt: 
+    name: postfix
+    state: present
 
