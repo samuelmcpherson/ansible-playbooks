@@ -68,6 +68,11 @@
     name: "{{ kde_apps }}"
     state: latest
 
+- name: install extra desktop apps
+  apt:
+    name: "{{ desktop_apps }}"
+    state: latest
+
 - name: add volian repo gpg key
   apt_key: 
     state: present
@@ -162,7 +167,6 @@
         line: 'InputMethod=qtvirtualkeyboard'
 
 - name: add the flathub flatpak repository remote to system
-  become: yes
   become_user: "{{ user }}"
   community.general.flatpak_remote:
     name: flathub
@@ -171,7 +175,6 @@
     method: user
 
 - name: add flatpaks to system
-  become: yes
   become_user: "{{ user }}"
   community.general.flatpak:
     state: present

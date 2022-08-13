@@ -50,6 +50,8 @@ kde_apps:
       - krfb 
       - ktimer
       - plasma-widgets-addons
+      
+desktop_apps:
       - profile-sync-daemon
       - print-manager
       - cups-browsed
@@ -70,6 +72,8 @@ kde_apps:
       - texlive-latex-extra-doc
       - texlive-latex-extra
       - calibre
+      - youtube-dl
+      - gallery-dl
 
 game_apps:
       - libglx-mesa0:i386 
@@ -113,6 +117,7 @@ zfs_flatpak_datasets:
 
 zfs_extra_datasets:
       - "Games/windiams"
+      - "Games/battleformiddleearth"      
       - ".local/share/flatpak/runtime/org.freedesktop.Platform.GL.default"
       - ".local/share/flatpak/runtime/org.freedesktop.Platform.VAAPI.Intel"
       - ".local/share/flatpak/runtime/org.freedesktop.Platform.openh264"

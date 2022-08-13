@@ -34,7 +34,7 @@
   include_tasks: zfs-proxmox-datasets.yaml
 
 - name: remove zfs dkms
-  ignore_errors: yes
+  ignore_errors: True
   apt:
     name: zfs-dkms
     state: absent
