@@ -16,6 +16,8 @@
       - grub-pc-bin 
       - grub-efi-amd64-bin 
       - mtools
+      - podman
+      - buildah
 
 - name: pull tftp compose stack from pxe-boot repo
   git:
