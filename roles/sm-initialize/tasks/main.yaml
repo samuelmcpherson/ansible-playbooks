@@ -10,6 +10,11 @@
     name: "{{ default_packages }}"
     state: latest
 
+- name: packages to remove
+  apt:  
+    name: "{{ remove_packages }}"
+    state: latest
+
 - name: Copy zsh environment file
   copy:
     src: "../files/zshenv"
@@ -155,6 +160,25 @@
     line: "{{ ansible_default_ipv4.address }} {{ hostname }}.{{ ansible_domain }} {{ hostname }}"
     backup: yes
 
+- name: copy chrony config template
+  template:
+    src: "../templates/chrony.conf.j2"
+    dest: "/etc/chrony/chrony.conf"
+    owner: root
+    group: root
+    mode: '644'
+
+- name: setup chrony keys
+  lineinfile:
+    state: present
+    path: "/etc/chrony/chrony.keys"
+    regexp: "{{ chrony_key }}"
+    line: "{{ chrony_key }}"
+    create: yes
+    owner: root
+    group: root
+    mode:  '640'
+ 
 - name: change root password
   user:
     name: root

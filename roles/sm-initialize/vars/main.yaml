@@ -27,3 +27,10 @@ default_packages:
       - iftop
       - tcpdump
       - smartmontools
+      - chrony
+
+remove_packages:
+      - systemd-timesyncd
+      - ntp
+      - ntpsec
+      - openntpd
