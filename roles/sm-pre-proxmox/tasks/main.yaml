@@ -29,6 +29,13 @@
     path: "/etc/network/interfaces.d"
     state: absent
 
+- name: "reboot for network interface changes"
+  reboot:
+    msg: "Rebooting to apply network interface changes"
+    pre_reboot_delay: 60
+    post_reboot_delay: 60
+  when: interfacesdir.stat.exists
+
 - name: create proxmox datasets
   when: zfs_root|bool == true
   include_tasks: zfs-proxmox-datasets.yaml
