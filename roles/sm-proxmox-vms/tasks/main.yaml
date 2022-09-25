@@ -2,14 +2,14 @@
 
 
 
-# - name: Create new VM with minimal options and given vmid
-#   community.general.proxmox_kvm:
-#     api_user: root@pam
-#     api_password: secret
-#     api_host: helldorado
-#     name: spynal
-#     node: sabrewulf
-#     vmid: 100
+- name: Create new VM with minimal options and given vmid
+  community.general.proxmox_kvm:
+    api_user: root@pam
+    api_password: "{{ root_passwd }}"
+    api_host: "{{ ansible_default_ipv4.address }}"
+    name: spynal
+    node: sabrewulf
+    vmid: 100
 
 #     net:
 #       net0: 'virtio,bridge=vmbr1,rate=200'

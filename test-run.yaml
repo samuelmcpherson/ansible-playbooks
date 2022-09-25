@@ -20,7 +20,7 @@
   become: True
   ignore_unreachable: True
   roles:
-    - role: sm-vm
+    - role: sm-proxmox-vms
 
 - hosts: pxe-boot
   become: True
