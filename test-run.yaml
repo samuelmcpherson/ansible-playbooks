@@ -22,11 +22,4 @@
   ignore_unreachable: True
   roles:
     - role: sm-initialize
-    - role: sm-proxmox-vms
-
-- hosts: pxe-boot
-  become: True
-  ignore_unreachable: True
-  roles:
-    - role: sm-pxe
     
