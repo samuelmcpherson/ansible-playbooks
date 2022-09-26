@@ -10,31 +10,29 @@
     name: bridge-utils
     state: present
 
-- name: Check if interfaces.d folder is empty before proceeding
-  stat:
-    path: "/etc/network/interfaces.d"
-  register: interfacesdir
+- name: check proxmox network configuration has already been setup
+  when: ansible_default_ipv4.interface != 'vmbr0'
+  block:
+    - name: copy /etc/network/interfaces.j2 template
+      template:
+        src: "../templates/interfaces.j2"
+        dest: "/etc/network/interfaces"
+        owner: root
+        group: root
+        mode: '644'
+      when: interfacesdir.stat.exists
 
-- name: copy /etc/network/interfaces.j2 template
-  template:
-    src: "../templates/interfaces.j2"
-    dest: "/etc/network/interfaces"
-    owner: root
-    group: root
-    mode: '644'
-  when: interfacesdir.stat.exists
+    - name: "remove interface configs in /etc/network/interfaces.d"
+      file:
+        path: "/etc/network/interfaces.d"
+        state: absent
 
-- name: "remove interface configs in /etc/network/interfaces.d"
-  file:
-    path: "/etc/network/interfaces.d"
-    state: absent
-
-- name: "reboot for network interface changes"
-  reboot:
-    msg: "Rebooting to apply network interface changes"
-    pre_reboot_delay: 60
-    post_reboot_delay: 60
-  when: interfacesdir.stat.exists
+    - name: "reboot for network interface changes"
+      reboot:
+        msg: "Rebooting to apply network interface changes"
+        pre_reboot_delay: 60
+        post_reboot_delay: 60
+      when: interfacesdir.stat.exists
 
 - name: create proxmox datasets
   when: zfs_root|bool == true
