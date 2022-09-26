@@ -5,9 +5,11 @@
     upgrade: safe
   changed_when: False
 
-- name: Install bridge-utils
+- name: install utilities
   apt:
-    name: bridge-utils
+    name: 
+      - bridge-utils
+      - python3-proxmoxer
     state: present
 
 - name: check proxmox network configuration has already been setup
