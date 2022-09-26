@@ -1,14 +1,11 @@
 ---
-
-
-
 - name: Create new VM with minimal options and given vmid
   community.general.proxmox_kvm:
     api_user: root@pam
     api_password: "{{ root_passwd }}"
     api_host: "{{ ansible_default_ipv4.address }}"
-    name: spynal
-    node: sabrewulf
+    name: test
+    node: "{{ hostname }}"
     vmid: 100
 
 #     net:
