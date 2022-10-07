@@ -5,14 +5,13 @@
   roles:
     - role: sm-initialize
 
-- hosts: corenetworkcluster
+- hosts: corenetcluster
   become: True
   ignore_unreachable: True
   roles:
     - role: sm-pre-proxmox
     - role: lae.proxmox
     - role: sm-post-proxmox
-    - role: sm-proxmox-vms
 
 - name: qemu vm setup
   hosts: 
