@@ -48,7 +48,7 @@
   debconf: 
     name: postifx
     question: postfix/mailname
-    value: "{{ hostname }}.{{ ansible_domain }}"
+    value: "{{ hostname }}.{{ domain }}"
     vtype: string
 
 - name: set mailer type for postfix
