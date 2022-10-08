@@ -8,10 +8,12 @@
     node: "{{ hostname }}"
     vmid: 100
     cores: 4
-    storage: VMs
-    format: qcow2
+#    storage: VMs
+#    format: qcow2
     net:
       net0: 'virtio,bridge=vmbr0'
+    state: stopped 
+    update: yes
 #       net1: 'e1000,bridge=vmbr2'
 #     virtio:
 #       virtio0: 'VMs_LVM:10'
