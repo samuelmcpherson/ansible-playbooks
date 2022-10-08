@@ -7,18 +7,18 @@
     name: test
     node: "{{ hostname }}"
     vmid: 100
-
-#     net:
-#       net0: 'virtio,bridge=vmbr1,rate=200'
+    cores: 4
+    storage: VMs
+    format: qcow2
+    net:
+      net0: 'virtio,bridge=vmbr0'
 #       net1: 'e1000,bridge=vmbr2'
 #     virtio:
 #       virtio0: 'VMs_LVM:10'
 #       virtio1: 'VMs:2,format=qcow2'
 #       virtio2: 'VMs:5,format=raw'
-#     cores: 4
-#     vcpus: 2
-#     storage: VMs
-#     format: qcow2
+#     
+#     
 #     sata:
 #       sata0: 'VMs_LVM:10,format=raw'
 #     bios: ovmf
