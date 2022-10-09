@@ -4,16 +4,40 @@
     api_user: root@pam
     api_password: "{{ root_passwd }}"
     api_host: "{{ ansible_default_ipv4.address }}"
-    name: test
+    name: testing
     node: "{{ hostname }}"
-    vmid: 100
+    vmid: 101
+    cpu: host
     cores: 4
-#    storage: VMs
-#    format: qcow2
+    #storage: local
+    #format: qcow2
+    memory: 2048
+    scsi:
+      scsi0: 'local:10,format'
+    #     virtio:
+#       virtio0: 'VMs_LVM:10'
+#       virtio1: 'VMs:2,format=qcow2'
+#       virtio2: 'VMs:5,format=raw'
+    bios: ovmf
+    efidisk0:
+      storage: local
+      format: qcow2
+      efitype: 4m
+      pre_enrolled_keys: False
     net:
       net0: 'virtio,bridge=vmbr0'
     state: stopped 
-    update: yes
+
+- name: check options
+  community.general.proxmox_kvm:
+    api_user: root@pam
+    api_password: "{{ root_passwd }}"
+    api_host: "{{ ansible_default_ipv4.address }}"
+    name: testing
+    node: "{{ hostname }}"
+    vmid: 101
+    state: present
+
 #       net1: 'e1000,bridge=vmbr2'
 #     virtio:
 #       virtio0: 'VMs_LVM:10'
