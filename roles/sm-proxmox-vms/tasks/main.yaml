@@ -37,6 +37,7 @@
     node: "{{ hostname }}"
     vmid: 101
     state: current
+  register: results
 
 - name: return vm info
   debug:
