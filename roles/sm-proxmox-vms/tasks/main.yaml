@@ -12,10 +12,11 @@
     #storage: local
     #format: qcow2
     memory: 2048
-    scsidisk0:
+    scsihw: virtio-scsi-pci
+    virtio:
       storage: local
       format: qcow2
-      size: 20g
+      size: 20
 
 
 #      scsi0: 'local:10,format'
