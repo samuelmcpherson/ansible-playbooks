@@ -40,7 +40,7 @@
 
 - name: return vm info
   debug:
-    var: results.status
+    msg: "{{ results.status }}"
 
 #       net1: 'e1000,bridge=vmbr2'
 #     virtio:
