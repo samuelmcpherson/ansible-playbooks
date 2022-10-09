@@ -38,6 +38,10 @@
     vmid: 101
     state: current
 
+- name: return vm info
+  debug:
+    var: results.status
+
 #       net1: 'e1000,bridge=vmbr2'
 #     virtio:
 #       virtio0: 'VMs_LVM:10'
