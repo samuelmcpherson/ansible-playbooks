@@ -6,13 +6,18 @@
     api_host: "{{ ansible_default_ipv4.address }}"
     name: testing
     node: "{{ hostname }}"
-    vmid: 101
+    vmid: 102
     cpu: host
     cores: 4
     #storage: local
     #format: qcow2
     memory: 2048
-#    scsi:
+    scsidisk0:
+      storage: local
+      format: qcow2
+      size: 20g
+
+
 #      scsi0: 'local:10,format'
     #     virtio:
 #       virtio0: 'VMs_LVM:10'
@@ -35,7 +40,7 @@
     api_host: "{{ ansible_default_ipv4.address }}"
     name: testing
     node: "{{ hostname }}"
-    vmid: 101
+    vmid: 102
     state: current
   register: results
 
