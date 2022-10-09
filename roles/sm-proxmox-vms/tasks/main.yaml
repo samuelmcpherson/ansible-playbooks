@@ -12,8 +12,8 @@
     #storage: local
     #format: qcow2
     memory: 2048
-    scsi:
-      scsi0: 'local:10,format'
+#    scsi:
+#      scsi0: 'local:10,format'
     #     virtio:
 #       virtio0: 'VMs_LVM:10'
 #       virtio1: 'VMs:2,format=qcow2'
