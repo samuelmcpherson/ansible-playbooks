@@ -41,7 +41,7 @@
 
 - name: return vm info
   debug:
-    msg: "{{ results.status }}"
+    msg: "{{ results }}"
 
 #       net1: 'e1000,bridge=vmbr2'
 #     virtio:
