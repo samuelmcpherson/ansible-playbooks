@@ -13,17 +13,10 @@
     #format: qcow2
     memory: 2048
     scsihw: virtio-scsi-pci
-    virtio:
-      storage: local
-      format: qcow2
-      size: 20
-
-
-#      scsi0: 'local:10,format'
-    #     virtio:
-#       virtio0: 'VMs_LVM:10'
-#       virtio1: 'VMs:2,format=qcow2'
-#       virtio2: 'VMs:5,format=raw'
+    # virtio:
+    #   storage: local
+    #   format: qcow2
+    #   size: 20
     bios: ovmf
     efidisk0:
       storage: local
