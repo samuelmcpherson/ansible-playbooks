@@ -4,9 +4,9 @@
     api_user: root@pam
     api_password: "{{ root_passwd }}"
     api_host: "{{ ansible_default_ipv4.address }}"
-    name: testestest
+    name: fin-test
     node: "{{ hostname }}"
-    vmid: 105
+    vmid: 106
     cpu: host
     cores: 4
     #storage: local
@@ -14,7 +14,7 @@
     memory: 2048
     ostype: l26
     scsihw: virtio-scsi-pci
-    virtio: '{"virtio1":"local:20,format=qcow2"}' 
+    scsi: '{"scsi0":"local:20,format=qcow2,cache=writeback,ssd=1"}' 
     bios: ovmf
     efidisk0:
       storage: local
@@ -24,16 +24,26 @@
     ide: '{"ide0":"local:iso/debian-custom.iso,media=cdrom"}'
     net:
       net0: 'virtio,bridge=vmbr0'
-    state: started 
+    state: present 
+
+- name: Create new VM with minimal options and given vmid
+  community.general.proxmox_kvm:
+    api_user: root@pam
+    api_password: "{{ root_passwd }}"
+    api_host: "{{ ansible_default_ipv4.address }}"
+    name: fin-test
+    node: "{{ hostname }}"
+    vmid: 106
+    state: started
 
 - name: check options
   community.general.proxmox_kvm:
     api_user: root@pam
     api_password: "{{ root_passwd }}"
     api_host: "{{ ansible_default_ipv4.address }}"
-    name: testestest
+    name: fin-test
     node: "{{ hostname }}"
-    vmid: 105
+    vmid: 106
     state: current
   register: results
 
