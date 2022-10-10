@@ -1,18 +1,28 @@
 ---
+- name: create zfs flatpak datasets
+  community.general.zfs:
+    name: "zroot/DATA/var/lib/vz/images/ {{ item.id }}"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/vz/images/ {{ item.id }}"
+  loop: "{{ vms }}"
+
+
 - name: Create new VM with minimal options and given vmid
   community.general.proxmox_kvm:
     api_user: root@pam
     api_password: "{{ root_passwd }}"
     api_host: "{{ ansible_default_ipv4.address }}"
-    name: fin-test
+    name: "{{ item.name }}"
     node: "{{ hostname }}"
-    vmid: 106
+    vmid: "{{ item.id }}"
     cpu: host
-    cores: 4
+    cores: "{{ item.cores }}"
     #storage: local
     #format: qcow2
-    memory: 2048
-    ostype: l26
+    memory: "{{ item.memory }}"
+    ostype: "{{ item.ostype }}"
     scsihw: virtio-scsi-pci
     scsi: '{"scsi0":"local:20,format=qcow2,cache=writeback,ssd=1"}' 
     bios: ovmf
@@ -25,27 +35,30 @@
     net:
       net0: 'virtio,bridge=vmbr0'
     state: present 
+  loop: "{{ vms }}"
 
 - name: Create new VM with minimal options and given vmid
   community.general.proxmox_kvm:
     api_user: root@pam
     api_password: "{{ root_passwd }}"
     api_host: "{{ ansible_default_ipv4.address }}"
-    name: fin-test
+    name: "{{ item.name }}"
     node: "{{ hostname }}"
-    vmid: 106
+    vmid: "{{ item.id }}"
     state: started
+  loop: "{{ vms }}"
 
 - name: check options
   community.general.proxmox_kvm:
     api_user: root@pam
     api_password: "{{ root_passwd }}"
     api_host: "{{ ansible_default_ipv4.address }}"
-    name: fin-test
+    name: "{{ item.name }}"
     node: "{{ hostname }}"
-    vmid: 106
+    vmid: "{{ item.id }}"
     state: current
   register: results
+  loop: "{{ vms }}"
 
 - name: return vm info
   debug:
