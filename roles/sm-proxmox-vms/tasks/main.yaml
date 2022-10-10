@@ -4,14 +4,15 @@
     api_user: root@pam
     api_password: "{{ root_passwd }}"
     api_host: "{{ ansible_default_ipv4.address }}"
-    name: testest
+    name: testestest
     node: "{{ hostname }}"
-    vmid: 104
+    vmid: 105
     cpu: host
     cores: 4
     #storage: local
     #format: qcow2
     memory: 2048
+    ostype: l26
     scsihw: virtio-scsi-pci
     virtio: '{"virtio1":"local:20,format=qcow2"}' 
     bios: ovmf
@@ -23,16 +24,16 @@
     ide: '{"ide0":"local:iso/debian-custom.iso,media=cdrom"}'
     net:
       net0: 'virtio,bridge=vmbr0'
-    state: present 
+    state: started 
 
 - name: check options
   community.general.proxmox_kvm:
     api_user: root@pam
     api_password: "{{ root_passwd }}"
     api_host: "{{ ansible_default_ipv4.address }}"
-    name: testest
+    name: testestest
     node: "{{ hostname }}"
-    vmid: 104
+    vmid: 105
     state: current
   register: results
 
