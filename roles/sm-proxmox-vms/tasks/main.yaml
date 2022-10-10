@@ -13,16 +13,14 @@
     #format: qcow2
     memory: 2048
     scsihw: virtio-scsi-pci
-    # virtio:
-    #   storage: local
-    #   format: qcow2
-    #   size: 20
+    virtio: '{"virtio0":"local:20,format=qcow2"}' 
     bios: ovmf
     efidisk0:
       storage: local
       format: qcow2
       efitype: 4m
       pre_enrolled_keys: False
+    ide: '{"storage": "local/iso,media=cdrom"}'
     net:
       net0: 'virtio,bridge=vmbr0'
     state: present 
