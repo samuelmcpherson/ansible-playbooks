@@ -4,9 +4,9 @@
     api_user: root@pam
     api_password: "{{ root_passwd }}"
     api_host: "{{ ansible_default_ipv4.address }}"
-    name: testing
+    name: testest
     node: "{{ hostname }}"
-    vmid: 102
+    vmid: 104
     cpu: host
     cores: 4
     #storage: local
@@ -32,7 +32,7 @@
     api_host: "{{ ansible_default_ipv4.address }}"
     name: testing
     node: "{{ hostname }}"
-    vmid: 102
+    vmid: 104
     state: current
   register: results
 
