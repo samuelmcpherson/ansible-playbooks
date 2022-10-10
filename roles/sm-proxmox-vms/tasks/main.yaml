@@ -15,12 +15,12 @@
     scsihw: virtio-scsi-pci
     virtio: '{"virtio0":"local:20,format=qcow2"}' 
     bios: ovmf
-    efidisk0:
+    efidisk1:
       storage: local
       format: qcow2
       efitype: 4m
       pre_enrolled_keys: False
-    ide: '{"storage": "local/iso,media=cdrom"}'
+    ide: '{"ide0":"local:iso/debian-custom.iso,media=cdrom"}'
     net:
       net0: 'virtio,bridge=vmbr0'
     state: present 
