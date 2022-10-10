@@ -13,9 +13,9 @@
     #format: qcow2
     memory: 2048
     scsihw: virtio-scsi-pci
-    virtio: '{"virtio0":"local:20,format=qcow2"}' 
+    virtio: '{"virtio1":"local:20,format=qcow2"}' 
     bios: ovmf
-    efidisk1:
+    efidisk0:
       storage: local
       format: qcow2
       efitype: 4m
