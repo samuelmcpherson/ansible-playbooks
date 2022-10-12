@@ -1,5 +1,5 @@
 ---
-- name: create zfs flatpak datasets
+- name: create zfs vm datasets
   community.general.zfs:
     name: "zroot/DATA/var/lib/vz/images/{{ item.id }}"
     state: present
@@ -17,6 +17,8 @@
     name: "{{ item.name }}"
     node: "{{ hostname }}"
     vmid: "{{ item.id }}"
+    acpi: yes
+    agent: yes
     cpu: host
     cores: "{{ item.cores }}"
     #storage: local
@@ -63,6 +65,36 @@
 - name: return vm info
   debug:
     msg: "{{ results }}"
+
+- name: Create new VM with minimal options and given vmid
+  community.general.proxmox_kvm:
+    api_user: root@pam
+    api_password: "{{ root_passwd }}"
+    api_host: "{{ ansible_default_ipv4.address }}"
+    name: "{{ item.name }}"
+    node: "{{ hostname }}"
+    vmid: "{{ item.id }}"
+    acpi: yes
+      #agent: yes
+    cpu: host
+    cores: "{{ item.cores }}"
+    #storage: local
+    #format: qcow2
+    memory: "{{ item.memory }}"
+    ostype: "{{ item.ostype }}"
+    scsihw: virtio-scsi-pci
+    scsi: '{"scsi0":"local:20,format=qcow2,cache=writeback,ssd=1"}' 
+    bios: ovmf
+    efidisk0:
+      storage: local
+      format: qcow2
+      efitype: 4m
+      pre_enrolled_keys: False
+    net:
+      net0: 'virtio,bridge=vmbr0'
+    state: present
+    update: yes
+  loop: "{{ vms }}"
 
 #       net1: 'e1000,bridge=vmbr2'
 #     virtio:
