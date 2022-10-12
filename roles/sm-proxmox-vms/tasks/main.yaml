@@ -1,11 +1,11 @@
 ---
 - name: create zfs flatpak datasets
   community.general.zfs:
-    name: "zroot/DATA/var/lib/vz/images/ {{ item.id }}"
+    name: "zroot/DATA/var/lib/vz/images/{{ item.id }}"
     state: present
     extra_zfs_properties:
       canmount: on
-      mountpoint: "/var/lib/vz/images/ {{ item.id }}"
+      mountpoint: "/var/lib/vz/images/{{ item.id }}"
   loop: "{{ vms }}"
 
 
