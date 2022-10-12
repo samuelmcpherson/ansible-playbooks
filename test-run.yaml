@@ -1,0 +1,12 @@
+---
+- hosts: hp-tablet
+  become: True
+  ignore_unreachable: True
+  roles:
+    - role: sm-initialize
+
+- hosts: hp-tablet
+  become: True
+  ignore_unreachable: True
+  roles:
+    - role: sm-gnome
