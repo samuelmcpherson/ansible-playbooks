@@ -56,11 +56,18 @@
     mode: '755'
   loop: "{{ zfs_extra_datasets }}"
 
-- name: install plasma desktop
+- name: install gnome desktop
   apt:  
     name: 
       - gnome
-      - network-manager  
+      - network-manager 
+      - gnome-shell-extension-prefs
+      - gnome-shell-extension-manager
+      - gnome-shell-extension-caffeine
+      - gnome-shell-extension-tiling-assistant
+      - gnome-shell-extension-gpaste
+      - gnome-shell-extension-panel-osd
+      - gnome-shell-extension-pixelsaver
     state: latest
 
 - name: install extra desktop apps
@@ -112,6 +119,11 @@
   apt:
     name: "{{ game_apps }}"
     state: latest
+
+- name: packages to remove
+  apt:  
+    name: "{{ remove_packages }}"
+    state: absent
 
 - name: touchscreen configurations 
   when: touchscreen|bool == true
