@@ -1,12 +1,8 @@
 ---
-- hosts: hp-tablet
+- hosts: surface-book2
   become: True
   ignore_unreachable: True
   roles:
     - role: sm-initialize
-
-- hosts: hp-tablet
-  become: True
-  ignore_unreachable: True
-  roles:
+    - role: sm-surface
     - role: sm-gnome
