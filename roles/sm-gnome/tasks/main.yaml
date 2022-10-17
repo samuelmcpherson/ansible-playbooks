@@ -66,8 +66,6 @@
       - gnome-shell-extension-caffeine
       - gnome-shell-extension-tiling-assistant
       - gnome-shell-extension-gpaste
-      - gnome-shell-extension-panel-osd
-      - gnome-shell-extension-pixelsaver
     state: latest
 
 - name: install extra desktop apps
