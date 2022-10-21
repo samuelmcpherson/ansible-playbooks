@@ -68,7 +68,8 @@ zfs_flatpak_datasets:
 
 zfs_extra_datasets:
       - "Games/windiams"
-      - "Games/battleformiddleearth"      
+      - "Games/battleformiddleearth"  
+      - ".steam"    
       - ".local/share/flatpak/runtime/org.freedesktop.Platform.GL.default"
       - ".local/share/flatpak/runtime/org.freedesktop.Platform.VAAPI.Intel"
       - ".local/share/flatpak/runtime/org.freedesktop.Platform.openh264"
