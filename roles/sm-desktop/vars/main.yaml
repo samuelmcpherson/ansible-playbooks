@@ -1,0 +1,104 @@
+---
+desktop_apps:
+      - profile-sync-daemon
+      - print-manager
+      - cups-browsed
+      - make
+      - cmake
+      - build-essential
+      - libsystemd-dev
+      - libinput-tools
+      - libinput-dev
+      - conky-all
+      - gimp
+      - hugo
+      - texlive-base
+      - texlive-bibtex-extra
+      - texlive-fonts-extra
+      - texlive-latex-base-doc
+      - texlive-latex-base
+      - texlive-latex-extra-doc
+      - texlive-latex-extra
+      - calibre
+      - youtube-dl
+      - gallery-dl
+      - acpid 
+      - keyutils 
+      - flatpak
+
+game_apps:
+      - libglx-mesa0:i386 
+      - mesa-vulkan-drivers:i386 
+      - libgl1-mesa-dri:i386
+      - mesa-vulkan-drivers
+      - wine
+      - steam 
+
+remove_packages:
+      - firefox-esr
+
+flatpak_apps:
+      - app/com.github.tchx84.Flatseal
+      - app/com.github.Eloston.UngoogledChromium
+      - app/org.mozilla.firefox
+      - app/com.vscodium.codium
+      - app/com.jgraph.drawio.desktop
+      - app/com.discordapp.Discord
+      - app/com.github.xournalpp.xournalpp
+      - app/us.zoom.Zoom
+      - app/com.axosoft.GitKraken
+      - app/com.belmoussaoui.Authenticator
+      - app/net.cozic.joplin_desktop
+      - app/org.telegram.desktop
+      - app/im.riot.Riot
+
+zfs_user_datasets:
+      - "Documents"
+      - "Downloads"
+      - "Music"
+      - "Pictures"
+      - "Videos"
+      - "Games"
+      - ".config"
+      - ".local/share/flatpak"
+
+zfs_flatpak_datasets:
+      - ".local/share/flatpak/runtime"  
+      - ".local/share/flatpak/app"    
+
+zfs_extra_datasets:
+      - "Games/windiams"
+      - "Games/battleformiddleearth"  
+      - ".steam"    
+      - ".local/share/flatpak/runtime/org.freedesktop.Platform.GL.default"
+      - ".local/share/flatpak/runtime/org.freedesktop.Platform.VAAPI.Intel"
+      - ".local/share/flatpak/runtime/org.freedesktop.Platform.openh264"
+      - ".local/share/flatpak/runtime/org.gnome.Platform.Locale"
+      - ".local/share/flatpak/runtime/org.gnome.Platform"
+      - ".local/share/flatpak/runtime/com.github.Eloston.UngoogledChromium.Codecs"
+      - ".local/share/flatpak/runtime/org.freedesktop.Platform.Locale"
+      - ".local/share/flatpak/runtime/org.freedesktop.Platform"
+      - ".local/share/flatpak/runtime/org.freedesktop.Platform.ffmpeg-full"
+      - ".local/share/flatpak/runtime/com.github.Eloston.UngoogledChromium"
+      - ".local/share/flatpak/runtime/org.mozilla.firefox.Locale"
+      - ".local/share/flatpak/runtime/org.mozilla.firefox"
+      - ".local/share/flatpak/runtime/org.freedesktop.Sdk"
+      - ".local/share/flatpak/runtime/org.freedesktop.Sdk.Locale"
+      - ".local/share/flatpak/runtime/com.github.xournalpp.xournalpp.Locale"
+      - ".local/share/flatpak/runtime/com.belmoussaoui.Authenticator.Locale"
+      - ".local/share/flatpak/runtime/com.telegram.desktop.webview"
+      - ".local/share/flatpak/app/com.github.tchx84.Flatseal"
+      - ".local/share/flatpak/app/com.github.Eloston.UngoogledChromium"
+      - ".local/share/flatpak/app/com.vscodium.codium"
+      - ".local/share/flatpak/app/com.jgraph.drawio.desktop"
+      - ".local/share/flatpak/app/com.discordapp.Discord"
+      - ".local/share/flatpak/app/com.github.xournalpp.xournalpp"
+      - ".local/share/flatpak/app/us.zoom.Zoom"
+      - ".local/share/flatpak/app/com.axosoft.GitKraken"
+      - ".local/share/flatpak/app/com.belmoussaoui.Authenticator"
+      - ".local/share/flatpak/app/net.cozic.joplin_desktop"
+      - ".local/share/flatpak/app/com.telegram.desktop"
+      - ".local/share/flatpak/app/im.riot.Riot"
+
+
+

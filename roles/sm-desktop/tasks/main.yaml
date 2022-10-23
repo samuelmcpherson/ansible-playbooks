@@ -56,97 +56,162 @@
     mode: '755'
   loop: "{{ zfs_extra_datasets }}"
 
-- name: install gnome desktop
+- name: install and configure gnome desktop 
+  when: desktop == "gnome"
+  block:
+    - name: install gnome desktop
+      apt:  
+        name: 
+          - gnome
+          - network-manager 
+          - python3-psutil
+          - gnome-shell-extension-prefs
+          - gnome-shell-extension-manager
+          - gnome-shell-extension-caffeine
+          - gnome-shell-extension-tiling-assistant
+          - gnome-shell-extension-gpaste
+        state: latest
+
+    - name: create wallpaper directory
+      file:
+        path: "/home/{{ user }}/Pictures/wallpaper"
+        state: directory
+        owner: "{{ user }}"
+        group: users
+        mode: '750'
+
+    - name: copy wallpaper
+      copy:
+        src: "../files/wallpaper/debian.jpg"
+        dest: "/home/{{ user }}/Pictures/wallpaper/debian.jpg"
+        owner: "{{ user }}"
+        group: users
+        mode: '750'
+
+    - name: 'setup window focus (follows mouse)'
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/wm/preferences/focus-mode"
+        value: "'sloppy'"
+        state: present
+
+    - name: enable tap to click
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/desktop/peripherals/touchpad/tap-to-click"
+        value: "true"
+        state: present
+
+    - name: set sleep timeout to 15 minutes
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/desktop/session/idle-delay"
+        value: "900"
+        state: present
+
+    - name: configure dark theme
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/color-scheme"
+        value: "'prefer-dark'"
+        state: present
+
+    - name: configure terminal dark theme
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/terminal/legacy/theme-variant"
+        value: "'dark'"
+        state: present
+
+    - name: show battery percentage
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/show-battery-percentage"
+        value: "true"
+        state: present
+
+    - name: allow volume over 100
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/desktop/sound/allow-volume-above-100-percent"
+        value: "true"
+        state: present
+
+    - name: set wallpaper
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/desktop/background/picture-uri"
+        value: "'file:///home/{{ user }}/Pictures/wallpaper/debian.jpg'"
+        state: present
+
+    - name: set lockscreen picture
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/desktop/screensaver/picture-uri"
+        value: "'file:///home/{{ user }}/Pictures/wallpaper/debian.jpg'"
+        state: present
+
+    - name: enable on screen keyboard
+      when: touchscreen|bool == true
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/desktop/a11y/applications/screen-keyboard-enabled"
+        value: "true"
+        state: present
+
+- name: install and configure plasma desktop 
+  when: desktop == "kde"
+  block:
+    - name: install plasma desktop
   apt:  
     name: 
-      - gnome
-      - network-manager 
-      - python3-psutil
-      - gnome-shell-extension-prefs
-      - gnome-shell-extension-manager
-      - gnome-shell-extension-caffeine
-      - gnome-shell-extension-tiling-assistant
-      - gnome-shell-extension-gpaste
+      - kde-plasma-desktop
+      - plasma-workspace-wayland  
+    state: latest
+    
+- name: install extra kde apps
+  apt:
+    name: "{{ kde_apps }}"
     state: latest
 
-- name: create wallpaper directory
-  file:
-    path: "/home/{{ user }}/Pictures/wallpaper"
-    state: directory
-    owner: "{{ user }}"
-    group: users
-    mode: '750'
+- name: install extra desktop apps
+  apt:
+    name: "{{ desktop_apps }}"
+    state: latest
 
-- name: copy wallpaper
-  copy:
-    src: "../files/wallpaper/debian.jpg"
-    dest: "/home/{{ user }}/Pictures/wallpaper/debian.jpg"
-    owner: "{{ user }}"
-    group: users
-    mode: '750'
-
-- name: 'setup window focus (follows mouse)'
-  become_user: "{{ user }}"
-  community.general.dconf:
-    key: "/org/gnome/wm/preferences/focus-mode"
-    value: "'sloppy'"
+- name: add volian repo gpg key
+  apt_key: 
     state: present
+    keyring: /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg
+    url: https://deb.volian.org/volian/scar.key
 
-- name: enable tap to click
-  become_user: "{{ user }}"
-  community.general.dconf:
-    key: "/org/gnome/desktop/peripherals/touchpad/tap-to-click"
-    value: "true"
+- name: add volian repo
+  apt_repository: 
     state: present
+    filename: /etc/apt/sources.list.d/volian-archive-scar-unstable
+    repo: "deb http://deb.volian.org/volian/ scar main"
 
-- name: set sleep timeout to 15 minutes
-  become_user: "{{ user }}"
-  community.general.dconf:
-    key: "/org/gnome/desktop/session/idle-delay"
-    value: "900"
-    state: present
+- name: install bismuth
+  apt:  
+    name: 
+      - kwin-bismuth
+    state: latest
 
-- name: configure dark theme
-  become_user: "{{ user }}"
-  community.general.dconf:
-    key: "/org/gnome/desktop/interface/color-scheme"
-    value: "'prefer-dark'"
-    state: present
+- name: install extra desktop apps
+  apt:
+    name: "{{ desktop_apps }}"
+    state: latest
 
-- name: configure terminal dark theme
-  become_user: "{{ user }}"
-  community.general.dconf:
-    key: "/org/gnome/terminal/legacy/theme-variant"
-    value: "'dark'"
-    state: present
-
-- name: show battery percentage
-  become_user: "{{ user }}"
-  community.general.dconf:
-    key: "/org/gnome/desktop/interface/show-battery-percentage"
-    value: "true"
-    state: present
-
-- name: allow volume over 100
-  become_user: "{{ user }}"
-  community.general.dconf:
-    key: "/org/gnome/desktop/sound/allow-volume-above-100-percent"
-    value: "true"
-    state: present
-
-- name: set wallpaper
-  become_user: "{{ user }}"
-  community.general.dconf:
-    key: "/org/gnome/desktop/background/picture-uri"
-    value: "'file:///home/{{ user }}/Pictures/wallpaper/debian.jpg'"
-    state: present
-
-- name: set lockscreen picture
-  become_user: "{{ user }}"
-  community.general.dconf:
-    key: "/org/gnome/desktop/screensaver/picture-uri"
-    value: "'file:///home/{{ user }}/Pictures/wallpaper/debian.jpg'"
-    state: present
+- name: add main user to additional groups 
+  user:
+    name: "{{ user }}"
+    groups: 
+      - audio
+      - video
+      - games 
+      - input
+    append: yes
+    create_home: no
 
 - name: touchscreen configurations 
   when: touchscreen|bool == true
@@ -157,13 +222,6 @@
         path: "/etc/security/pam_env.conf"
         regexp: 'MOZ_USE_XINPUT2 DEFAULT=1'
         line: 'MOZ_USE_XINPUT2 DEFAULT=1'
- 
-    - name: enable on screen keyboard
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/desktop/a11y/applications/screen-keyboard-enabled"
-        value: "true"
-        state: present
 
 - name: create systemd user mode directories
   file:
