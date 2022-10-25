@@ -1,4 +1,70 @@
 ---
+gnome_apps:
+      - gnome
+      - network-manager 
+      - python3-psutil
+      - gnome-shell-extension-prefs
+      - gnome-shell-extension-manager
+      - gnome-shell-extension-caffeine
+      - gnome-shell-extension-tiling-assistant
+      - gnome-shell-extension-gpaste
+      
+kde_apps:
+      - kde-plasma-desktop
+      - plasma-workspace-wayland 
+      - network-manager 
+      - plasma-nm
+      - accountwizard 
+      - acpid 
+      - akonadi-backend-postgresql 
+      - akonadi-server
+      - debconf-kde-data
+      - debconf-kde-helper 
+      - kde-config-fcitx5 
+      - kde-config-fcitx
+      - kdeaccessibility 
+      - kdepim-addons 
+      - kdepim-runtime 
+      - kdepim-themeeditors 
+      - keyutils 
+      - kio-ldap
+      - kmag 
+      - kmousetool 
+      - kmouth 
+      - konq-plugins 
+      - korganizer 
+      - pinentry-qt 
+      - plasma-integration 
+      - plasma-runners-addons 
+      - plasma-wallpapers-addons 
+      - plasma-widgets-addons 
+      - powermgmt-base
+      - qtgstreamer-plugins-qt5
+      - plasma-discover-backend-flatpak 
+      - okular-extra-backends 
+      - libreoffice-plasma 
+      - ark 
+      - gwenview 
+      - kcalc 
+      - kmahjongg 
+      - kmines 
+      - krdc 
+      - ksudoku 
+      - kde-spectacle 
+      - ksystemlog 
+      - kate 
+      - okular 
+      - yakuake 
+      - marble 
+      - kdenlive 
+      - kigo 
+      - kompare 
+      - krfb 
+      - ktimer
+      - plasma-widgets-addons
+      - maliit-keyboard
+      - qtvirtualkeyboard-plugin
+
 desktop_apps:
       - profile-sync-daemon
       - print-manager

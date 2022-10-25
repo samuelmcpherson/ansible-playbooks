@@ -201,7 +201,7 @@
 
 - name: copy .local/share/plasma directory
   copy:
-    src: "../files/.local/share/plasma"
+    src: "../files/plasma/.local/share/plasma"
     dest: "/home/{{ user }}/.local/share"
     owner: "{{ user }}"
     group: users
@@ -209,7 +209,7 @@
 
 - name: copy .local/share/aurorae directory
   copy:
-    src: "../files/.local/share/aurorae"
+    src: "../files/plasma/.local/share/aurorae"
     dest: "/home/{{ user }}/.local/share"
     owner: "{{ user }}"
     group: users
@@ -217,7 +217,7 @@
 
 - name: copy .local/share/color-schemes directory
   copy:
-    src: "../files/.local/share/color-schemes"
+    src: "../files/plasma/.local/share/color-schemes"
     dest: "/home/{{ user }}/.local/share"
     owner: "{{ user }}"
     group: users
@@ -225,7 +225,7 @@
 
 - name: copy .local/share/konsole directory
   copy:
-    src: "../files/.local/share/konsole"
+    src: "../files/plasma/.local/share/konsole"
     dest: "/home/{{ user }}/.local/share"
     owner: "{{ user }}"
     group: users
@@ -247,7 +247,7 @@
 
 - name: copy .config/gtk-3.0 directory
   copy:
-    src: "../files/.config/gtk-3.0"
+    src: "../files/plasma/.config/gtk-3.0"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -255,7 +255,7 @@
 
 - name: copy .config/gtk-4.0 directory
   copy:
-    src: "../files/.config/gtk-4.0"
+    src: "../files/plasma/.config/gtk-4.0"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -263,7 +263,7 @@
 
 - name: copy .config/xsettingsd directory
   copy:
-    src: "../files/.config/xsettingsd"
+    src: "../files/plasma/.config/xsettingsd"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -271,7 +271,7 @@
 
 - name: copy .config/kdeglobals file
   copy:
-    src: "../files/.config/kdeglobals"
+    src: "../files/plasma/.config/kdeglobals"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -279,7 +279,7 @@
 
 - name: copy .config/kglobalshortcutsrc file
   copy:
-    src: "../files/.config/kglobalshortcutsrc"
+    src: "../files/plasma/.config/kglobalshortcutsrc"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -287,7 +287,7 @@
 
 - name: copy .config/khotkeysrc file
   copy:
-    src: "../files/.config/khotkeysrc"
+    src: "../files/plasma/.config/khotkeysrc"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -295,7 +295,7 @@
 
 - name: copy .config/kscreenlockerrc file
   copy:
-    src: "../files/.config/kscreenlockerrc"
+    src: "../files/plasma/.config/kscreenlockerrc"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -303,7 +303,7 @@
 
 - name: copy .config/ksmserverrc file
   copy:
-    src: "../files/.config/ksmserverrc"
+    src: "../files/plasma/.config/ksmserverrc"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -311,7 +311,7 @@
 
 - name: copy .config/kwinrc file
   copy:
-    src: "../files/.config/kwinrc"
+    src: "../files/plasma/.config/kwinrc"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -319,7 +319,7 @@
 
 - name: copy .config/Trolltech.conf file
   copy:
-    src: "../files/.config/Trolltech.conf"
+    src: "../files/plasma/.config/Trolltech.conf"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -327,7 +327,7 @@
 
 - name: copy .config/plasma-org.kde.plasma.desktop-appletsrc file
   copy:
-    src: "../files/.config/plasma-org.kde.plasma.desktop-appletsrc"
+    src: "../files/plasma/.config/plasma-org.kde.plasma.desktop-appletsrc"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -335,7 +335,7 @@
 
 - name: copy .config/plasmarc file
   copy:
-    src: "../files/.config/plasmarc"
+    src: "../files/plasma/.config/plasmarc"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -343,7 +343,7 @@
 
 - name: copy .config/plasmashellrc file
   copy:
-    src: "../files/.config/plasmashellrc"
+    src: "../files/plasma/.config/plasmashellrc"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -351,7 +351,7 @@
 
 - name: copy .config/klaunchrc file
   copy:
-    src: "../files/.config/klaunchrc"
+    src: "../files/plasma/.config/klaunchrc"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
@@ -359,7 +359,7 @@
 
 - name: copy .config/autostart directory
   copy:
-    src: "../files/.config/autostart"
+    src: "../files/plasma/.config/autostart"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
