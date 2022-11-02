@@ -164,6 +164,13 @@
         value: "'file:///home/{{ user }}/Pictures/wallpaper/debian.jpg'"
         state: present
 
+    - name: set wallpaper
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/desktop/background/picture-uri-dark"
+        value: "'file:///home/{{ user }}/Pictures/wallpaper/debian.jpg'"
+        state: present
+
     - name: set lockscreen picture
       become_user: "{{ user }}"
       community.general.dconf:
