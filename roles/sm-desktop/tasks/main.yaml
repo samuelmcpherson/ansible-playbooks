@@ -115,6 +115,27 @@
         value: "'dark'"
         state: present
 
+    - name: configure terminal profile background color 
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/terminal/legacy/profile/background-color"
+        value: "'rgb(0,0,0)'"
+        state: present
+
+    - name: configure terminal profile font color 
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/terminal/legacy/profile/foreground-color"
+        value: "'rgb(255,255,255)'"
+        state: present
+    
+    - name: configure terminal profile colors 
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/terminal/legacy/profile/use-theme-colors"
+        value: "false"
+        state: present
+
     - name: show battery percentage
       become_user: "{{ user }}"
       community.general.dconf:
