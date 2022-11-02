@@ -1,12 +1,16 @@
 ---
-- hosts: hp-tablet
+- hosts: 
+    - hp-tablet
+    - latitude-test
   become: True
   ignore_unreachable: True
   roles:
     - role: sm-initialize
 
-- hosts: hp-tablet
+- hosts:
+    - hp-tablet
+    - latitude-test
   become: True
   ignore_unreachable: True
   roles:
-    - role: sm-gnome
+    - role: sm-desktop
