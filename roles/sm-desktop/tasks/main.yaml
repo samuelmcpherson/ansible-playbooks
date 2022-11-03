@@ -185,17 +185,17 @@
         value: "'file:///home/{{ user }}/Pictures/wallpaper/debian.jpg'"
         state: present
 
+    - name: set pinned applications
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/shell/favorite-apps"
+        value: "['org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.mozilla.firefox.desktop', 'com.github.Eloston.UngoogledChromium.desktop', 'im.riot.Riot.deselegram.desktop.desktop', 'us.zoom.Zoom.desktop', 'com.belmoussaoui.Authenticator.desktop', 'com.vscodium.codium.desktop', 'com.axosoft.GitKraken.desktop', 'com.jgrcalibre-gui.desktop', 'net.cozic.joplin_desktop.desktop', 'com.github.xournalpp.xournalpp.desktop']"
+        state: present
+
     - name: enable extensions
       become_user: "{{ user }}"
       community.general.dconf:
         key: "/org/gnome/shell/enabled-extensions"
-        value: "['org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.mozilla.firefox.desktop', 'com.github.Eloston.UngoogledChromium.desktop', 'im.riot.Riot.deselegram.desktop.desktop', 'us.zoom.Zoom.desktop', 'com.belmoussaoui.Authenticator.desktop', 'com.vscodium.codium.desktop', 'com.axosoft.GitKraken.desktop', 'com.jgrcalibre-gui.desktop', 'net.cozic.joplin_desktop.desktop', 'com.github.xournalpp.xournalpp.desktop']"
-        state: present
-
-    - name: set pinned apps
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/shell/favorite-apps"
         value: "['GPaste@gnome-shell-extensions.gnome.org', 'caffeine@patapon.info', 'launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'tiling-assistant@leleat-on-github', 'window-list@gnome-shell-extensions.gcampax.github.com', 'windowsNavigator@gnome-shell-extensions.gcampax.github.com']"
         state: present
 
