@@ -157,6 +157,13 @@
         value: "false"
         state: present
 
+    - name: limit window switching to one workspace
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/shell/app-switcher/current-workspace-only"
+        value: "true"
+        state: present
+
     - name: set wallpaper
       become_user: "{{ user }}"
       community.general.dconf:
@@ -176,6 +183,20 @@
       community.general.dconf:
         key: "/org/gnome/desktop/screensaver/picture-uri"
         value: "'file:///home/{{ user }}/Pictures/wallpaper/debian.jpg'"
+        state: present
+
+    - name: enable extensions
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/shell/enabled-extensions"
+        value: "['GPaste@gnome-shell-extensions.gnome.org', 'caffeine@patapon.info', 'launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'tiling-assistant@leleat-on-github', 'window-list@gnome-shell-extensions.gcampax.github.com', 'windowsNavigator@gnome-shell-extensions.gcampax.github.com']"
+        state: present
+
+    - name: configure window grouping for window list extension
+      become_user: "{{ user }}"
+      community.general.dconf:
+        key: "/org/gnome/shell/extensions/window-list/grouping-mode"
+        value: "'auto'"
         state: present
 
     - name: enable on screen keyboard
