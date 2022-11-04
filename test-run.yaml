@@ -1,5 +1,7 @@
 ---
 - hosts: 
+    - main-desktop
+    - surface-book2
     - hp-tablet
     - latitude-test
   become: True
@@ -8,6 +10,8 @@
     - role: sm-initialize
 
 - hosts:
+    - main-desktop
+    - surface-book2
     - hp-tablet
     - latitude-test
   become: True
