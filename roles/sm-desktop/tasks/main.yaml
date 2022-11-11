@@ -413,7 +413,10 @@
             create: yes
             path: "/home/{{ user }}/.config/konsolerc"
             regexp: '[Desktop Entry]'
-            line: '[Desktop Entry]'    
+            line: '[Desktop Entry]'  
+            owner: "{{ user }}"
+            group: users
+            mode: '640'  
       
         - lineinfile: 
             state: present
@@ -429,13 +432,17 @@
             create: yes
             path: "/etc/sddm.conf"
             regexp: '[General]'
-            line: '[General]'    
+            line: '[General]' 
+            owner: "{{ user }}"
+            group: users
+            mode: '640'   
       
         - lineinfile: 
             state: present
             path: "/etc/sddm.conf"
             regexp: 'InputMethod=qtvirtualkeyboard'
             line: 'InputMethod=qtvirtualkeyboard'
+
 
 - name: install extra desktop apps
   apt:
