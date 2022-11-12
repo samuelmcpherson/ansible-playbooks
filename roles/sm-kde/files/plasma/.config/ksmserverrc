@@ -1,0 +1,11 @@
+[$Version]
+update_info=ksmserver_update_loginMode_value.upd:ksmserver_update_loginMode_value_default_enum
+
+[General][$i]
+loginMode=emptySession
+shutdownType=2
+
+[LegacySession: saved at previous logout][$i]
+
+[Session: saved at previous logout][$i]
+
