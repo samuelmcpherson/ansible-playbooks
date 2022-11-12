@@ -11,580 +11,237 @@
           mountpoint: "/home/{{ user }}/{{ item }}"
       loop: "{{ zfs_user_datasets }}"
 
-    - name: create zfs flatpak datasets
-      community.general.zfs:
-        name: "zroot/DATA/home/{{ user }}/{{ item }}"
-        state: present
-        extra_zfs_properties:
-          canmount: on
-          mountpoint: "/home/{{ user }}/{{ item }}"
-      loop: "{{ zfs_flatpak_datasets }}"
-
-    - name: create zfs extra datasets
-      community.general.zfs:
-        name: "zroot/DATA/home/{{ user }}/{{ item }}"
-        state: present
-        extra_zfs_properties:
-          canmount: on
-          mountpoint: "/home/{{ user }}/{{ item }}"
-      loop: "{{ zfs_extra_datasets }}"
-
 - name: create directories or fix ownership on user zfs datasets
   file:
     path: "/home/{{ user }}/{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: users
-    mode: '755'
+    mode: '750'
   loop: "{{ zfs_user_datasets }}"
 
-- name: create directories or fix ownership on flatpak zfs datasets
-  file:
-    path: "/home/{{ user }}/{{ item }}"
-    state: directory
-    owner: "{{ user }}"
-    group: users
-    mode: '755'
-  loop: "{{ zfs_flatpak_datasets }}"
-
-- name: create directories or fix ownership on extra zfs datasets
-  file:
-    path: "/home/{{ user }}/{{ item }}"
-    state: directory
-    owner: "{{ user }}"
-    group: users
-    mode: '755'
-  loop: "{{ zfs_extra_datasets }}"
-
-- name: install and configure gnome desktop 
-  when: desktop == "gnome"
-  block:
-    - name: install gnome desktop
-      apt:  
-        name: "{{ gnome_apps }}"
-        state: latest
-
-    - name: create wallpaper directory
-      file:
-        path: "/home/{{ user }}/Pictures/wallpaper"
-        state: directory
-        owner: "{{ user }}"
-        group: users
-        mode: '750'
-
-    - name: copy wallpaper
-      copy:
-        src: "../files/wallpaper/debian.jpg"
-        dest: "/home/{{ user }}/Pictures/wallpaper/debian.jpg"
-        owner: "{{ user }}"
-        group: users
-        mode: '750'
-
-    - name: 'setup window focus (follows mouse)'
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/desktop/wm/preferences/focus-mode"
-        value: "'sloppy'"
-        state: present
-
-    - name: enable tap to click
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/desktop/peripherals/touchpad/tap-to-click"
-        value: "true"
-        state: present
-
-    - name: set sleep timeout to 15 minutes
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/desktop/session/idle-delay"
-        value: "900"
-        state: present
-
-    - name: configure dark theme
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/desktop/interface/color-scheme"
-        value: "'prefer-dark'"
-        state: present
-
-    - name: configure terminal dark theme
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/terminal/legacy/theme-variant"
-        value: "'dark'"
-        state: present
-
-    - name: configure terminal profile background color 
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/background-color"
-        value: "'rgb(0,0,0)'"
-        state: present
-
-    - name: configure terminal profile font color 
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/foreground-color"
-        value: "'rgb(255,255,255)'"
-        state: present
-    
-    - name: configure terminal profile colors 
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/use-theme-colors"
-        value: "false"
-        state: present
-
-    - name: show battery percentage
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/desktop/interface/show-battery-percentage"
-        value: "true"
-        state: present
-
-    - name: allow volume over 100
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/desktop/sound/allow-volume-above-100-percent"
-        value: "true"
-        state: present
-
-    - name: disable automatic brightness
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/settings-daemon/plugins/power/ambient-enabled"
-        value: "false"
-        state: present
-
-    - name: limit window switching to one workspace
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/shell/app-switcher/current-workspace-only"
-        value: "true"
-        state: present
-
-    - name: set wallpaper
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/desktop/background/picture-uri"
-        value: "'file:///home/{{ user }}/Pictures/wallpaper/debian.jpg'"
-        state: present
-
-    - name: set wallpaper
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/desktop/background/picture-uri-dark"
-        value: "'file:///home/{{ user }}/Pictures/wallpaper/debian.jpg'"
-        state: present
-
-    - name: set lockscreen picture
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/desktop/screensaver/picture-uri"
-        value: "'file:///home/{{ user }}/Pictures/wallpaper/debian.jpg'"
-        state: present
-
-    - name: set pinned applications
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/shell/favorite-apps"
-        value: "['org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.mozilla.firefox.desktop', 'com.github.Eloston.UngoogledChromium.desktop', 'im.riot.Riot.desktop', 'com.discordapp.Discord.desktop', 'org.telegram.desktop.desktop', 'us.zoom.Zoom.desktop', 'com.belmoussaoui.Authenticator.desktop', 'com.vscodium.codium.desktop', 'com.axosoft.GitKraken.desktop', 'com.jgraph.drawio.desktop.desktop', 'steam.desktop', 'calibre-gui.desktop', 'net.cozic.joplin_desktop.desktop', 'com.github.xournalpp.xournalpp.desktop']"
-        state: present
-
-    - name: enable extensions
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/shell/enabled-extensions"
-        value: "['GPaste@gnome-shell-extensions.gnome.org', 'caffeine@patapon.info', 'launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'tiling-assistant@leleat-on-github', 'window-list@gnome-shell-extensions.gcampax.github.com', 'windowsNavigator@gnome-shell-extensions.gcampax.github.com']"
-        state: present
-
-    - name: configure window grouping for window list extension
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/shell/extensions/window-list/grouping-mode"
-        value: "'auto'"
-        state: present
-
-    - name: enable on screen keyboard
-      when: touchscreen|bool == true
-      become_user: "{{ user }}"
-      community.general.dconf:
-        key: "/org/gnome/desktop/a11y/applications/screen-keyboard-enabled"
-        value: "true"
-        state: present
-
-- name: install and configure plasma desktop 
-  when: desktop == "kde"
-  block:
-    - name: install plasma desktop
-      apt:  
-        name: "{{ kde_apps }}"
-        state: latest
-
-    - name: add volian repo gpg key
-      apt_key: 
-        state: present
-        keyring: /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg
-        url: https://deb.volian.org/volian/scar.key
-
-    - name: add volian repo
-      apt_repository: 
-        state: present
-        filename: /etc/apt/sources.list.d/volian-archive-scar-unstable
-        repo: "deb http://deb.volian.org/volian/ scar main"
-
-    - name: install bismuth
-      apt:  
-        name: 
-          - kwin-bismuth
-        state: latest
-
-    - name: copy .local/share/plasma directory
-      copy:
-        src: "../files/plasma/.local/share/plasma"
-        dest: "/home/{{ user }}/.local/share"
-        owner: "{{ user }}"
-        group: users
-        mode: '750'
-
-    - name: copy .local/share/aurorae directory
-      copy:
-        src: "../files/plasma/.local/share/aurorae"
-        dest: "/home/{{ user }}/.local/share"
-        owner: "{{ user }}"
-        group: users
-        mode: '750'
-
-    - name: copy .local/share/color-schemes directory
-      copy:
-        src: "../files/plasma/.local/share/color-schemes"
-        dest: "/home/{{ user }}/.local/share"
-        owner: "{{ user }}"
-        group: users
-        mode: '750'
-
-    - name: copy .local/share/konsole directory
-      copy:
-        src: "../files/plasma/.local/share/konsole"
-        dest: "/home/{{ user }}/.local/share"
-        owner: "{{ user }}"
-        group: users
-        mode: '750'
-
-    - name: copy wallpaper
-      copy:
-        src: "../files/wallpaper/contents"
-        dest: "/usr/share/wallpapers/Next"
-        mode: '755'
-
-    - name: copy .config/gtk-3.0 directory
-      copy:
-        src: "../files/plasma/.config/gtk-3.0"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '750'
-
-    - name: copy .config/gtk-4.0 directory
-      copy:
-        src: "../files/plasma/.config/gtk-4.0"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '750'
-
-    - name: copy .config/xsettingsd directory
-      copy:
-        src: "../files/plasma/.config/xsettingsd"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '750'
-
-    - name: copy .config/kdeglobals file
-      copy:
-        src: "../files/plasma/.config/kdeglobals"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'
-
-    - name: copy .config/kglobalshortcutsrc file
-      copy:
-        src: "../files/plasma/.config/kglobalshortcutsrc"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'
-
-    - name: copy .config/khotkeysrc file
-      copy:
-        src: "../files/plasma/.config/khotkeysrc"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'
-
-    - name: copy .config/kscreenlockerrc file
-      copy:
-        src: "../files/plasma/.config/kscreenlockerrc"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'
-
-    - name: copy .config/ksmserverrc file
-      copy:
-        src: "../files/plasma/.config/ksmserverrc"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'
-
-    - name: copy .config/kwinrc file
-      copy:
-        src: "../files/plasma/.config/kwinrc"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'
-
-    - name: copy .config/Trolltech.conf file
-      copy:
-        src: "../files/plasma/.config/Trolltech.conf"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'
-
-    - name: copy .config/plasma-org.kde.plasma.desktop-appletsrc file
-      copy:
-        src: "../files/plasma/.config/plasma-org.kde.plasma.desktop-appletsrc"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'
-
-    - name: copy .config/plasmarc file
-      copy:
-        src: "../files/plasma/.config/plasmarc"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'
-
-    - name: copy .config/plasmashellrc file
-      copy:
-        src: "../files/plasma/.config/plasmashellrc"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'
-
-    - name: copy .config/klaunchrc file
-      copy:
-        src: "../files/plasma/.config/klaunchrc"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'
-
-    - name: copy .config/autostart directory
-      copy:
-        src: "../files/plasma/.config/autostart"
-        dest: "/home/{{ user }}/.config"
-        owner: "{{ user }}"
-        group: users
-        mode: '750'
-
-    - name: copy kcminputrc.j2 template
-      template:
-        src: "../templates/kcminputrc.j2"
-        dest: "/home/{{ user }}/.config/kcminputrc"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'
-
-    - name: "setup terminal profile"
-      block:
-        - lineinfile: 
-            state: present
-            create: yes
-            path: "/home/{{ user }}/.config/konsolerc"
-            regexp: '[Desktop Entry]'
-            line: '[Desktop Entry]'  
-            owner: "{{ user }}"
-            group: users
-            mode: '640'  
-      
-        - lineinfile: 
-            state: present
-            path: "/home/{{ user }}/.config/konsolerc"
-            regexp: 'DefaultProfile=Profile 1.profile'
-            line: 'DefaultProfile=Profile 1.profile'
-
-    - name: "touchscreen configuration: enable sddm lockscreen keyboard"
-      when: touchscreen|bool == true
-      block:
-        - lineinfile: 
-            state: present
-            create: yes
-            path: "/etc/sddm.conf"
-            regexp: '[General]'
-            line: '[General]' 
-            owner: "{{ user }}"
-            group: users
-            mode: '640'   
-      
-        - lineinfile: 
-            state: present
-            path: "/etc/sddm.conf"
-            regexp: 'InputMethod=qtvirtualkeyboard'
-            line: 'InputMethod=qtvirtualkeyboard'
-
-
-- name: install extra desktop apps
-  apt:
-    name: "{{ desktop_apps }}"
+- name: install plasma desktop
+  apt:  
+    name: "{{ kde_apps }}"
     state: latest
 
-- name: add main user to additional groups 
-  user:
-    name: "{{ user }}"
-    groups: 
-      - audio
-      - video
-      - games 
-      - input
-    append: yes
-    create_home: no
+- name: add volian repo gpg key
+  apt_key: 
+    state: present
+    keyring: /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg
+    url: https://deb.volian.org/volian/scar.key
 
-- name: touchscreen configurations 
-  when: touchscreen|bool == true
-  block:
-    - name: configure firefox touch scrolling
-      lineinfile: 
-        state: present
-        path: "/etc/security/pam_env.conf"
-        regexp: 'MOZ_USE_XINPUT2 DEFAULT=1'
-        line: 'MOZ_USE_XINPUT2 DEFAULT=1'
+- name: add volian repo
+  apt_repository: 
+    state: present
+    filename: /etc/apt/sources.list.d/volian-archive-scar-unstable
+    repo: "deb http://deb.volian.org/volian/ scar main"
 
-- name: create systemd user mode directories
-  file:
-    path: "/home/{{ user }}/.config/systemd/user/default.target.wants"
-    state: directory
-    owner: "{{ user }}"
-    group: users
-    mode: '751'
+- name: install bismuth
+  apt:  
+    name: 
+      - kwin-bismuth
+    state: latest
 
-- name: enable profile sync daemon service for main user
-  file:
-    src: /usr/lib/systemd/user/psd.service
-    path: "/home/{{ user }}/.config/systemd/user/default.target.wants/psd.service"
-    state: link
-    owner: "{{ user }}"
-    group: users
-
-- name: copy .config/autostart directory
+- name: copy .local/share/plasma directory
   copy:
-    src: "../files/.config/autostart"
+    src: "../files/plasma/.local/share/plasma"
+    dest: "/home/{{ user }}/.local/share"
+    owner: "{{ user }}"
+    group: users
+    mode: '750'
+
+- name: copy .local/share/aurorae directory
+  copy:
+    src: "../files/plasma/.local/share/aurorae"
+    dest: "/home/{{ user }}/.local/share"
+    owner: "{{ user }}"
+    group: users
+    mode: '750'
+
+- name: copy .local/share/color-schemes directory
+  copy:
+    src: "../files/plasma/.local/share/color-schemes"
+    dest: "/home/{{ user }}/.local/share"
+    owner: "{{ user }}"
+    group: users
+    mode: '750'
+
+- name: copy .local/share/konsole directory
+  copy:
+    src: "../files/plasma/.local/share/konsole"
+    dest: "/home/{{ user }}/.local/share"
+    owner: "{{ user }}"
+    group: users
+    mode: '750'
+
+- name: copy wallpaper
+  copy:
+    src: "../files/wallpaper/contents"
+    dest: "/usr/share/wallpapers/Next"
+    mode: '755'
+
+- name: copy .config/gtk-3.0 directory
+  copy:
+    src: "../files/plasma/.config/gtk-3.0"
     dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
     mode: '750'
 
-- name: copy .conkyrc2 file
+- name: copy .config/gtk-4.0 directory
   copy:
-    src: "../files/.conkyrc2"
-    dest: "/home/{{ user }}"
-    owner: "{{ user }}"
-    group: users
-    mode: '640'
-
-- name: copy .conkyrc.j2 template
-  template:
-    src: "../templates/.conkyrc.j2"
-    dest: "/home/{{ user }}/.conkyrc"
-    owner: "{{ user }}"
-    group: users
-    mode: '640'
-
-- name: setup conky2 autostart config file
-  lineinfile: 
-    state: present
-    create: yes
-    dest: "/home/{{ user }}/.config/autostart/conky2.desktop"
+    src: "../files/plasma/.config/gtk-4.0"
+    dest: "/home/{{ user }}/.config"
     owner: "{{ user }}"
     group: users
     mode: '750'
-    regexp: '^Exec='
-    line: "Exec=conky -c /home/{{ user }}/.conkyrc2 --daemonize --pause=1"
 
-- name: setup package architecture config file
-  lineinfile: 
-    state: present
-    create: yes
-    dest: "/var/lib/dpkg/arch"
-    regexp: "amd64"
-    line: "amd64"
+- name: copy .config/xsettingsd directory
+  copy:
+    src: "../files/plasma/.config/xsettingsd"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '750'
 
-- name: setup architecture for games
-  lineinfile: 
-    state: present
-    create: yes
-    dest: "/var/lib/dpkg/arch"
-    regexp: "i386"
-    line: "i386"
+- name: copy .config/kdeglobals file
+  copy:
+    src: "../files/plasma/.config/kdeglobals"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
 
-- name: update repositories
-  apt: 
-    update_cache: yes
-    upgrade: safe
-  changed_when: False
+- name: copy .config/kglobalshortcutsrc file
+  copy:
+    src: "../files/plasma/.config/kglobalshortcutsrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
 
-- name: accept steam license
-  debconf:
-    name: "steam"
-    question: "steam/question"
-    value: "I AGREE"
-    vtype: "select"
+- name: copy .config/khotkeysrc file
+  copy:
+    src: "../files/plasma/.config/khotkeysrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
 
-- name: install game packages
-  apt:
-    name: "{{ game_apps }}"
-    state: latest
+- name: copy .config/kscreenlockerrc file
+  copy:
+    src: "../files/plasma/.config/kscreenlockerrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
 
-- name: packages to remove
-  apt:  
-    name: "{{ remove_packages }}"
-    state: absent
+- name: copy .config/ksmserverrc file
+  copy:
+    src: "../files/plasma/.config/ksmserverrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
 
-- name: add the flathub flatpak repository remote to system
-  become_user: "{{ user }}"
-  community.general.flatpak_remote:
-    name: flathub
-    state: present
-    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-    method: user
+- name: copy .config/kwinrc file
+  copy:
+    src: "../files/plasma/.config/kwinrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
 
-- name: add flatpaks to system
-  become_user: "{{ user }}"
-  community.general.flatpak:
-    state: present
-    remote: flathub
-    method: user
-    name: "{{ item }}"
-  loop: "{{ flatpak_apps }}"
+- name: copy .config/Trolltech.conf file
+  copy:
+    src: "../files/plasma/.config/Trolltech.conf"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
 
-- name: setup flatpak discovery in /etc/zsh/zprofile
-  lineinfile:
-    state: present
-    path: "/etc/zsh/zprofile"
-    regexp: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
-    line: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
+- name: copy .config/plasma-org.kde.plasma.desktop-appletsrc file
+  copy:
+    src: "../files/plasma/.config/plasma-org.kde.plasma.desktop-appletsrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
 
-- name: remove old network configuration
-  file:
-    path: "/etc/network/interfaces.d"
-    state: absent
+- name: copy .config/plasmarc file
+  copy:
+    src: "../files/plasma/.config/plasmarc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
+
+- name: copy .config/plasmashellrc file
+  copy:
+    src: "../files/plasma/.config/plasmashellrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
+
+- name: copy .config/klaunchrc file
+  copy:
+    src: "../files/plasma/.config/klaunchrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
+
+- name: copy .config/autostart directory
+  copy:
+    src: "../files/plasma/.config/autostart"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '750'
+
+- name: copy kcminputrc.j2 template
+  template:
+    src: "../templates/kcminputrc.j2"
+    dest: "/home/{{ user }}/.config/kcminputrc"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
+
+- name: "setup terminal profile"
+  block:
+    - lineinfile: 
+        state: present
+        create: yes
+        path: "/home/{{ user }}/.config/konsolerc"
+        regexp: '[Desktop Entry]'
+        line: '[Desktop Entry]'  
+        owner: "{{ user }}"
+        group: users
+        mode: '640'  
+  
+    - lineinfile: 
+        state: present
+        path: "/home/{{ user }}/.config/konsolerc"
+        regexp: 'DefaultProfile=Profile 1.profile'
+        line: 'DefaultProfile=Profile 1.profile'
+
+- name: "touchscreen configuration: enable sddm lockscreen keyboard"
+  when: touchscreen|bool == true
+  block:
+    - lineinfile: 
+        state: present
+        create: yes
+        path: "/etc/sddm.conf"
+        regexp: '[General]'
+        line: '[General]' 
+        owner: "{{ user }}"
+        group: users
+        mode: '640'   
+  
+    - lineinfile: 
+        state: present
+        path: "/etc/sddm.conf"
+        regexp: 'InputMethod=qtvirtualkeyboard'
+        line: 'InputMethod=qtvirtualkeyboard'

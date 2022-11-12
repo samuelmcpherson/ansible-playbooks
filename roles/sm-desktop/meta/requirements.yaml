@@ -2,5 +2,3 @@
 dependencies:
   - community.general.flatpak
   - community.general.zfs
-  - community.general.proxmox
-  - community.general.proxmox_kvm

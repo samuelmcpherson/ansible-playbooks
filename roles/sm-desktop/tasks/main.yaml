@@ -35,7 +35,7 @@
     state: directory
     owner: "{{ user }}"
     group: users
-    mode: '755'
+    mode: '750'
   loop: "{{ zfs_user_datasets }}"
 
 - name: create directories or fix ownership on flatpak zfs datasets
@@ -44,7 +44,7 @@
     state: directory
     owner: "{{ user }}"
     group: users
-    mode: '755'
+    mode: '750'
   loop: "{{ zfs_flatpak_datasets }}"
 
 - name: create directories or fix ownership on extra zfs datasets
@@ -53,7 +53,7 @@
     state: directory
     owner: "{{ user }}"
     group: users
-    mode: '755'
+    mode: '750'
   loop: "{{ zfs_extra_datasets }}"
 
 - name: install desktop apps
