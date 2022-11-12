@@ -28,30 +28,13 @@
 
 - name: create zfs user datasets
   when: zfs_root|bool == true
-  block:
-    - name: create zfs dataset for standard user home directory
-      community.general.zfs:
-        name: "zroot/DATA/home/{{ user }}"
-        state: present
-        extra_zfs_properties:
-          canmount: on
-          mountpoint: "/home/{{ user }}"
-
-    - name: create .local dataset
-      community.general.zfs:
-        name: "zroot/DATA/home/{{ user }}/.local"
-        state: present
-        extra_zfs_properties:
-          canmount: on
-          mountpoint: "/home/{{ user }}/.local"
-
-    - name: create .local/share dataset
-      community.general.zfs:
-        name: "zroot/DATA/home/{{ user }}/.local/share"
-        state: present
-        extra_zfs_properties:
-          canmount: on
-          mountpoint: "/home/{{ user }}/.local/share"
+  community.general.zfs:
+    name: "zroot/DATA/{{ item }}"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/{{ item }}"
+  loop: "{{ zfs_user_datasets }}"
 
 - name: create standard user
   user:
@@ -73,15 +56,12 @@
 
 - name: create directories or fix ownership on user zfs datasets
   file:
-    path: "/home/{{ item }}"
+    path: "/{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: users
     mode: '750'
-  loop: 
-    - "{{ user }}"
-    - "{{ user }}/.local"
-    - "{{ user }}/.local/share"
+  loop: "{{ zfs_user_datasets }}"
 
 - name: Create .ssh directory
   file:
