@@ -166,5 +166,4 @@ zfs_extra_datasets:
       - ".local/share/flatpak/app/com.telegram.desktop"
       - ".local/share/flatpak/app/im.riot.Riot"
 
-
-
+vscode_settings_gist: "dabef92f779d3ec58846bdeb18d3adaf"
