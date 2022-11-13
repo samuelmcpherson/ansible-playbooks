@@ -52,5 +52,5 @@ ${color}${execp  zpool list -Ho name,allocated,size,capacity | sed -n '1'p | awk
 ${color #0077FF}ZFS Datasets:
 ${color #0077FF}${hr 2}
 ${exec zfs list -o name | sed -n '1'p}                      ${exec zfs list zroot -o used,available,referenced | sed -n '1'p}
-${color}${exec zfs list -t filesystem -d 3 -o name,used,available,referenced | sed 1d}
+${color}${exec zfs list -t filesystem -d 4 -o name,used,available,referenced | sed 1d}
 ]];

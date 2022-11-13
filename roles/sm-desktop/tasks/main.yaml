@@ -1,33 +1,13 @@
 ---
-- name: create zfs datasets
+- name: create zfs user datasets
   when: zfs_root|bool == true
-  block:
-    - name: create zfs user datasets
-      community.general.zfs:
-        name: "zroot/DATA/{{ item }}"
-        state: present
-        extra_zfs_properties:
-          canmount: on
-          mountpoint: "/{{ item }}"
-      loop: "{{ zfs_user_datasets }}"
-
-    - name: create zfs flatpak datasets
-      community.general.zfs:
-        name: "zroot/DATA/{{ item }}"
-        state: present
-        extra_zfs_properties:
-          canmount: on
-          mountpoint: "/{{ item }}"
-      loop: "{{ zfs_flatpak_datasets }}"
-
-    - name: create zfs extra datasets
-      community.general.zfs:
-        name: "zroot/DATA/{{ item }}"
-        state: present
-        extra_zfs_properties:
-          canmount: on
-          mountpoint: "/{{ item }}"
-      loop: "{{ zfs_extra_datasets }}"
+  community.general.zfs:
+    name: "zroot/DATA/{{ item }}"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/{{ item }}"
+  loop: "{{ zfs_user_datasets }}"
 
 - name: create directories or fix ownership on user zfs datasets
   file:
@@ -38,27 +18,14 @@
     mode: '750'
   loop: "{{ zfs_user_datasets }}"
 
-- name: create directories or fix ownership on flatpak zfs datasets
-  file:
-    path: "/{{ item }}"
-    state: directory
-    owner: "{{ user }}"
-    group: users
-    mode: '750'
-  loop: "{{ zfs_flatpak_datasets }}"
-
-- name: create directories or fix ownership on extra zfs datasets
-  file:
-    path: "/{{ item }}"
-    state: directory
-    owner: "{{ user }}"
-    group: users
-    mode: '750'
-  loop: "{{ zfs_extra_datasets }}"
-
 - name: install desktop apps
   apt:
     name: "{{ desktop_apps }}"
+    state: latest
+
+- name: install extra desktop apps
+  apt:
+    name: "{{ extra_desktop_apps }}"
     state: latest
 
 - name: add main user to additional groups 
@@ -67,20 +34,9 @@
     groups: 
       - audio
       - video
-      
       - games 
     append: yes
     create_home: no
-
-- name: touchscreen configurations 
-  when: touchscreen|bool == true
-  block:
-    - name: configure firefox touch scrolling
-      lineinfile: 
-        state: present
-        path: "/etc/security/pam_env.conf"
-        regexp: 'MOZ_USE_XINPUT2 DEFAULT=1'
-        line: 'MOZ_USE_XINPUT2 DEFAULT=1'
 
 - name: create systemd user mode directories
   file:
@@ -98,13 +54,29 @@
     owner: "{{ user }}"
     group: users
 
-- name: copy .config/autostart directory
-  copy:
-    src: "../files/.config/autostart"
-    dest: "/home/{{ user }}/.config"
+- name: create .config/autostart directory
+  file:
+    path: "/home/{{ user }}/.config/autostart"
+    state: directory
     owner: "{{ user }}"
     group: users
     mode: '750'
+
+- name: copy conky.desktop autostart file
+  copy:
+    src: "../files/.config/autostart/conky.desktop"
+    dest: "/home/{{ user }}/.config/autostart"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
+
+- name: copy conky2.desktop autostart file
+  copy:
+    src: "../files/.config/autostart/conky2.desktop"
+    dest: "/home/{{ user }}/.config/autostart"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
 
 - name: copy .conkyrc2 file
   copy:
@@ -133,70 +105,128 @@
     regexp: '^Exec='
     line: "Exec=conky -c /home/{{ user }}/.conkyrc2 --daemonize --pause=1"
 
-- name: setup package architecture config file
-  lineinfile: 
-    state: present
-    create: yes
-    dest: "/var/lib/dpkg/arch"
-    regexp: "amd64"
-    line: "amd64"
+- name: touchscreen configurations 
+  when: touchscreen|bool == true
+  block:
+    - name: configure firefox touch scrolling
+      lineinfile: 
+        state: present
+        path: "/etc/security/pam_env.conf"
+        regexp: 'MOZ_USE_XINPUT2 DEFAULT=1'
+        line: 'MOZ_USE_XINPUT2 DEFAULT=1'
 
-- name: setup architecture for games
-  lineinfile: 
-    state: present
-    create: yes
-    dest: "/var/lib/dpkg/arch"
-    regexp: "i386"
-    line: "i386"
+- name: setup dev environment
+  block:
+    - name: install game packages
+      apt:
+        name: "{{ dev_apps }}"
+        state: latest
 
-- name: update repositories
-  apt: 
-    update_cache: yes
-    upgrade: safe
-  changed_when: False
+- name: setup games
+  block:
+    - name: create zfs game datasets
+      community.general.zfs:
+        name: "zroot/DATA/{{ item }}"
+        state: present
+        extra_zfs_properties:
+          canmount: on
+          mountpoint: "/{{ item }}"
+      loop: "{{ zfs_game_datasets }}"
 
-- name: accept steam license
-  debconf:
-    name: "steam"
-    question: "steam/question"
-    value: "I AGREE"
-    vtype: "select"
+    - name: create directories or fix ownership on game zfs datasets
+      file:
+        path: "/{{ item }}"
+        state: directory
+        owner: "{{ user }}"
+        group: users
+        mode: '750'
+      loop: "{{ zfs_game_datasets }}"
+    
+    - name: setup package architecture config file
+      lineinfile: 
+        state: present
+        create: yes
+        dest: "/var/lib/dpkg/arch"
+        regexp: "amd64"
+        line: "amd64"
 
-- name: install game packages
-  apt:
-    name: "{{ game_apps }}"
-    state: latest
+    - name: setup architecture for games
+      lineinfile: 
+        state: present
+        create: yes
+        dest: "/var/lib/dpkg/arch"
+        regexp: "i386"
+        line: "i386"
+
+    - name: update repositories
+      apt: 
+        update_cache: yes
+        upgrade: safe
+      changed_when: False
+
+    - name: accept steam license
+      debconf:
+        name: "steam"
+        question: "steam/question"
+        value: "I AGREE"
+        vtype: "select"
+
+    - name: install game packages
+      apt:
+        name: "{{ game_apps }}"
+        state: latest
+
+- name: setup flatpaks
+  block:
+    - name: create zfs flatpak datasets
+      when: zfs_root|bool == true
+      community.general.zfs:
+        name: "zroot/DATA/{{ item }}"
+        state: present
+        extra_zfs_properties:
+          canmount: on
+          mountpoint: "/{{ item }}"
+      loop: "{{ zfs_flatpak_datasets }}"
+
+    - name: create directories or fix ownership on flatpak zfs datasets
+      file:
+        path: "/{{ item }}"
+        state: directory
+        owner: "{{ user }}"
+        group: users
+        mode: '750'
+      loop: "{{ zfs_flatpak_datasets }}"
+
+    - name: install flatpak
+      apt:
+        name: flatpak
+        state: latest
+
+    - name: add the flathub flatpak repository remote to system
+      become_user: "{{ user }}"
+      community.general.flatpak_remote:
+        name: flathub
+        state: present
+        flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+        method: user
+
+    - name: add flatpaks to system
+      become_user: "{{ user }}"
+      community.general.flatpak:
+        state: present
+        remote: flathub
+        method: user
+        name: "{{ item }}"
+      loop: "{{ flatpak_apps }}"
+
+    - name: setup flatpak discovery in /etc/zsh/zprofile
+      lineinfile:
+        state: present
+        path: "/etc/zsh/zprofile"
+        regexp: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
+        line: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
 
 - name: packages to remove
   apt:  
     name: "{{ remove_packages }}"
-    state: absent
-
-- name: add the flathub flatpak repository remote to system
-  become_user: "{{ user }}"
-  community.general.flatpak_remote:
-    name: flathub
-    state: present
-    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-    method: user
-
-- name: add flatpaks to system
-  become_user: "{{ user }}"
-  community.general.flatpak:
-    state: present
-    remote: flathub
-    method: user
-    name: "{{ item }}"
-  loop: "{{ flatpak_apps }}"
-
-- name: setup flatpak discovery in /etc/zsh/zprofile
-  lineinfile:
-    state: present
-    path: "/etc/zsh/zprofile"
-    regexp: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
-    line: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
-
-- name: remove old network configuration
-  file:
-    path: "/etc/network/interfaces.d"
     state: absent

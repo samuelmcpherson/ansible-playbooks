@@ -22,6 +22,11 @@
     name: "{{ gnome_apps }}"
     state: latest
 
+- name: remove old network configuration
+  file:
+    path: "/etc/network/interfaces.d"
+    state: absent
+
 - name: create wallpaper directory
   file:
     path: "/home/{{ user }}/Pictures/wallpaper"

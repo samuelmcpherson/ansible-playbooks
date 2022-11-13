@@ -5,7 +5,8 @@ desktop_apps:
       - cups-browsed
       - conky-all
       - gimp
-      
+
+extra_desktop_apps:      
       - hugo
       - texlive-base
       - texlive-bibtex-extra
@@ -17,15 +18,13 @@ desktop_apps:
       - calibre
       - youtube-dl
       - gallery-dl
-      - flatpak
-
       - acpid 
       - keyutils
 
+dev_apps:
       - make
       - cmake
       - build-essential
-
 
 game_apps:
       - libglx-mesa0:i386 
@@ -57,7 +56,6 @@ zfs_user_datasets:
       - "home/{{ user }}/.config"
       - "home/{{ user }}/.local"
       - "home/{{ user }}/.local/share"
-      - "home/{{ user }}/.local/share/flatpak"
       - "home/{{ user }}/Documents"
       - "home/{{ user }}/Downloads"
       - "home/{{ user }}/Music"
@@ -66,13 +64,9 @@ zfs_user_datasets:
       - "home/{{ user }}/Games"
 
 zfs_flatpak_datasets:
+      - "home/{{ user }}/.local/share/flatpak"
       - "home/{{ user }}/.local/share/flatpak/runtime"  
-      - "home/{{ user }}/.local/share/flatpak/app"    
-
-zfs_extra_datasets:
-      - "home/{{ user }}/Games/windiams"
-      - "home/{{ user }}/Games/battleformiddleearth"  
-      - "home/{{ user }}/.steam"    
+      - "home/{{ user }}/.local/share/flatpak/app"
       - "home/{{ user }}/.local/share/flatpak/runtime/org.freedesktop.Platform.GL.default"
       - "home/{{ user }}/.local/share/flatpak/runtime/org.freedesktop.Platform.VAAPI.Intel"
       - "home/{{ user }}/.local/share/flatpak/runtime/org.freedesktop.Platform.openh264"
@@ -102,5 +96,10 @@ zfs_extra_datasets:
       - "home/{{ user }}/.local/share/flatpak/app/net.cozic.joplin_desktop"
       - "home/{{ user }}/.local/share/flatpak/app/com.telegram.desktop"
       - "home/{{ user }}/.local/share/flatpak/app/im.riot.Riot"
+
+zfs_game_datasets:
+      - "home/{{ user }}/.steam"
+      - "home/{{ user }}/Games/windiams"
+      - "home/{{ user }}/Games/battleformiddleearth"  
 
 vscode_settings_gist: "dabef92f779d3ec58846bdeb18d3adaf"

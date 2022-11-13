@@ -25,6 +25,11 @@
     name: "{{ kde_apps }}"
     state: latest
 
+- name: remove old network configuration
+  file:
+    path: "/etc/network/interfaces.d"
+    state: absent
+
 - name: add volian repo gpg key
   apt_key: 
     state: present
