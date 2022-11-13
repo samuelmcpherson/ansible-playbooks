@@ -115,16 +115,10 @@
         regexp: 'MOZ_USE_XINPUT2 DEFAULT=1'
         line: 'MOZ_USE_XINPUT2 DEFAULT=1'
 
-- name: setup dev environment
-  block:
-    - name: install game packages
-      apt:
-        name: "{{ dev_apps }}"
-        state: latest
-
 - name: setup games
   block:
     - name: create zfs game datasets
+      when: zfs_root|bool == true
       community.general.zfs:
         name: "zroot/DATA/{{ item }}"
         state: present
@@ -225,6 +219,29 @@
         path: "/etc/zsh/zprofile"
         regexp: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
         line: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
+
+- name: setup dev environment
+  block:
+    - name: install development packages
+      apt:
+        name: "{{ dev_apps }}"
+        state: latest
+    
+    - name: create directory path for flatpak configuration file
+      file:
+        path: "/home/{{ user }}/.var/app/com.vscodium.codium/config/VSCodium/User"
+        state: directory
+        owner: "{{ user }}"
+        group: users
+        mode: '750'
+        
+    - name: copy vscode flatpak configuration file
+      copy:
+        src: "../files/vscodium/settings.json"
+        dest: "/home/{{ user }}/.var/app/com.vscodium.codium/config/VSCodium/User"
+        owner: "{{ user }}"
+        group: users
+        mode: '640'
 
 - name: packages to remove
   apt:  
