@@ -1,20 +1,12 @@
 ---
 - hosts: 
     - main-desktop
-    - surface-book2
+    #- surface-book2
     - hp-tablet
     - latitude-test
   become: True
   ignore_unreachable: True
   roles:
     - role: sm-initialize
-
-- hosts:
-    - main-desktop
-    - surface-book2
-    - hp-tablet
-    - latitude-test
-  become: True
-  ignore_unreachable: True
-  roles:
+    - role: sm-kde
     - role: sm-desktop

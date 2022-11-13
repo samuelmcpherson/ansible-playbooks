@@ -174,6 +174,14 @@
     group: users
     mode: '640'
 
+- name: copy .config/kactivitymanagerd-statsrc file
+  copy:
+    src: "../files/.config/kactivitymanagerd-statsrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
+
 - name: copy .config/plasmarc file
   copy:
     src: "../files/.config/plasmarc"
