@@ -6,7 +6,7 @@ desktop_apps:
       - conky-all
       - gimp
 
-extra_desktop_apps:      
+extra_desktop_apps:
       - hugo
       - texlive-base
       - texlive-bibtex-extra
@@ -22,9 +22,16 @@ extra_desktop_apps:
       - keyutils
 
 dev_apps:
+      - git
       - make
       - cmake
+      - dialog
       - build-essential
+      - python3-ipython
+      - zeal
+      
+
+vscode_settings_gist: "dabef92f779d3ec58846bdeb18d3adaf"
 
 game_apps:
       - libglx-mesa0:i386 
@@ -67,39 +74,16 @@ zfs_flatpak_datasets:
       - "home/{{ user }}/.local/share/flatpak"
       - "home/{{ user }}/.local/share/flatpak/runtime"  
       - "home/{{ user }}/.local/share/flatpak/app"
-      - "home/{{ user }}/.local/share/flatpak/runtime/org.freedesktop.Platform.GL.default"
-      - "home/{{ user }}/.local/share/flatpak/runtime/org.freedesktop.Platform.VAAPI.Intel"
-      - "home/{{ user }}/.local/share/flatpak/runtime/org.freedesktop.Platform.openh264"
-      - "home/{{ user }}/.local/share/flatpak/runtime/org.gnome.Platform.Locale"
-      - "home/{{ user }}/.local/share/flatpak/runtime/org.gnome.Platform"
-      - "home/{{ user }}/.local/share/flatpak/runtime/com.github.Eloston.UngoogledChromium.Codecs"
-      - "home/{{ user }}/.local/share/flatpak/runtime/org.freedesktop.Platform.Locale"
-      - "home/{{ user }}/.local/share/flatpak/runtime/org.freedesktop.Platform"
-      - "home/{{ user }}/.local/share/flatpak/runtime/org.freedesktop.Platform.ffmpeg-full"
-      - "home/{{ user }}/.local/share/flatpak/runtime/com.github.Eloston.UngoogledChromium"
-      - "home/{{ user }}/.local/share/flatpak/runtime/org.mozilla.firefox.Locale"
-      - "home/{{ user }}/.local/share/flatpak/runtime/org.mozilla.firefox"
-      - "home/{{ user }}/.local/share/flatpak/runtime/org.freedesktop.Sdk"
-      - "home/{{ user }}/.local/share/flatpak/runtime/org.freedesktop.Sdk.Locale"
-      - "home/{{ user }}/.local/share/flatpak/runtime/com.github.xournalpp.xournalpp.Locale"
-      - "home/{{ user }}/.local/share/flatpak/runtime/com.belmoussaoui.Authenticator.Locale"
-      - "home/{{ user }}/.local/share/flatpak/runtime/com.telegram.desktop.webview"
-      - "home/{{ user }}/.local/share/flatpak/app/com.github.tchx84.Flatseal"
-      - "home/{{ user }}/.local/share/flatpak/app/com.github.Eloston.UngoogledChromium"
-      - "home/{{ user }}/.local/share/flatpak/app/com.vscodium.codium"
-      - "home/{{ user }}/.local/share/flatpak/app/com.jgraph.drawio.desktop"
-      - "home/{{ user }}/.local/share/flatpak/app/com.discordapp.Discord"
-      - "home/{{ user }}/.local/share/flatpak/app/com.github.xournalpp.xournalpp"
-      - "home/{{ user }}/.local/share/flatpak/app/us.zoom.Zoom"
-      - "home/{{ user }}/.local/share/flatpak/app/com.axosoft.GitKraken"
-      - "home/{{ user }}/.local/share/flatpak/app/com.belmoussaoui.Authenticator"
-      - "home/{{ user }}/.local/share/flatpak/app/net.cozic.joplin_desktop"
-      - "home/{{ user }}/.local/share/flatpak/app/com.telegram.desktop"
-      - "home/{{ user }}/.local/share/flatpak/app/im.riot.Riot"
+      - "home/{{ user }}/.var"
+      - "home/{{ user }}/.var/app"
+      - "home/{{ user }}/.var/app/com.vscodium.codium"
+      - "home/{{ user }}/.var/app/org.mozilla.firefox"
+      - "home/{{ user }}/.var/app/com.discordapp.Discord"
+      - "home/{{ user }}/.var/app/com.github.Eloston.UngoogledChromium"
+
 
 zfs_game_datasets:
       - "home/{{ user }}/.steam"
+      - "home/{{ user }}/.share/7DaysToDie"
       - "home/{{ user }}/Games/windiams"
       - "home/{{ user }}/Games/battleformiddleearth"  
-
-vscode_settings_gist: "dabef92f779d3ec58846bdeb18d3adaf"
