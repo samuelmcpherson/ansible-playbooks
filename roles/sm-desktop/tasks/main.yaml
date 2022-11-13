@@ -4,34 +4,34 @@
   block:
     - name: create zfs user datasets
       community.general.zfs:
-        name: "zroot/DATA/home/{{ user }}/{{ item }}"
+        name: "zroot/DATA/{{ item }}"
         state: present
         extra_zfs_properties:
           canmount: on
-          mountpoint: "/home/{{ user }}/{{ item }}"
+          mountpoint: "/{{ item }}"
       loop: "{{ zfs_user_datasets }}"
 
     - name: create zfs flatpak datasets
       community.general.zfs:
-        name: "zroot/DATA/home/{{ user }}/{{ item }}"
+        name: "zroot/DATA/{{ item }}"
         state: present
         extra_zfs_properties:
           canmount: on
-          mountpoint: "/home/{{ user }}/{{ item }}"
+          mountpoint: "/{{ item }}"
       loop: "{{ zfs_flatpak_datasets }}"
 
     - name: create zfs extra datasets
       community.general.zfs:
-        name: "zroot/DATA/home/{{ user }}/{{ item }}"
+        name: "zroot/DATA/{{ item }}"
         state: present
         extra_zfs_properties:
           canmount: on
-          mountpoint: "/home/{{ user }}/{{ item }}"
+          mountpoint: "/{{ item }}"
       loop: "{{ zfs_extra_datasets }}"
 
 - name: create directories or fix ownership on user zfs datasets
   file:
-    path: "/home/{{ user }}/{{ item }}"
+    path: "/{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: users
@@ -40,7 +40,7 @@
 
 - name: create directories or fix ownership on flatpak zfs datasets
   file:
-    path: "/home/{{ user }}/{{ item }}"
+    path: "/{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: users
@@ -49,7 +49,7 @@
 
 - name: create directories or fix ownership on extra zfs datasets
   file:
-    path: "/home/{{ user }}/{{ item }}"
+    path: "/{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: users

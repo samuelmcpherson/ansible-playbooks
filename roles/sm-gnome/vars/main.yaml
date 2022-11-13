@@ -10,10 +10,12 @@ gnome_apps:
       - gnome-shell-extension-gpaste
       
 zfs_user_datasets:
-      - "Documents"
-      - "Downloads"
-      - "Music"
-      - "Pictures"
-      - "Videos"
-      - "Games"
-      - ".config"
+      - "home/{{ user }}/.config"
+      - "home/{{ user }}/.local"
+      - "home/{{ user }}/.local/share"
+      - "home/{{ user }}/Documents"
+      - "home/{{ user }}/Downloads"
+      - "home/{{ user }}/Music"
+      - "home/{{ user }}/Pictures"
+      - "home/{{ user }}/Videos"
+      - "home/{{ user }}/Games"
