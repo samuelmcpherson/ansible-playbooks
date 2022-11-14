@@ -84,6 +84,6 @@ zfs_flatpak_datasets:
 
 zfs_game_datasets:
       - "home/{{ user }}/.steam"
-      - "home/{{ user }}/.share/7DaysToDie"
+      - "home/{{ user }}/.local/share/7DaysToDie"
       - "home/{{ user }}/Games/windiams"
       - "home/{{ user }}/Games/battleformiddleearth"  
