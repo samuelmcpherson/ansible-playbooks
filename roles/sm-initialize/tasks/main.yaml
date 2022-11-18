@@ -84,6 +84,30 @@
     group: users
     mode: '640'    
 
+- name: create systemd user mode directories
+  file:
+    path: "/home/{{ user }}/.config/systemd/user/default.target.wants"
+    state: directory
+    owner: "{{ user }}"
+    group: users
+    mode: '751'
+
+- name: Copy ssh authorized_keys
+  copy:
+    src: "../files/ssh-agent.service"
+    dest: "/home/{{ user }}/.config/systemd/user/"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'  
+
+- name: enable ssh-agent service for main user
+  file:
+    src: "/home/{{ user }}/.config/systemd/user/ssh-agent.service"
+    path: "/home/{{ user }}/.config/systemd/user/default.target.wants/ssh-agent.service"
+    state: link
+    owner: "{{ user }}"
+    group: users
+
 - name: Copy zsh config
   copy:
     src: "../files/.zshrc"
