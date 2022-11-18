@@ -294,6 +294,9 @@ plugin=org.kde.plasma.printmanager
 [Containments][8][Applets][21]
 immutability=1
 plugin=org.kde.plasma.battery
+
+[Containments][8][Applets][21][Configuration][General]
+immutability=1
 showPercentage=true
 
 [Containments][8][Applets][22]
