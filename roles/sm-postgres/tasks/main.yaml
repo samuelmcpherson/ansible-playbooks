@@ -1,0 +1,43 @@
+---
+- name: create postgres dataset
+  when: zfs_root|bool == true
+  community.general.zfs:
+    name: "zroot/DATA/var/lib/postgresql"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/postgresql"
+      recordsize: "16k"
+      atime: off
+
+- name: create postgres version dataset
+  when: zfs_root|bool == true
+  community.general.zfs:
+    name: "zroot/DATA/var/lib/postgresql/15"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/postgresql/15"
+
+- name: default packages
+  apt:  
+    name: postgresql
+    state: latest
+
+# - name: create standard user
+#   user:
+#     name: "{{ user }}"
+#     state: present
+#     shell: /bin/zsh
+#     uid: 1001
+#     group: users
+#     create_home: yes
+#     home: "/home/{{ user }}"
+#     groups: sudo
+#     append: yes
+    
+# - name: change user password
+#   user:
+#     name: "{{ user }}"
+#     update_password: always
+#     password: "{{ user_passwd |password_hash('sha512') }}"
