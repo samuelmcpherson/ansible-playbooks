@@ -180,6 +180,7 @@
         extra_zfs_properties:
           canmount: on
           mountpoint: "/{{ item }}"
+          sync: "disabled"
       loop: "{{ zfs_flatpak_datasets }}"
 
     - name: create directories or fix ownership on flatpak zfs datasets
