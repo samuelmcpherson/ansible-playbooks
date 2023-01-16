@@ -239,12 +239,28 @@ plugin=org.kde.plasma.icon
 localPath=/home/oslander/.local/share/plasma_icons/org.zealdocs.zeal.desktop
 url=file:///usr/share/applications/org.zealdocs.zeal.desktop
 
+[Containments][26][Applets][65]
+immutability=1
+plugin=org.kde.plasma.icon
+
+[Containments][26][Applets][65][Configuration]
+localPath=/home/oslander/.local/share/plasma_icons/md.obsidian.Obsidian.desktop
+url=file:///home/oslander/.local/share/flatpak/exports/share/applications/md.obsidian.Obsidian.desktop
+
+[Containments][26][Applets][66]
+immutability=1
+plugin=org.kde.plasma.icon
+
+[Containments][26][Applets][66][Configuration]
+localPath=/home/oslander/.local/share/plasma_icons/info.mumble.Mumble.desktop
+url=file:///home/oslander/.local/share/flatpak/exports/share/applications/info.mumble.Mumble.desktop
+
 [Containments][26][ConfigDialog]
 DialogHeight=84
 DialogWidth=1920
 
 [Containments][26][General]
-AppletOrder=28;31;32;35;37;50;36;52;39;38;41;53;40;47;43;51;34;42;33;44;30
+AppletOrder=28;31;32;35;37;50;66;36;52;39;38;41;53;40;47;65;43;34;42;33;44;30
 
 [Containments][8]
 activityId=
