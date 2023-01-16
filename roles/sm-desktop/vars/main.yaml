@@ -58,6 +58,9 @@ flatpak_apps:
       - app/net.cozic.joplin_desktop
       - app/org.telegram.desktop
       - app/im.riot.Riot
+      - app/md.obsidian.Obsidian
+      - app/info.mumble.Mumble
+      - app/community.pathofbuilding.PathOfBuilding
 
 zfs_user_datasets:
       - "home/{{ user }}/.config"
