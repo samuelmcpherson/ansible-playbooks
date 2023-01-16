@@ -1,7 +1,0 @@
-[Desktop Entry]
-Categories=System;
-Exec=~/touchscreenextras-master/release/RunTouchscreenExtras.sh
-Name=gebaard
-StartupNotify=false
-Terminal=false
-Type=Application

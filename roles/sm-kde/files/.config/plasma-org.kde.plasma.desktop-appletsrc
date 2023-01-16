@@ -207,20 +207,60 @@ plugin=org.kde.plasma.icon
 localPath=/home/oslander/.local/share/plasma_icons/steam.desktop
 url=file:///usr/share/applications/steam.desktop
 
-[Containments][26][Applets][48]
+[Containments][26][Applets][50]
 immutability=1
 plugin=org.kde.plasma.icon
 
-[Containments][26][Applets][48][Configuration]
-localPath=/home/oslander/.local/share/plasma_icons/net.lutris.Lutris.desktop
-url=file:///usr/share/applications/net.lutris.Lutris.desktop
+[Containments][26][Applets][50][Configuration]
+localPath=/home/oslander/.local/share/plasma_icons/im.riot.Riot.desktop
+url=file:///home/oslander/.local/share/flatpak/exports/share/applications/im.riot.Riot.desktop
+
+[Containments][26][Applets][51]
+immutability=1
+plugin=org.kde.plasma.icon
+
+[Containments][26][Applets][51][Configuration]
+localPath=/home/oslander/.local/share/plasma_icons/net.cozic.joplin_desktop.desktop
+url=file:///home/oslander/.local/share/flatpak/exports/share/applications/net.cozic.joplin_desktop.desktop
+
+[Containments][26][Applets][52]
+immutability=1
+plugin=org.kde.plasma.icon
+
+[Containments][26][Applets][52][Configuration]
+localPath=/home/oslander/.local/share/plasma_icons/org.telegram.desktop.desktop
+url=file:///home/oslander/.local/share/flatpak/exports/share/applications/org.telegram.desktop.desktop
+
+[Containments][26][Applets][53]
+immutability=1
+plugin=org.kde.plasma.icon
+
+[Containments][26][Applets][53][Configuration]
+localPath=/home/oslander/.local/share/plasma_icons/org.zealdocs.zeal.desktop
+url=file:///usr/share/applications/org.zealdocs.zeal.desktop
+
+[Containments][26][Applets][65]
+immutability=1
+plugin=org.kde.plasma.icon
+
+[Containments][26][Applets][65][Configuration]
+localPath=/home/oslander/.local/share/plasma_icons/md.obsidian.Obsidian.desktop
+url=file:///home/oslander/.local/share/flatpak/exports/share/applications/md.obsidian.Obsidian.desktop
+
+[Containments][26][Applets][66]
+immutability=1
+plugin=org.kde.plasma.icon
+
+[Containments][26][Applets][66][Configuration]
+localPath=/home/oslander/.local/share/plasma_icons/info.mumble.Mumble.desktop
+url=file:///home/oslander/.local/share/flatpak/exports/share/applications/info.mumble.Mumble.desktop
 
 [Containments][26][ConfigDialog]
 DialogHeight=84
 DialogWidth=1920
 
 [Containments][26][General]
-AppletOrder=28;31;32;35;37;36;39;38;41;40;43;47;48;34;42;33;44;30
+AppletOrder=28;31;32;35;37;50;66;36;52;39;38;41;53;40;47;65;43;34;42;33;44;30
 
 [Containments][8]
 activityId=
@@ -270,6 +310,10 @@ plugin=org.kde.plasma.printmanager
 [Containments][8][Applets][21]
 immutability=1
 plugin=org.kde.plasma.battery
+
+[Containments][8][Applets][21][Configuration][General]
+immutability=1
+showPercentage=true
 
 [Containments][8][Applets][22]
 immutability=1

@@ -1,0 +1,50 @@
+{
+    "workbench.colorTheme": "Solarized Dark",
+    "editor.tabCompletion": "on",
+    "editor.wordWrap": "on",
+    "editor.minimap.autohide": true,
+    "editor.quickSuggestions": {
+        "comments": "on",
+        "strings": "on"
+    },
+    "workbench.preferredDarkColorTheme": "Solarized Dark",
+    "cmake.environment": {
+        "PATH": "~/kde/usr/bin:${env:PATH}",
+        "LD_LIBRARY_PATH": "~/kde/usr/lib/x86_64-linux-gnu:${env:LD_LIBRARY_PATH}",
+        "XDG_DATA_DIRS": "~/kde/usr/share:${env:XDG_DATA_DIRS}",
+        "XDG_CONFIG_DIRS": "~/kde/usr/etc/xdg:${env:XDG_CONFIG_DIRS}",
+        "QT_PLUGIN_PATH": "~/kde/usr/lib/plugins:${env:QT_PLUGIN_PATH}",
+        "QML2_IMPORT_PATH": "~/kde/usr/lib/qml:${env:QML2_IMPORT_PATH}",
+        "QT_QUICK_CONTROLS_STYLE_PATH": "~/kde/usr/lib/qml/QtQuick/Controls.2/:${env:QT_QUICK_CONTROLS_STYLE_PATH}",
+    },
+    "cmake.generator": "Unix Makefiles",
+    "cmake.installPrefix": "~/kde/usr",
+    "git.autoStash": true,
+    "git.autofetch": true,
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+        },
+        "zsh": {
+            "path": "zsh"
+        },
+        "fish": {
+            "path": "fish"
+        },
+        "tmux": {
+            "path": "tmux",
+            "icon": "terminal-tmux"
+        },
+        "pwsh": {
+            "path": "pwsh",
+            "icon": "terminal-powershell"
+        }
+    },
+    "sync.autoDownload": false,
+    "sync.forceUpload": false,
+    "sync.autoUpload": false,
+    "sync.forceDownload": false,
+    "sync.gist": "dabef92f779d3ec58846bdeb18d3adaf"
+}

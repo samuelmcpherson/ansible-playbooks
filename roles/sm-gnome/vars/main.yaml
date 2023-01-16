@@ -1,0 +1,21 @@
+---
+gnome_apps:
+      - gnome
+      - network-manager 
+      - python3-psutil
+      - gnome-shell-extension-prefs
+      - gnome-shell-extension-manager
+      - gnome-shell-extension-caffeine
+      - gnome-shell-extension-tiling-assistant
+      - gnome-shell-extension-gpaste
+      
+zfs_user_datasets:
+      - "home/{{ user }}/.config"
+      - "home/{{ user }}/.local"
+      - "home/{{ user }}/.local/share"
+      - "home/{{ user }}/Documents"
+      - "home/{{ user }}/Downloads"
+      - "home/{{ user }}/Music"
+      - "home/{{ user }}/Pictures"
+      - "home/{{ user }}/Videos"
+      - "home/{{ user }}/Games"

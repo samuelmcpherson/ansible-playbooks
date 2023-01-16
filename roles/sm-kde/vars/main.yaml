@@ -1,5 +1,7 @@
 ---
 kde_apps:
+      - kde-plasma-desktop
+      - plasma-workspace-wayland 
       - network-manager 
       - plasma-nm
       - accountwizard 
@@ -50,101 +52,16 @@ kde_apps:
       - krfb 
       - ktimer
       - plasma-widgets-addons
-      
-desktop_apps:
-      - profile-sync-daemon
-      - print-manager
-      - cups-browsed
-      - make
-      - cmake
-      - build-essential
-      - libsystemd-dev
-      - libinput-tools
-      - libinput-dev
-      - conky-all
-      - gimp
-      - hugo
-      - texlive-base
-      - texlive-bibtex-extra
-      - texlive-fonts-extra
-      - texlive-latex-base-doc
-      - texlive-latex-base
-      - texlive-latex-extra-doc
-      - texlive-latex-extra
-      - calibre
-      - youtube-dl
-      - gallery-dl
-
-game_apps:
-      - libglx-mesa0:i386 
-      - mesa-vulkan-drivers:i386 
-      - libgl1-mesa-dri:i386
-      - mesa-vulkan-drivers
-      - wine
-      - steam 
-
-touchscreen_apps:
       - maliit-keyboard
       - qtvirtualkeyboard-plugin
 
-flatpak_apps:
-      - app/com.github.tchx84.Flatseal
-      - app/com.github.eloston.ungoogledchromium
-      - app/org.mozilla.firefox
-      - app/com.vscodium.codium
-      - app/com.jgraph.drawio.desktop
-      - app/com.discordapp.discord
-      - app/com.github.xournalpp.xournalpp
-      - app/us.zoom.zoom
-      - app/com.axosoft.gitkraken
-      - app/com.belmoussaoui.Authenticator
-      - app/net.cozic.joplin_desktop
-
 zfs_user_datasets:
-      - "Documents"
-      - "Downloads"
-      - "Music"
-      - "Pictures"
-      - "Videos"
-      - "Games"
-      - ".config"
-      - ".local/share/plasma"
-      - ".local/share/flatpak"
-
-zfs_flatpak_datasets:
-      - ".local/share/flatpak/runtime"  
-      - ".local/share/flatpak/app"    
-
-zfs_extra_datasets:
-      - "Games/windiams"
-      - "Games/battleformiddleearth"      
-      - ".local/share/flatpak/runtime/org.freedesktop.Platform.GL.default"
-      - ".local/share/flatpak/runtime/org.freedesktop.Platform.VAAPI.Intel"
-      - ".local/share/flatpak/runtime/org.freedesktop.Platform.openh264"
-      - ".local/share/flatpak/runtime/org.gnome.Platform.Locale"
-      - ".local/share/flatpak/runtime/org.gnome.Platform"
-      - ".local/share/flatpak/runtime/com.github.Eloston.UngoogledChromium.Codecs"
-      - ".local/share/flatpak/runtime/org.freedesktop.Platform.Locale"
-      - ".local/share/flatpak/runtime/org.freedesktop.Platform"
-      - ".local/share/flatpak/runtime/com.github.Eloston.UngoogledChromium"
-      - ".local/share/flatpak/runtime/org.mozilla.firefox.Locale"
-      - ".local/share/flatpak/runtime/org.mozilla.firefox"
-      - ".local/share/flatpak/runtime/org.freedesktop.Sdk.Locale"
-      - ".local/share/flatpak/runtime/com.github.xournalpp.xournalpp.Locale"
-      - ".local/share/flatpak/runtime/com.belmoussaoui.Authenticator.Locale"
-      - ".local/share/flatpak/runtime/org.kde.KStyle.Adwaita"
-      - ".local/share/flatpak/runtime/org.kde.Platform"
-      - ".local/share/flatpak/runtime/org.kde.Platform.Locale"
-      - ".local/share/flatpak/app/com.github.tchx84.Flatseal"
-      - ".local/share/flatpak/app/com.github.eloston.ungoogledchromium"
-      - ".local/share/flatpak/app/com.vscodium.codium"
-      - ".local/share/flatpak/app/com.jgraph.drawio.desktop"
-      - ".local/share/flatpak/app/com.discordapp.discord"
-      - ".local/share/flatpak/app/com.github.xournalpp.xournalpp"
-      - ".local/share/flatpak/app/us.zoom.zoom"
-      - ".local/share/flatpak/app/com.axosoft.gitkraken"
-      - ".local/share/flatpak/app/com.belmoussaoui.Authenticator"
-      - ".local/share/flatpak/app/net.cozic.joplin_desktop"
-
-
-
+      - "home/{{ user }}/.config"
+      - "home/{{ user }}/.local"
+      - "home/{{ user }}/.local/share"
+      - "home/{{ user }}/Documents"
+      - "home/{{ user }}/Downloads"
+      - "home/{{ user }}/Music"
+      - "home/{{ user }}/Pictures"
+      - "home/{{ user }}/Videos"
+      - "home/{{ user }}/Games"
