@@ -40,7 +40,8 @@ game_apps:
       - mesa-vulkan-drivers
       - wine
       - steam 
-
+      - supertux
+      - supertuxkart
 remove_packages:
       - firefox-esr
 
