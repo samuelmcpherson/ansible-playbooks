@@ -42,6 +42,7 @@ game_apps:
       - steam 
       - supertux
       - supertuxkart
+      
 remove_packages:
       - firefox-esr
 
