@@ -54,6 +54,7 @@ kde_apps:
       - plasma-widgets-addons
       - maliit-keyboard
       - qtvirtualkeyboard-plugin
+      - krusader
 
 zfs_user_datasets:
       - "home/{{ user }}/.config"
