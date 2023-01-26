@@ -221,6 +221,38 @@
         regexp: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
         line: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
 
+    - name: create systemd user mode directories
+      file:
+        path: "/home/{{ user }}/.config/systemd/user/default.target.wants"
+        state: directory
+        owner: "{{ user }}"
+        group: users
+        mode: '751'
+
+    - name: copy flatpak update user service
+      copy:
+        src: "../files/flatpak-update.service"
+        dest: "/home/{{ user }}/.config/systemd/user/"
+        owner: "{{ user }}"
+        group: users
+        mode: '640'  
+
+    - name: copy flatpak update user timer
+      copy:
+        src: "../files/flatpak-update.timer"
+        dest: "/home/{{ user }}/.config/systemd/user/"
+        owner: "{{ user }}"
+        group: users
+        mode: '640'  
+
+    - name: enable flatpak update timer for main user
+      file:
+        src: "/home/{{ user }}/.config/systemd/user/flatpak-update.timer"
+        path: "/home/{{ user }}/.config/systemd/user/default.target.wants/flatpak-update.timer"
+        state: link
+        owner: "{{ user }}"
+        group: users
+
 - name: setup dev environment
   block:
     - name: install development packages
