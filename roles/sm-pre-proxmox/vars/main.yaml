@@ -1,2 +1,3 @@
 ---
 loopback: lo
+physical_network_int: eno1
