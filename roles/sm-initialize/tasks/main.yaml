@@ -92,7 +92,7 @@
     group: users
     mode: '751'
 
-- name: Copy ssh authorized_keys
+- name: copy ssh-agent user service
   copy:
     src: "../files/ssh-agent.service"
     dest: "/home/{{ user }}/.config/systemd/user/"

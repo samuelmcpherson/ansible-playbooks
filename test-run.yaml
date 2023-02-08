@@ -1,12 +1,26 @@
 ---
-- hosts: 
-    - main-desktop
-    #- surface-book2
-    - hp-tablet
-    - latitude-test
+# - hosts: corenetcluster
+#   become: True
+#   ignore_unreachable: True
+#   roles:
+#     - role: sm-initialize
+
+- hosts: corenet-node1
   become: True
   ignore_unreachable: True
   roles:
-    - role: sm-initialize
-    - role: sm-kde
-    - role: sm-desktop
+    #    - role: sm-pre-proxmox
+    #    - role: lae.proxmox
+    #    - role: sm-post-proxmox
+    - role: sm-proxmox-vms
+
+# - name: qemu vm setup
+#   hosts: 
+#     - corenetworkmanagementvms
+#     - corenetworkproductionvms
+#   become: True
+#   ignore_unreachable: True
+#   roles:
+#     - role: sm-initialize
+#     - role: sm-vm
+    
