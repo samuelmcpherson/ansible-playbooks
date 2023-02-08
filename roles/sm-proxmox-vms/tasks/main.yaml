@@ -1,27 +1,108 @@
 ---
+- name: create zfs vm datasets
+  community.general.zfs:
+    name: "zroot/DATA/var/lib/vz/images/{{ item.id }}"
+    state: present
+    extra_zfs_properties:
+      canmount: on
+      mountpoint: "/var/lib/vz/images/{{ item.id }}"
+  loop: "{{ vms }}"
 
 
+- name: Create new VM with minimal options and given vmid
+  community.general.proxmox_kvm:
+    api_user: root@pam
+    api_password: "{{ root_passwd }}"
+    api_host: "{{ ansible_default_ipv4.address }}"
+    name: "{{ item.name }}"
+    node: "{{ hostname }}"
+    vmid: "{{ item.id }}"
+    acpi: yes
+    agent: yes
+    cpu: host
+    cores: "{{ item.cores }}"
+    #storage: local
+    #format: qcow2
+    memory: "{{ item.memory }}"
+    ostype: "{{ item.ostype }}"
+    scsihw: virtio-scsi-pci
+    scsi: '{"scsi0":"local:20,format=qcow2,cache=writeback,ssd=1"}' 
+    bios: ovmf
+    efidisk0:
+      storage: local
+      format: qcow2
+      efitype: 4m
+      pre_enrolled_keys: False
+    ide: '{"ide0":"local:iso/debian-custom.iso,media=cdrom"}'
+    net:
+      net0: 'virtio,bridge=vmbr0'
+    state: present 
+  loop: "{{ vms }}"
 
-# - name: Create new VM with minimal options and given vmid
-#   community.general.proxmox_kvm:
-#     api_user: root@pam
-#     api_password: secret
-#     api_host: helldorado
-#     name: spynal
-#     node: sabrewulf
-#     vmid: 100
+- name: Create new VM with minimal options and given vmid
+  community.general.proxmox_kvm:
+    api_user: root@pam
+    api_password: "{{ root_passwd }}"
+    api_host: "{{ ansible_default_ipv4.address }}"
+    name: "{{ item.name }}"
+    node: "{{ hostname }}"
+    vmid: "{{ item.id }}"
+    state: started
+  loop: "{{ vms }}"
 
-#     net:
-#       net0: 'virtio,bridge=vmbr1,rate=200'
+- name: check options
+  community.general.proxmox_kvm:
+    api_user: root@pam
+    api_password: "{{ root_passwd }}"
+    api_host: "{{ ansible_default_ipv4.address }}"
+    name: "{{ item.name }}"
+    node: "{{ hostname }}"
+    vmid: "{{ item.id }}"
+    state: current
+  register: results
+  loop: "{{ vms }}"
+
+- name: return vm info
+  debug:
+    msg: "{{ results }}"
+
+- name: Create new VM with minimal options and given vmid
+  community.general.proxmox_kvm:
+    api_user: root@pam
+    api_password: "{{ root_passwd }}"
+    api_host: "{{ ansible_default_ipv4.address }}"
+    name: "{{ item.name }}"
+    node: "{{ hostname }}"
+    vmid: "{{ item.id }}"
+    acpi: yes
+      #agent: yes
+    cpu: host
+    cores: "{{ item.cores }}"
+    #storage: local
+    #format: qcow2
+    memory: "{{ item.memory }}"
+    ostype: "{{ item.ostype }}"
+    scsihw: virtio-scsi-pci
+    scsi: '{"scsi0":"local:20,format=qcow2,cache=writeback,ssd=1"}' 
+    bios: ovmf
+    efidisk0:
+      storage: local
+      format: qcow2
+      efitype: 4m
+      pre_enrolled_keys: False
+    net:
+      net0: 'virtio,bridge=vmbr0'
+    state: present
+    update: yes
+  loop: "{{ vms }}"
+
 #       net1: 'e1000,bridge=vmbr2'
 #     virtio:
 #       virtio0: 'VMs_LVM:10'
 #       virtio1: 'VMs:2,format=qcow2'
 #       virtio2: 'VMs:5,format=raw'
-#     cores: 4
-#     vcpus: 2
-#     storage: VMs
-#     format: qcow2
+#     
+#     
 #     sata:
 #       sata0: 'VMs_LVM:10,format=raw'
 #     bios: ovmf
