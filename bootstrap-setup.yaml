@@ -1,0 +1,10 @@
+---
+- hosts: bootstrap
+  become: True
+  ignore_unreachable: True
+  roles:
+    - role: sm-initialize
+    - role: geerlingguy.ntp
+    - role: sm-pre-proxmox
+    - role: lae.proxmox
+    - role: sm-post-proxmox
