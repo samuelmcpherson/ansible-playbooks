@@ -26,16 +26,16 @@
     memory: "{{ item.memory }}"
     ostype: "{{ item.ostype }}"
     scsihw: virtio-scsi-pci
-    scsi: '{"scsi0":"local:20,format=qcow2,cache=writeback,ssd=1"}' 
+    scsi: '{"scsi0":"local:{{ item.storage }},format=qcow2,cache=writeback,ssd=1"}' 
     bios: ovmf
     efidisk0:
       storage: local
       format: qcow2
       efitype: 4m
       pre_enrolled_keys: False
-    ide: '{"ide0":"local:iso/debian-custom.iso,media=cdrom"}'
+    ide: '{"ide0":"local:{{ item.iso }},media=cdrom"}'
     net:
-      net0: 'virtio,bridge=vmbr0'
+      net0: "virtio={{ item.mac }},bridge=vmbr0"
     state: present 
   loop: "{{ vms }}"
 
@@ -75,15 +75,12 @@
     node: "{{ hostname }}"
     vmid: "{{ item.id }}"
     acpi: yes
-      #agent: yes
     cpu: host
     cores: "{{ item.cores }}"
-    #storage: local
-    #format: qcow2
     memory: "{{ item.memory }}"
     ostype: "{{ item.ostype }}"
     scsihw: virtio-scsi-pci
-    scsi: '{"scsi0":"local:20,format=qcow2,cache=writeback,ssd=1"}' 
+    scsi: '{"scsi0":"local:{{ item.storage }},format=qcow2,cache=writeback,ssd=1"}' 
     bios: ovmf
     efidisk0:
       storage: local
