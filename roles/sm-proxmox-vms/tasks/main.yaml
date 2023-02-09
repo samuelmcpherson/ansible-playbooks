@@ -33,9 +33,9 @@
       format: qcow2
       efitype: 4m
       pre_enrolled_keys: False
-    ide: '{"ide0":"local:{{ item.iso }},media=cdrom"}'
+    ide: "{{ item.iso }}"
     net:
-      net0: "virtio={{ item.mac }},bridge=vmbr0"
+      net0: "{{ item.network }}"
     state: present 
   loop: "{{ vms }}"
 
