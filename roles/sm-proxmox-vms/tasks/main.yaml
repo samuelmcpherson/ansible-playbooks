@@ -9,7 +9,7 @@
   loop: "{{ vms }}"
 
 
-- name: Create new VM with minimal options and given vmid
+- name: create new VMs with minimal options and given VMID
   community.general.proxmox_kvm:
     api_user: root@pam
     api_password: "{{ root_passwd }}"
@@ -21,12 +21,10 @@
     agent: yes
     cpu: host
     cores: "{{ item.cores }}"
-    #storage: local
-    #format: qcow2
     memory: "{{ item.memory }}"
     ostype: "{{ item.ostype }}"
     scsihw: virtio-scsi-pci
-    scsi: '{"scsi0":"local:{{ item.storage }},format=qcow2,cache=writeback,ssd=1"}' 
+    scsi: "{{ item.storage }}" 
     bios: ovmf
     efidisk0:
       storage: local
@@ -39,7 +37,7 @@
     state: present 
   loop: "{{ vms }}"
 
-- name: Create new VM with minimal options and given vmid
+- name: start new VMs
   community.general.proxmox_kvm:
     api_user: root@pam
     api_password: "{{ root_passwd }}"
@@ -50,48 +48,21 @@
     state: started
   loop: "{{ vms }}"
 
-- name: check options
-  community.general.proxmox_kvm:
-    api_user: root@pam
-    api_password: "{{ root_passwd }}"
-    api_host: "{{ ansible_default_ipv4.address }}"
-    name: "{{ item.name }}"
-    node: "{{ hostname }}"
-    vmid: "{{ item.id }}"
-    state: current
-  register: results
-  loop: "{{ vms }}"
+# - name: check options
+#   community.general.proxmox_kvm:
+#     api_user: root@pam
+#     api_password: "{{ root_passwd }}"
+#     api_host: "{{ ansible_default_ipv4.address }}"
+#     name: "{{ item.name }}"
+#     node: "{{ hostname }}"
+#     vmid: "{{ item.id }}"
+#     state: current
+#   register: results
+#   loop: "{{ vms }}"
 
-- name: return vm info
-  debug:
-    msg: "{{ results }}"
-
-- name: Create new VM with minimal options and given vmid
-  community.general.proxmox_kvm:
-    api_user: root@pam
-    api_password: "{{ root_passwd }}"
-    api_host: "{{ ansible_default_ipv4.address }}"
-    name: "{{ item.name }}"
-    node: "{{ hostname }}"
-    vmid: "{{ item.id }}"
-    acpi: yes
-    cpu: host
-    cores: "{{ item.cores }}"
-    memory: "{{ item.memory }}"
-    ostype: "{{ item.ostype }}"
-    scsihw: virtio-scsi-pci
-    scsi: '{"scsi0":"local:{{ item.storage }},format=qcow2,cache=writeback,ssd=1"}' 
-    bios: ovmf
-    efidisk0:
-      storage: local
-      format: qcow2
-      efitype: 4m
-      pre_enrolled_keys: False
-    net:
-      net0: 'virtio,bridge=vmbr0'
-    state: present
-    update: yes
-  loop: "{{ vms }}"
+# - name: return vm info
+#   debug:
+#     msg: "{{ results }}"
 
 #       net1: 'e1000,bridge=vmbr2'
 #     virtio:
