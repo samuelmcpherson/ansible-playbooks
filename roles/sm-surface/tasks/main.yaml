@@ -37,32 +37,6 @@
     name: iptsd.service
     enabled: yes
 
-- name: create zfs user .config dataset
-  community.general.zfs:
-    name: "zroot/DATA/home/{{ user }}/.config"
-    state: present
-    extra_zfs_properties:
-      canmount: on
-      mountpoint: "/home/{{ user }}/.config"
-  when: zfs_root|bool == true
-
-- name: create user .config directory
-  file:
-    path: "/home/{{ user }}/.config"
-    state: directory
-    owner: "{{ user }}"
-    group: users
-    mode: '751'
-  when: zfs_root|bool == false
-
-- name: create systemd user mode directories
-  file:
-    path: "/home/{{ user }}/.config/systemd/user/default.target.wants"
-    state: directory
-    owner: "{{ user }}"
-    group: users
-    mode: '751'
-
 - name: enable surface-dtx-daemon service for main user
   file:
     src: /usr/lib/systemd/user/surface-dtx-userd.service
