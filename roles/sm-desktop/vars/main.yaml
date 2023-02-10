@@ -30,7 +30,6 @@ dev_apps:
       - python3-ipython
       - zeal
       
-
 vscode_settings_gist: "dabef92f779d3ec58846bdeb18d3adaf"
 
 game_apps:
