@@ -27,5 +27,12 @@ iface vmbr0 inet static
         bridge-ports {{ ansible_default_ipv4.interface }}
         bridge-stp off
         bridge-fd 0
-        #bridge-vlan-aware yes
-        #bridge-vids 2-4094
+        bridge-vlan-aware yes
+        bridge-vids 2-4094
+
+{% for vlan in vlans %}
+auto vmbr0.{{ vlan.id }}
+iface vmbr0.{{ vlan.id }} inet static
+        address {{ vlan.address }}/24
+{% endfor %}
+

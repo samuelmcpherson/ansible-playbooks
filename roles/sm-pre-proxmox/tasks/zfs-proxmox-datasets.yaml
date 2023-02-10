@@ -30,3 +30,11 @@
     extra_zfs_properties:
         canmount: on
         mountpoint: /var/lib/vz/template
+
+- name: "create pve dataset: zroot/DATA/var/lib/vz/template/iso"
+  community.general.zfs:
+    name: "zroot/DATA/var/lib/vz/template"
+    state: present
+    extra_zfs_properties:
+        canmount: on
+        mountpoint: /var/lib/vz/template

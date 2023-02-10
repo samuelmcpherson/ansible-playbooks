@@ -7,3 +7,4 @@
 # Global Order: zshenv, zprofile, zshrc, zlogin
 
 [ -n "$SSH_TTY" ] && [ -z "$TMUX"  ] && { tmux attach || exec tmux new-session;}
+emulate sh -c "export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket"

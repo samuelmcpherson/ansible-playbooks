@@ -1,0 +1,94 @@
+---
+desktop_apps:
+      - profile-sync-daemon
+      - print-manager
+      - cups-browsed
+      - conky-all
+      - gimp
+
+extra_desktop_apps:
+      - hugo
+      - texlive-base
+      - texlive-bibtex-extra
+      - texlive-fonts-extra
+      - texlive-latex-base-doc
+      - texlive-latex-base
+      - texlive-latex-extra-doc
+      - texlive-latex-extra
+      - calibre
+      - youtube-dl
+      - gallery-dl
+      - acpid 
+      - keyutils
+
+dev_apps:
+      - git
+      - make
+      - cmake
+      - dialog
+      - build-essential
+      - python3-ipython
+      - zeal
+      
+
+vscode_settings_gist: "dabef92f779d3ec58846bdeb18d3adaf"
+
+game_apps:
+      - libglx-mesa0:i386 
+      - mesa-vulkan-drivers:i386 
+      - libgl1-mesa-dri:i386
+      - mesa-vulkan-drivers
+      - wine
+      - steam 
+      - supertux
+      - supertuxkart
+      
+remove_packages:
+      - firefox-esr
+
+flatpak_apps:
+      - app/com.github.tchx84.Flatseal
+      - app/com.github.Eloston.UngoogledChromium
+      - app/org.mozilla.firefox
+      - app/com.vscodium.codium
+      - app/com.jgraph.drawio.desktop
+      - app/com.discordapp.Discord
+      - app/com.github.xournalpp.xournalpp
+      - app/us.zoom.Zoom
+      - app/com.axosoft.GitKraken
+      - app/com.belmoussaoui.Authenticator
+      - app/net.cozic.joplin_desktop
+      - app/org.telegram.desktop
+      - app/im.riot.Riot
+      - app/md.obsidian.Obsidian
+      - app/info.mumble.Mumble
+      - app/community.pathofbuilding.PathOfBuilding
+
+zfs_user_datasets:
+      - "home/{{ user }}/.config"
+      - "home/{{ user }}/.local"
+      - "home/{{ user }}/.local/share"
+      - "home/{{ user }}/Documents"
+      - "home/{{ user }}/Downloads"
+      - "home/{{ user }}/Music"
+      - "home/{{ user }}/Pictures"
+      - "home/{{ user }}/Videos"
+      - "home/{{ user }}/Games"
+
+zfs_flatpak_datasets:
+      - "home/{{ user }}/.local/share/flatpak"
+      - "home/{{ user }}/.local/share/flatpak/runtime"  
+      - "home/{{ user }}/.local/share/flatpak/app"
+      - "home/{{ user }}/.var"
+      - "home/{{ user }}/.var/app"
+      - "home/{{ user }}/.var/app/com.vscodium.codium"
+      - "home/{{ user }}/.var/app/org.mozilla.firefox"
+      - "home/{{ user }}/.var/app/com.discordapp.Discord"
+      - "home/{{ user }}/.var/app/com.github.Eloston.UngoogledChromium"
+
+
+zfs_game_datasets:
+      - "home/{{ user }}/.steam"
+      - "home/{{ user }}/.local/share/7DaysToDie"
+      - "home/{{ user }}/Games/windiams"
+      - "home/{{ user }}/Games/battleformiddleearth"  

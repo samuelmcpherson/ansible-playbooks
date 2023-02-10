@@ -1,3 +1,9 @@
 [submodule "inventories"]
 	path = inventories
 	url = git@github.com:samuelmcpherson/inventories.git
+[submodule "external/k3s-ansible"]
+	path = external/k3s-ansible
+	url = https://github.com/k3s-io/k3s-ansible.git
+[submodule "external/postgresql_cluster"]
+	path = external/postgresql_cluster
+	url = https://github.com/vitabaks/postgresql_cluster.git

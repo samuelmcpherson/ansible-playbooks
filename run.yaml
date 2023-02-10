@@ -19,6 +19,7 @@
   ignore_unreachable: True
   roles:
     - role: sm-kde
+    - role: sm-desktop
 
 - name: qemu vm setup
   hosts: 

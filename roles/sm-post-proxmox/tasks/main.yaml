@@ -1,4 +1,26 @@
 ---
+- name: copy in debian iso
+  copy:
+    src: "../files/debian-custom.iso"
+    dest: "/var/lib/vz/template/iso/debian-custom.iso"
+    owner: root
+    group: root
+    mode: '644'
+
+- name: check if opnsense iso exists
+  stat:
+    path: "/var/lib/vz/template/iso/opnsense.iso"
+  register: isopath
+
+- name: copy in opnsense iso
+  when: not isopath.stat.exists
+  copy:
+    src: "../files/opnsense.iso"
+    dest: "/var/lib/vz/template/iso/opnsense.iso"
+    owner: root
+    group: root
+    mode: '644'
+
 - name: stop and disable proxmox-boot-cleanup service
   systemd:
     name: proxmox-boot-cleanup.service
@@ -21,7 +43,7 @@
   loop: "{{ filestopatch }}"
 
 - name: remove uneeded debian-packages
-  ignore_errors: yes
+  ignore_errors: True
   apt:
     name: 
       - linux-image-amd64

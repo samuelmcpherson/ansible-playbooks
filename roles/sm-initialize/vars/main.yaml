@@ -1,4 +1,10 @@
 ---
+zfs_user_datasets:
+      - "home/{{ user }}"
+      - "home/{{ user }}/.config"
+      - "home/{{ user }}/.local"
+      - "home/{{ user }}/.local/share"
+
 default_packages:
       - vim
       - git
