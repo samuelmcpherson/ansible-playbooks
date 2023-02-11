@@ -56,12 +56,12 @@ flatpak_apps:
       - app/us.zoom.Zoom
       - app/com.axosoft.GitKraken
       - app/com.belmoussaoui.Authenticator
-      - app/net.cozic.joplin_desktop
       - app/org.telegram.desktop
       - app/im.riot.Riot
       - app/md.obsidian.Obsidian
       - app/info.mumble.Mumble
       - app/community.pathofbuilding.PathOfBuilding
+      - app/com.visualstudio.code
 
 zfs_user_datasets:
       - "home/{{ user }}/.config"
@@ -84,7 +84,9 @@ zfs_flatpak_datasets:
       - "home/{{ user }}/.var/app/org.mozilla.firefox"
       - "home/{{ user }}/.var/app/com.discordapp.Discord"
       - "home/{{ user }}/.var/app/com.github.Eloston.UngoogledChromium"
-
+      - "home/{{ user }}/.var/app/com.visualstudio.code"
+      - "home/{{ user }}/.var/app/md.obsidian.Obsidian"
+      - "home/{{ user }}/.var/app/com.axosoft.GitKraken"
 
 zfs_game_datasets:
       - "home/{{ user }}/.steam"
