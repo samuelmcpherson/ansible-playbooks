@@ -12,12 +12,12 @@ alignment=132
 panelVisibility=1
 
 [PlasmaViews][Panel 26][Defaults][$i]
-maxLength=1200
-minLength=1200
+maxLength=1000
+minLength=1000
 thickness=52
 
 [PlasmaViews][Panel 26][Horizontal1920][$i]
-maxLength=1200
+maxLength=1000
 thickness=52
 
 [Updates]
