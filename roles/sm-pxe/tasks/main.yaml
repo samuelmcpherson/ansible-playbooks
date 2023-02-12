@@ -43,7 +43,7 @@
     cmd: "/root/debian-custom-iso/debian-build.sh -l {{ root_passwd }} -e {{ encryption_passwd }} -r {{ root_passwd }} -u {{ ansible_user }} -p {{ ansible_passwd }} -s {{ wifi_ssid }} -w {{ wifi_passwd }} /srv/pxe-boot/tftp-pxe/tftp/debian-installer/amd64"
 
 - name: pull created iso
-  ansible.builtin.fetch:
+  fetch:
     src: /srv/pxe-boot/tftp-pxe/tftp/debian-installer/amd64/debian-custom.iso
     dest: roles/sm-post-proxmox/files/
     flat: yes

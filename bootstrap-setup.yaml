@@ -8,3 +8,16 @@
     - role: lae.proxmox
     - role: sm-post-proxmox
     - role: sm-proxmox-vms
+
+- hosts: bootstrapvms
+  become: True
+  ignore_unreachable: True
+  roles:
+    - role: sm-vm
+
+- hosts: pxe-bootstrap
+  become: True
+  ignore_unreachable: True
+  roles:
+    - role: sm-docker
+    - role: sm-pxe
