@@ -13,6 +13,7 @@
   become: True
   ignore_unreachable: True
   roles:
+    - role: sm-initialize
     - role: sm-vm
 
 - hosts: pxe-bootstrap
