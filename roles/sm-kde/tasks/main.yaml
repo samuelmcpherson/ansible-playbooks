@@ -206,6 +206,14 @@
     group: users
     mode: '640'
 
+- name: copy .config/powermanagementprofilesrc file
+  copy:
+    src: "../files/.config/powermanagementprofilesrc"
+    dest: "/home/{{ user }}/.config"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
+
 - name: copy .config/autostart directory
   copy:
     src: "../files/.config/autostart"
