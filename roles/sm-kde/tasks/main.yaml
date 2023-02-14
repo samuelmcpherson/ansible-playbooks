@@ -30,24 +30,6 @@
     path: "/etc/network/interfaces.d"
     state: absent
 
-- name: add volian repo gpg key
-  apt_key: 
-    state: present
-    keyring: /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg
-    url: https://deb.volian.org/volian/scar.key
-
-- name: add volian repo
-  apt_repository: 
-    state: present
-    filename: /etc/apt/sources.list.d/volian-archive-scar-unstable
-    repo: "deb http://deb.volian.org/volian/ scar main"
-
-- name: install bismuth
-  apt:  
-    name: 
-      - kwin-bismuth
-    state: latest
-
 - name: copy .local/share/plasma directory
   copy:
     src: "../files/.local/share/plasma"
