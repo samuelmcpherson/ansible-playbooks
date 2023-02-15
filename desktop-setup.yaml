@@ -1,0 +1,14 @@
+---
+- hosts: desktops
+  become: True
+  ignore_unreachable: True
+  roles:
+    - role: sm-initialize
+    - role: sm-kde
+    - role: sm-desktop
+
+- hosts: surface-book2
+  become: True
+  ignore_unreachable: True
+  roles:
+    - role: sm-surface

@@ -13,7 +13,7 @@ conky.config = {
 	draw_shades = false,
 	gap_x = 15,
 	gap_y = 30,
-    maximum_width = 390,
+    maximum_width = 490,
 	max_port_monitor_connections = 64,
 	max_user_text = 16384,
 	minimum_width = 390, minimum_height = 10,
@@ -33,7 +33,7 @@ conky.config = {
 	xftalpha = 0.8,
 	font = 'Bitstream Vera Sans Mono:size=10',
     default_bar_height = 9,
-    default_bar_width = 250,
+    default_bar_width = 350,
 
 };
 
@@ -51,6 +51,6 @@ ${color}${execp  zpool list -Ho name,allocated,size,capacity | sed -n '1'p | awk
 
 ${color #0077FF}ZFS Datasets:
 ${color #0077FF}${hr 2}
-${exec zfs list -o name | sed -n '1'p}                      ${exec zfs list zroot -o used,available,referenced | sed -n '1'p}
+${exec zfs list -o name | sed -n '1'p}                                ${exec zfs list zroot -o used,available,referenced | sed -n '1'p}
 ${color}${exec zfs list -t filesystem -d 4 -o name,used,available,referenced | sed 1d}
 ]];

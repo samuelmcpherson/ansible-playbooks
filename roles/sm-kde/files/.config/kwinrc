@@ -31,12 +31,6 @@ blurEnabled=false
 overviewEnabled=true
 zoomEnabled=false
 
-[Script-bismuth]
-enableQuarterLayout=true
-enableSpreadLayout=false
-ignoreClass=yakuake,spectacle,conky,zoom,onboard
-newWindowAsMaster=true
-
 [Windows]
 FocusPolicy=FocusFollowsMouse
 
