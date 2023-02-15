@@ -32,9 +32,9 @@
       - libwacom-surface
     state: latest
 
-- name: enable iptsd.service
+- name: enable iptsd@dev-hidraw0.service
   systemd:
-    name: iptsd.service
+    name: 'iptsd@dev-hidraw0.service'
     enabled: yes
 
 - name: enable surface-dtx-daemon service for main user
