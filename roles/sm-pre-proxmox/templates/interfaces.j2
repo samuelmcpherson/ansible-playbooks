@@ -10,16 +10,21 @@
 # configuration from sourced files, so do not attempt to move any of
 # the PVE managed interfaces into external files!
 
-
 auto lo
 iface lo inet loopback
 
 {% for interface in ansible_interfaces %}
 {% if interface != loopback %}
+### start ansible managed {{ interface }} config
+###
 iface {{ interface }} inet manual
+###
+### end ansible managed {{ interface }} config
 
 {% endif %}
 {% endfor %}
+### start ansible managed vmbr0 config
+###
 auto vmbr0
 iface vmbr0 inet static
         address {{ ansible_default_ipv4.address }}/24
@@ -28,11 +33,19 @@ iface vmbr0 inet static
         bridge-stp off
         bridge-fd 0
         bridge-vlan-aware yes
-        bridge-vids 2-4094
+{% for vlan in vlans %}
+        bridge-vids {{ vlan }}
+    {% if not loop.last %}
+        " "
+    {% endif %}
+{% endfor %}   
+###
+### end ansible managed vmbr0 config
 
 {% for vlan in vlans %}
 auto vmbr0.{{ vlan.id }}
 iface vmbr0.{{ vlan.id }} inet static
         address {{ vlan.address }}/24
+
 {% endfor %}
 
