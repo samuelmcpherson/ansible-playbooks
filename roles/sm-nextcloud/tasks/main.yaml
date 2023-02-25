@@ -1,6 +1,20 @@
 ---
-- name: install qemu guest agent
-  apt:  
-    name: 
-      - qemu-guest-agent
-    state: latest
+- name: pull image
+  docker_image:
+    name: nextcloud/all-in-one:latest
+    source: pull
+
+- name: run a container
+  docker_container:
+    name: nextcloud-aio-mastercontainer
+    image: mtabishk/ansible-container-node
+    state: started
+    restart: yes
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "8443:8443"
+    volumes:
+      - "nextcloud_aio_mastercontainer:/mnt/docker-aio-config"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
