@@ -1,0 +1,10 @@
+---
+- hosts: nextcloud
+  become: True
+  ignore_unreachable: True
+  roles:
+    - role: sm-initialize
+    - role: sm-docker
+    - role: sm-nextcloud
+
+
