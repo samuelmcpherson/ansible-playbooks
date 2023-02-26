@@ -29,12 +29,12 @@
   ansible.builtin.iptables:
     chain: INPUT
     protocol: tcp
-    destination_ports: "8443"
+    destination_port: "8443"
     jump: ACCEPT
 
 - name: Allow connections on multiple ports
   ansible.builtin.iptables:
     chain: INPUT
     protocol: tcp
-    destination_ports: "8080"
+    destination_port: "8080"
     jump: ACCEPT
