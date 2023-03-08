@@ -34,6 +34,58 @@
         pre_reboot_delay: 60
         post_reboot_delay: 60
 
+- name: manage proxmox network interfaces 
+  block: 
+    - name: setup unused interfaces
+      when: item.type == 'unused_interface'
+      blockinfile:
+        path: /home/ansible/test-interfaces
+        marker: "### {mark} ansible managed {{ item.name }} config"
+        block: |
+          ###
+          # {{ item.comment }}
+          iface {{ item.name }} inet manual
+          ###
+
+    - name: setup bridge interfaces
+      when: item.type == 'bridge_interface'
+      blockinfile:
+        path: /home/ansible/test-interfaces
+        marker: "### {mark} ansible managed {{ item.name }} config"
+        block: |
+          ###
+          # {{ item.comment }}
+          auto {{ item.name }}
+          iface {{ item.name }} inet static
+                address {{ item.address }}
+                gateway {{ item.gateway }}
+                bridge-ports {{ item.bridged_port }}
+                bridge-stp off
+                bridge-fd 0
+          {% if vlans is defined %}
+                bridge-vlan-aware yes
+                bridge-vids {% for vlan in vlans %} {{ vlan.id }} {% endfor %}
+          {% endif %}
+
+          ###
+      loop: "{{ proxmox_interfaces }}" 
+
+    - name: setup directly connected interfaces
+      when: item.type == 'direct_connection'
+      blockinfile:
+        path: /home/ansible/test-interfaces
+        marker: "### {mark} ansible managed {{ item.name }} config"
+        block: |
+          ###
+          # {{ item.comment }}
+          auto {{ item.name }}
+          iface {{ item.name }} inet static
+                address {{ item.address }}
+                {{ item.up_route }}
+                {{ item.down_route }}
+          ###
+      loop: "{{ proxmox_interfaces }}" 
+
 - name: create proxmox datasets
   when: zfs_root|bool == true
   include_tasks: zfs-proxmox-datasets.yaml
