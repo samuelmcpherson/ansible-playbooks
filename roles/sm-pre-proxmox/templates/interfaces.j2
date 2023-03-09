@@ -15,15 +15,15 @@ iface lo inet loopback
 
 {% for interface in ansible_interfaces %}
 {% if interface != "lo" %}
-### start ansible managed {{ interface }} config
+### BEGIN ansible managed {{ interface }} config
 ###
 iface {{ interface }} inet manual
 ###
-### end ansible managed {{ interface }} config
+### END ansible managed {{ interface }} config
 
 {% endif %}
 {% endfor %}
-### start ansible managed vmbr0 config
+### BEGIN ansible managed vmbr0 config
 ###
 auto vmbr0
 iface vmbr0 inet static
@@ -35,15 +35,21 @@ iface vmbr0 inet static
 {% if vlans is defined %}
         bridge-vlan-aware yes
         bridge-vids {% for vlan in vlans %} {{ vlan.id }} {% endfor %}
-        
+
 {% endif %}
 ###
-### end ansible managed vmbr0 config
+### END ansible managed vmbr0 config
 
+{% if vlans is defined %}
 {% for vlan in vlans %}
+### BEGIN ansible managed vmbr0 config
+###
 auto vmbr0.{{ vlan.id }}
 iface vmbr0.{{ vlan.id }} inet static
         address {{ vlan.address }}/24
         gateway {{ vlan.gateway }}
-{% endfor %}
+###
+### END ansible managed vmbr0 config
 
+{% endfor %}
+{% endif %}
