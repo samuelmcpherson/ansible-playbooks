@@ -1,0 +1,144 @@
+---
+- name: create network config directory
+  file:
+    path: "/etc/nertwork/interfaces.d"
+    state: directory
+
+- name: "re-create network configuration file for {{ ansible_default_ipv4.interface }}"
+  block:
+    - lineinfile: 
+        state: present
+        create: yes
+        path: "/etc/nertwork/interfaces.d/{{ ansible_default_ipv4.interface }}"
+        regexp: "auto {{ ansible_default_ipv4.interface }}"
+        line: "auto {{ ansible_default_ipv4.interface }}"
+
+    - lineinfile: 
+        state: present
+        create: yes
+        path: "/etc/nertwork/interfaces.d/{{ ansible_default_ipv4.interface }}"
+        regexp: "iface {{ ansible_default_ipv4.interface }} inet dhcp"
+        line: "iface {{ ansible_default_ipv4.interface }} inet dhcp"
+
+- name: remove plasma desktop packages
+  apt:  
+    name: "{{ kde_apps }}"
+    state: absent
+    purge: true
+    autoremove: true
+
+- name: remove .local/share/plasma directory
+  file:
+    path: "/home/{{ user }}/.local/share/plasma"
+    state: absent
+
+- name: remove .local/share/aurorae directory
+  file:
+    path: "/home/{{ user }}/.local/share/aurorae"
+    state: absent
+
+- name: remove .local/share/color-schemes directory
+  file:
+    path: "/home/{{ user }}/.local/share/color-schemes"
+    state: absent
+
+- name: remove .local/share/konsole directory
+  file:
+    path: "/home/{{ user }}/.local/share/konsole"
+    state: absent
+
+- name: remove .config/gtk-3.0 directory
+  file:
+    path: "/home/{{ user }}/.config/gtk-3.0"
+    state: absent
+
+- name: remove .config/gtk-4.0 directory
+  file:
+    path: "/home/{{ user }}/.config/gtk-4.0"
+    state: absent
+
+- name: remove .config/xsettingsd directory
+  file:
+    path: "/home/{{ user }}/.config/xsettingsd"
+    state: absent
+
+- name: remove .config/kdeglobals file
+  file:
+    path: "/home/{{ user }}/.config/kdeglobals"
+    state: absent
+
+- name: remove .config/kglobalshortcutsrc file
+  file:
+    path: "/home/{{ user }}/.config/kglobalshortcutsrc"
+    state: absent
+
+- name: remove .config/khotkeysrc file
+  file:
+    path: "/home/{{ user }}/.config/khotkeysrc"
+    state: absent
+
+- name: remove .config/kscreenlockerrc file
+  file:
+    path: "/home/{{ user }}/.config/kscreenlockerrc"
+    state: absent
+
+- name: remove .config/ksmserverrc file
+  file:
+    path: "/home/{{ user }}/.config/ksmserverrc"
+    state: absent
+
+- name: remove .config/kwinrc file
+  file:
+    path: "/home/{{ user }}/.config/kwinrc"
+    state: absent
+
+- name: remove .config/Trolltech.conf file
+  file:
+    path: "/home/{{ user }}/.config/Trolltech.conf"
+    state: absent
+
+- name: remove .config/plasma-org.kde.plasma.desktop-appletsrc file
+  file:
+    path: "/home/{{ user }}/.config/plasma-org.kde.plasma.desktop-appletsrc"
+    state: absent
+
+- name: remove .config/kactivitymanagerd-statsrc file
+  file:
+    path: "/home/{{ user }}/.config/kactivitymanagerd-statsrc"
+    state: absent
+
+- name: remove .config/plasmarc file
+  file:
+    path: "/home/{{ user }}/.config/plasmarc"
+    state: absent
+
+- name: remove .config/plasmashellrc file
+  file:
+    path: "/home/{{ user }}/.config/plasmashellrc"
+    state: absent
+
+- name: remove .config/klaunchrc file
+  file:
+    path: "/home/{{ user }}/.config/klaunchrc"
+    state: absent
+
+- name: remove .config/powermanagementprofilesrc file
+  file:
+    path: "/home/{{ user }}/.config/powermanagementprofilesrc"
+    state: absent
+
+- name: remove .config/autostart directory
+  file:
+    path: "/home/{{ user }}/.config/autostart"
+    state: absent
+
+- name: remove kcminputrc.j2 template
+  file:
+    path: "/home/{{ user }}/.config/kcminputrc"
+    state: absent
+
+- name: remove konsolerc file
+  file:
+    path: "/home/{{ user }}/.config/konsolerc"
+    state: absent
+

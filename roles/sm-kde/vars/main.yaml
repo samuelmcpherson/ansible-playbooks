@@ -51,10 +51,10 @@ kde_apps:
       - kompare 
       - krfb 
       - ktimer
-      - plasma-widgets-addons
       - maliit-keyboard
       - qtvirtualkeyboard-plugin
       - krusader
+      - sddm
 
 zfs_user_datasets:
       - "home/{{ user }}/.config"
