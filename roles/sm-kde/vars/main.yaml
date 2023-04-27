@@ -55,6 +55,7 @@ kde_apps:
       - qtvirtualkeyboard-plugin
       - krusader
       - sddm
+      - dolphin
 
 zfs_user_datasets:
       - "home/{{ user }}/.config"
