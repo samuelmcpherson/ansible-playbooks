@@ -28,8 +28,17 @@ Meta=org.kde.kglobalaccel,/component/kwin,org.kde.kglobalaccel.Component,invokeS
 [Plugins]
 bismuthEnabled=true
 blurEnabled=false
+desktopgridEnabled=false
 overviewEnabled=true
+tileseditorEnabled=false
+windowviewEnabled=false
 zoomEnabled=false
+
+[Script-bismuth]
+ignoreClass=yakuake,spectacle,conky,zoom
+ignoreTitle=yakuake,spectacle,conky,zoom
+maximizeSoleTile=true
+tileLayoutGap=2
 
 [Windows]
 FocusPolicy=FocusFollowsMouse

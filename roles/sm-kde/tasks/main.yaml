@@ -25,6 +25,24 @@
     name: "{{ kde_apps }}"
     state: latest
 
+- name: add volian repo gpg key
+  apt_key: 
+    state: present
+    keyring: /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg
+    url: https://deb.volian.org/volian/scar.key
+
+- name: add volian repo
+  apt_repository: 
+    state: present
+    filename: /etc/apt/sources.list.d/volian-archive-scar-unstable
+    repo: "deb http://deb.volian.org/volian/ scar main"
+
+- name: install bismuth
+  apt:  
+    name: 
+      - kwin-bismuth
+    state: latest
+
 - name: remove old network configuration
   file:
     path: "/etc/network/interfaces.d"
@@ -230,7 +248,7 @@
         regexp: 'DefaultProfile=Profile 1.profile'
         line: 'DefaultProfile=Profile 1.profile'
 
-- name: "touchscreen configuration: enable sddm lockscreen keyboard"
+- name: "touchscreen configuration: enable sddm lockscreen keyboard & maliit keyboard"
   when: touchscreen|bool == true
   block:
     - lineinfile: 
@@ -248,3 +266,18 @@
         path: "/etc/sddm.conf"
         regexp: 'InputMethod=qtvirtualkeyboard'
         line: 'InputMethod=qtvirtualkeyboard'
+    
+    - lineinfile: 
+        state: present
+        path: "/home/{{ user }}/.config/kwinrc"
+        regexp: '[Wayland]'
+        line: '[Wayland]' 
+
+    - lineinfile: 
+        state: present
+        path: "/home/{{ user }}/.config/kwinrc"
+        regexp: 'InputMethod[$e]=/usr/share/applications/com.github.maliit.keyboard.desktop'
+        line: 'InputMethod[$e]=/usr/share/applications/com.github.maliit.keyboard.desktop'
+
+
+
