@@ -51,11 +51,16 @@ kde_apps:
       - kompare 
       - krfb 
       - ktimer
-      - maliit-keyboard
-      - qtvirtualkeyboard-plugin
       - krusader
       - sddm
       - dolphin
+      - libsystemd-dev 
+      - libinput-tools 
+      - libinput-dev
+
+touchscreen_apps:
+      - maliit-keyboard
+      - qtvirtualkeyboard-plugin
 
 zfs_user_datasets:
       - "home/{{ user }}/.config"

@@ -248,9 +248,102 @@
         regexp: 'DefaultProfile=Profile 1.profile'
         line: 'DefaultProfile=Profile 1.profile'
 
+- name: check if gebaard binary exists on system
+  stat:
+    path: "/usr/local/bin/gebaard"
+  register: gebaard_present
+
+- name: pull gebaard repo and make package
+  when: gebaard_present.stat.exists == False
+  block:
+    - name: pull gebaar gestures repo
+      git:
+        clone: yes
+        dest: "/home/{{ user }}/gebaar-libinput"
+        repo: https://github.com/NICHOLAS85/gebaar-libinput
+        recursive: yes
+        update: yes
+        force: yes
+
+    - name: "fix library dependancy for gebaar in cpptoml.h"
+      lineinfile:
+        path: "/home/{{ user }}/gebaar-libinput/libs/cpptoml/include/cpptoml.h"
+        insertafter: "^#include"
+        line: "#include <limits>"
+        state: present
+
+    - name: "fix library dependancy for gebaar in cxxopts.hpp"
+      lineinfile:
+        path: "/home/{{ user }}/gebaar-libinput/libs/cxxopts/include/cxxopts.hpp"
+        insertafter: "^#include"
+        line: "#include <limits>"
+        state: present
+
+    - name: create gebaar build directory
+      file:
+        path: "/home/{{ user }}/gebaar-libinput/build"
+        state: directory
+        owner: "{{ user }}"
+        group: users
+        mode: '751'
+
+- name: add main user to input group
+  user:
+    name: "{{ user }}"
+    groups: 
+      - input
+    append: yes
+    create_home: no
+
+- name: create gebaar configuration directory
+  file:
+    path: "/home/{{ user }}/.config/gebaar"
+    state: directory
+    owner: "{{ user }}"
+    group: users
+    mode: '751'
+
+- name: copy gebaard config
+  copy:
+    src: "../files/.config/gebaar/gebaard.toml"
+    dest: "/home/{{ user }}/.config/gebaar/"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'  
+
+- name: create systemd user mode directories
+  file:
+    path: "/home/{{ user }}/.config/systemd/user/default.target.wants"
+    state: directory
+    owner: "{{ user }}"
+    group: users
+    mode: '751'
+
+- name: copy gebaard user service
+  copy:
+    src: "../files/gebaard.service"
+    dest: "/home/{{ user }}/.config/systemd/user/"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'  
+
+- name: enable gebaard service for main user
+  file:
+    src: "/home/{{ user }}/.config/systemd/user/gebaard.service"
+    path: "/home/{{ user }}/.config/systemd/user/default.target.wants/gebaard.service"
+    state: link
+    owner: "{{ user }}"
+    group: users
+
 - name: "touchscreen configuration: enable sddm lockscreen keyboard & maliit keyboard"
   when: touchscreen|bool == true
   block:
+    
+    - name: install plasma touchscreen apps
+      apt:  
+        name: "{{ touchscreen_apps }}"
+        state: latest
+      
     - lineinfile: 
         state: present
         create: yes

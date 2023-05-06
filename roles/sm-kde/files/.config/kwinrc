@@ -11,9 +11,10 @@ Id_3=4487cbb2-4e2f-48b2-9e81-f0ac5e53f83e
 Id_4=5fdeb496-e23a-4a80-a9a3-0157de351e5d
 Id_5=b05e6570-73b1-46ea-b4cd-f7cd4d901eb6
 Number=5
-Rows=1
+Rows=5
 
 [Effect-overview]
+BlurBackground=false
 BorderActivate=7
 
 [Effect-windowview]
@@ -29,7 +30,9 @@ Meta=org.kde.kglobalaccel,/component/kwin,org.kde.kglobalaccel.Component,invokeS
 bismuthEnabled=true
 blurEnabled=false
 desktopgridEnabled=false
+kwin4_effect_fadedesktopEnabled=true
 overviewEnabled=true
+slideEnabled=false
 tileseditorEnabled=false
 windowviewEnabled=false
 zoomEnabled=false
@@ -38,7 +41,7 @@ zoomEnabled=false
 ignoreClass=yakuake,spectacle,conky,zoom
 ignoreTitle=yakuake,spectacle,conky,zoom
 maximizeSoleTile=true
-tileLayoutGap=2
+tileLayoutGap=4
 
 [Windows]
 FocusPolicy=FocusFollowsMouse
