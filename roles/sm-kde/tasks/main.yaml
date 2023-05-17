@@ -80,6 +80,11 @@
     group: users
     mode: '750'
 
+- name: remove default wallpaper
+  file:
+    path: "/usr/share/wallpapers/Next/contents"
+    state: absent
+
 - name: copy wallpaper
   copy:
     src: "../files/wallpaper/contents"
