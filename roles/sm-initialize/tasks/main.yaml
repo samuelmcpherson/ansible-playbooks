@@ -10,6 +10,11 @@
     name: "{{ default_packages }}"
     state: latest
 
+- name: host specific drivers
+  apt:  
+    name: "{{ driver_packages }}"
+    state: latest
+
 - name: packages to remove
   apt:  
     name: "{{ remove_packages }}"
