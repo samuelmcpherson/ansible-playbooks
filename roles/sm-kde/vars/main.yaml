@@ -57,6 +57,7 @@ kde_apps:
       - libsystemd-dev 
       - libinput-tools 
       - libinput-dev
+      - skanlite
 
 touchscreen_apps:
       - maliit-keyboard
