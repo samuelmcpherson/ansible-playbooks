@@ -20,6 +20,13 @@ extra_desktop_apps:
       - gallery-dl
       - acpid 
       - keyutils
+      - libreoffice-writer
+      - libreoffice-impress
+      - libreoffice-math
+      - libreoffice-draw
+      - libreoffice-calc
+      - libreoffice-common
+      - libreoffice-core
 
 dev_apps:
       - git
