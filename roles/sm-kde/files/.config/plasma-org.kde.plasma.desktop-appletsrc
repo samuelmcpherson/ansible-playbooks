@@ -255,6 +255,10 @@ plugin=org.kde.plasma.keyboardlayout
 immutability=1
 plugin=org.kde.plasma.volume
 
+[Containments][8][Applets][15][Configuration]
+immutability=1
+PreloadWeight=100
+
 [Containments][8][Applets][16]
 immutability=1
 plugin=org.kde.plasma.notifications
@@ -271,6 +275,10 @@ plugin=org.kde.plasma.printmanager
 immutability=1
 plugin=org.kde.plasma.battery
 
+[Containments][8][Applets][21][Configuration]
+immutability=1
+PreloadWeight=100
+
 [Containments][8][Applets][21][Configuration][General]
 immutability=1
 showPercentage=true
@@ -278,6 +286,10 @@ showPercentage=true
 [Containments][8][Applets][22]
 immutability=1
 plugin=org.kde.plasma.networkmanagement
+
+[Containments][8][Applets][22][Configuration]
+immutability=1
+PreloadWeight=100
 
 [Containments][8][Applets][23]
 immutability=1

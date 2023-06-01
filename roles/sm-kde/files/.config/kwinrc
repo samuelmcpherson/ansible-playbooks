@@ -41,6 +41,7 @@ zoomEnabled=false
 ignoreClass=yakuake,spectacle,conky,zoom
 ignoreTitle=yakuake,spectacle,conky,zoom
 maximizeSoleTile=true
+newWindowAsMaster=true
 tileLayoutGap=4
 
 [Windows]
