@@ -34,6 +34,7 @@ default_packages:
       - tcpdump
       - smartmontools
       - chrony
+      - dnsutils
 
 remove_packages:
       - systemd-timesyncd
