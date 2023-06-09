@@ -62,6 +62,38 @@
     group: users
     mode: '751'
 
+- name: copy nfs auto (un)mount script
+  copy:
+    src: "../files/auto_nfs_share.sh"
+    dest: "/usr/bin/"
+    owner: root
+    group: root
+    mode: '755'
+
+- name: copy nfs auto (un)mount user service
+  copy:
+    src: "../files/auto_nfs_share.service"
+    dest: "/home/{{ user }}/.config/systemd/user/"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'  
+
+- name: copy nfs auto (un)mount user timer
+  copy:
+    src: "../files/auto_nfs_share.timer"
+    dest: "/home/{{ user }}/.config/systemd/user/"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'  
+
+- name: enable nfs auto (un)mount timer for main user
+  file:
+    src: "/home/{{ user }}/.config/systemd/user/auto_nfs_share.timer"
+    path: "/home/{{ user }}/.config/systemd/user/default.target.wants/auto_nfs_share.timer"
+    state: link
+    owner: "{{ user }}"
+    group: users
+
 - name: enable profile sync daemon service for main user
   file:
     src: /usr/lib/systemd/user/psd.service
@@ -117,7 +149,7 @@
     dest: "/home/{{ user }}/.config/autostart/conky2.desktop"
     owner: "{{ user }}"
     group: users
-    mode: '750'
+    mode: '640'
     regexp: '^Exec='
     line: "Exec=conky -c /home/{{ user }}/.conkyrc2 --daemonize --pause=1"
 
@@ -236,14 +268,6 @@
         path: "/etc/zsh/zprofile"
         regexp: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
         line: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
-
-    - name: create systemd user mode directories
-      file:
-        path: "/home/{{ user }}/.config/systemd/user/default.target.wants"
-        state: directory
-        owner: "{{ user }}"
-        group: users
-        mode: '751'
 
     - name: copy flatpak update user service
       copy:
