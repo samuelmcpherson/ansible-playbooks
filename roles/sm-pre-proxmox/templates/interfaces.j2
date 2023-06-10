@@ -42,14 +42,14 @@ iface vmbr0 inet static
 
 {% if vlans is defined %}
 {% for vlan in vlans %}
-### BEGIN ansible managed vmbr0 config
+### BEGIN ansible managed vmbr0.{{ vlan.id }} config
 ###
 auto vmbr0.{{ vlan.id }}
 iface vmbr0.{{ vlan.id }} inet static
         address {{ vlan.address }}/24
         gateway {{ vlan.gateway }}
 ###
-### END ansible managed vmbr0 config
+### END ansible managed vmbr0.{{ vlan.id }} config
 
 {% endfor %}
 {% endif %}

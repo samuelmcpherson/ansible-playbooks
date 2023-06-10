@@ -90,6 +90,22 @@
           
       loop: "{{ proxmox_interfaces }}" 
 
+    - name: setup standard interfaces (used for VLANs of main bridge)
+      when: item.type == 'standard_interface'
+      blockinfile:
+        path: "/etc/network/interfaces"
+        marker: "### {mark} ansible managed {{ item.name }} config"
+        block: |
+          ###
+          # {{ item.comment }}
+          auto {{ item.name }}
+          iface {{ item.name }} inet static
+                address {{ item.address }}
+                gateway {{ item.gateway }}
+          ###
+          
+      loop: "{{ proxmox_interfaces }}" 
+
 - name: create proxmox datasets
   when: zfs_root|bool == true
   include_tasks: zfs-proxmox-datasets.yaml
