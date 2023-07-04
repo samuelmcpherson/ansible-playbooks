@@ -3,7 +3,7 @@
   become: True
   ignore_unreachable: True
   roles:
-    - role: sm-initialize
+    - role: sm-base
     - role: sm-kde
     - role: sm-desktop
 
