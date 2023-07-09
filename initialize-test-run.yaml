@@ -1,5 +1,5 @@
 ---
-- hosts: unconfigured-hosts
+- hosts: unconfigured_hosts
   become: True
   ignore_unreachable: True
   roles:
