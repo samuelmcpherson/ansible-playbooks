@@ -8,6 +8,7 @@ gnome_apps:
       - gnome-shell-extension-caffeine
       - gnome-shell-extension-tiling-assistant
       - gnome-shell-extension-gpaste
+      - dconf-editor
       
 zfs_user_datasets:
       - "home/{{ user }}/.config"
