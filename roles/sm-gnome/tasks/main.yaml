@@ -45,14 +45,14 @@
 
 - name: disable initial welcome screen
   lineinfile:
-  state: present
-  create: yes
-  path: "/home/{{ user }}/.config/gnome-initial-setup-done"
-  regexp: 'yes'
-  line: 'yes'
-  owner: "{{ user }}"
-  group: users
-  mode: '640'
+    state: present
+    create: yes
+    path: "/home/{{ user }}/.config/gnome-initial-setup-done"
+    regexp: 'yes'
+    line: 'yes'
+    owner: "{{ user }}"
+    group: users
+    mode: '640'
 
 - name: disable location services
   become_user: "{{ user }}"
