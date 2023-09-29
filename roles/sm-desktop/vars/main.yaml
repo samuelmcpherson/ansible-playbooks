@@ -5,6 +5,15 @@ desktop_apps:
       - cups-browsed
       - conky-all
       - gimp
+      - acpid 
+      - keyutils
+      - libreoffice-writer
+      - libreoffice-impress
+      - libreoffice-math
+      - libreoffice-draw
+      - libreoffice-calc
+      - libreoffice-common
+      - libreoffice-core
 
 extra_desktop_apps:
       - hugo
@@ -16,17 +25,10 @@ extra_desktop_apps:
       - texlive-latex-extra-doc
       - texlive-latex-extra
       - calibre
-      - youtube-dl
+      - yt-dlp
       - gallery-dl
-      - acpid 
-      - keyutils
-      - libreoffice-writer
-      - libreoffice-impress
-      - libreoffice-math
-      - libreoffice-draw
-      - libreoffice-calc
-      - libreoffice-common
-      - libreoffice-core
+      - syncthing
+
 
 dev_apps:
       - git

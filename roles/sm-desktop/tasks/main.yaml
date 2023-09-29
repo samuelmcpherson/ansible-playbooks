@@ -153,6 +153,22 @@
     regexp: '^Exec='
     line: "Exec=conky -c /home/{{ user }}/.conkyrc2 --daemonize --pause=1"
 
+- name: copy syncthing user service
+  copy:
+    src: "../files/syncthing.service"
+    dest: "/home/{{ user }}/.config/systemd/user/"
+    owner: "{{ user }}"
+    group: users
+    mode: '640'  
+
+- name: enable syncthing service for main user
+  file:
+    src: "/home/{{ user }}/.config/systemd/user/syncthing.service"
+    path: "/home/{{ user }}/.config/systemd/user/default.target.wants/syncthing.service"
+    state: link
+    owner: "{{ user }}"
+    group: users
+
 - name: touchscreen configurations 
   when: touchscreen|bool == true
   block:
