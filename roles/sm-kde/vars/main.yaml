@@ -51,7 +51,6 @@ kde_apps:
       - kompare 
       - krfb 
       - ktimer
-      - krusader
       - sddm
       - dolphin
       - libsystemd-dev 
