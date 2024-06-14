@@ -1,5 +1,6 @@
 ---
 desktop_apps:
+      - firefox-esr
       - profile-sync-daemon
       - print-manager
       - cups-browsed
@@ -28,7 +29,7 @@ extra_desktop_apps:
       - yt-dlp
       - gallery-dl
       - syncthing
-
+      - xournalpp
 
 dev_apps:
       - git
@@ -50,27 +51,6 @@ game_apps:
       - steam 
       - supertux
       - supertuxkart
-      
-remove_packages:
-      - firefox-esr
-
-flatpak_apps:
-      - app/com.github.tchx84.Flatseal
-      - app/com.github.Eloston.UngoogledChromium
-      - app/org.mozilla.firefox
-      - app/com.vscodium.codium
-      - app/com.jgraph.drawio.desktop
-      - app/com.discordapp.Discord
-      - app/com.github.xournalpp.xournalpp
-      - app/us.zoom.Zoom
-      - app/com.axosoft.GitKraken
-      - app/com.belmoussaoui.Authenticator
-      - app/org.telegram.desktop
-      - app/im.riot.Riot
-      - app/md.obsidian.Obsidian
-      - app/info.mumble.Mumble
-      - app/community.pathofbuilding.PathOfBuilding
-      - app/com.visualstudio.code
 
 zfs_user_datasets:
       - "home/{{ user }}/.config"
@@ -82,20 +62,6 @@ zfs_user_datasets:
       - "home/{{ user }}/Pictures"
       - "home/{{ user }}/Videos"
       - "home/{{ user }}/Games"
-
-zfs_flatpak_datasets:
-      - "home/{{ user }}/.local/share/flatpak"
-      - "home/{{ user }}/.local/share/flatpak/runtime"  
-      - "home/{{ user }}/.local/share/flatpak/app"
-      - "home/{{ user }}/.var"
-      - "home/{{ user }}/.var/app"
-      - "home/{{ user }}/.var/app/com.vscodium.codium"
-      - "home/{{ user }}/.var/app/org.mozilla.firefox"
-      - "home/{{ user }}/.var/app/com.discordapp.Discord"
-      - "home/{{ user }}/.var/app/com.github.Eloston.UngoogledChromium"
-      - "home/{{ user }}/.var/app/com.visualstudio.code"
-      - "home/{{ user }}/.var/app/md.obsidian.Obsidian"
-      - "home/{{ user }}/.var/app/com.axosoft.GitKraken"
 
 zfs_game_datasets:
       - "home/{{ user }}/.steam"

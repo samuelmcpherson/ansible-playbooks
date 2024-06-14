@@ -1,5 +1,5 @@
 [$Version]
-update_info=bismuth_new_logger.upd:bismuth-new-logger,kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize,kwin.upd:animation-speed,kwin.upd:desktop-grid-click-behavior,kwin.upd:no-swap-encourage,kwin.upd:make-translucency-effect-disabled-by-default,kwin.upd:remove-flip-switch-effect,kwin.upd:remove-cover-switch-effect,kwin.upd:remove-cubeslide-effect,kwin.upd:remove-xrender-backend,kwin.upd:enable-scale-effect-by-default
+update_info=replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize,kwin.upd:animation-speed,kwin.upd:desktop-grid-click-behavior,kwin.upd:no-swap-encourage,kwin.upd:make-translucency-effect-disabled-by-default,kwin.upd:remove-flip-switch-effect,kwin.upd:remove-cover-switch-effect,kwin.upd:remove-cubeslide-effect,kwin.upd:remove-xrender-backend,kwin.upd:enable-scale-effect-by-default
 
 [Compositing]
 OpenGLIsUnsafe=false
@@ -28,7 +28,6 @@ AnimationDurationFactor=0.125
 Meta=org.kde.kglobalaccel,/component/kwin,org.kde.kglobalaccel.Component,invokeShortcut,Overview
 
 [Plugins]
-bismuthEnabled=true
 blurEnabled=false
 desktopgridEnabled=false
 kwin4_effect_fadedesktopEnabled=true
@@ -37,13 +36,6 @@ slideEnabled=false
 tileseditorEnabled=false
 windowviewEnabled=false
 zoomEnabled=false
-
-[Script-bismuth]
-ignoreClass=yakuake,spectacle,conky,zoom
-ignoreTitle=yakuake,spectacle,conky,zoom
-maximizeSoleTile=true
-newWindowAsMaster=true
-tileLayoutGap=4
 
 [Windows]
 FocusPolicy=FocusFollowsMouse

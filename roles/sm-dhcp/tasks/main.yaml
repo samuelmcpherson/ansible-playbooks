@@ -1,0 +1,79 @@
+---
+- name: install dhcp server package
+  apt:  
+    name: isc-dhcp-server
+    state: latest
+
+
+- name: convert existing dhcp address to static address
+  when: item !=  "lo"
+  lineinfile: 
+    state: present
+    path: "/etc/network/interfaces.d/{{ item }}"
+    regexp: "iface {{ item }} inet dhcp"
+    line: "iface {{ item }} inet static"
+  loop: "{{ ansible_interfaces }}"
+
+Edit your /etc/network/interfaces file for something like this:
+
+# Placeholder IP on the root device - not actually used
+iface eth0 inet static
+        address 192.168.4.1
+        netmask 255.255.255.0
+        broadcast 192.168.4.255
+        network 192.168.4.0
+
+# VLAN 2
+iface eth0.2 inet static
+address 192.168.5.1
+netmask 255.255.255.0
+broadcast 192.168.5.255
+network 192.168.5.0
+vlan_raw_device eth0
+
+# VLAN 3
+iface eth0.3 inet static
+address 192.168.6.1
+netmask 255.255.255.0
+broadcast 192.168.6.255
+network 192.168.6.0
+vlan_raw_device eth0
+
+
+# Placeholder for root nic (maybe not needed?)
+subnet 192.168.4.0 netmask 255.255.255.0 {}
+
+# VLAN 2
+subnet 192.168.5.0 netmask 255.255.255.0 {
+        option routers 192.168.5.1;
+        option broadcast-address 192.168.5.255;
+        pool {
+                range 192.168.5.50 192.168.5.200;
+        }
+}
+
+# VLAN 3
+subnet 192.168.6.0 netmask 255.255.255.0 {
+        option routers 192.168.6.1;
+        option broadcast-address 192.168.6.255;
+        pool {
+                range 192.168.6.50 192.168.6.200;
+        }
+}
+
+And, tell the ISC DHCP server what to listen on by editing the /etc/default/isc-dhcp-server file to look something like:
+
+INTERFACES="eth0.2 eth0.3"
+
+
+
+/etc/dhcp/dhcpd.conf
+
+
+subnet 192.168.90.0 netmask 255.255.255.0 {
+   range 192.168.90.100 192.168.90.240;
+   option routers 192.168.90.254;
+   option domain-name-servers 192.168.90.254;
+   default-lease-time 600;
+   max-lease-time 7200;
+}

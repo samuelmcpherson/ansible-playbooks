@@ -28,6 +28,79 @@
     name: "{{ extra_desktop_apps }}"
     state: latest
 
+
+- name: setup key for vscodium repo
+  apt_key: 
+    state: present
+    keyring: /etc/apt/trusted.gpg.d/keyrings/vscodium-archive-keyring.gpg
+    url: https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg
+
+- name: add vscodium repo 
+  apt_repository: 
+    state: present
+    filename: /etc/apt/sources.list.d/vscodium.list
+    repo: "deb https://download.vscodium.com/debs vscodium main"
+
+- name: install vscodium 
+  apt:  
+    name: codium
+    state: latest
+
+# wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
+#     | gpg --dearmor \
+#     | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
+
+# echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
+#     | sudo tee /etc/apt/sources.list.d/vscodium.list
+
+- name: setup key for element repo
+  apt_key: 
+    state: present
+    keyring: /etc/apt/trusted.gpg.d/keyrings/element-io-archive-keyring.gpg
+    url: https://packages.element.io/debian/element-io-archive-keyring.gpg
+
+- name: add element repo 
+  apt_repository: 
+    state: present
+    filename: /etc/apt/sources.list.d/element-io.list
+    repo: "deb https://packages.element.io/debian default main"
+
+- name: install element 
+  apt:  
+    name: element-desktop
+    state: latest
+
+# sudo wget -O /usr/share/keyrings/element-io-archive-keyring.gpg https://packages.element.io/debian/element-io-archive-keyring.gpg
+# ‍
+# echo "deb [signed-by=/usr/share/keyrings/element-io-archive-keyring.gpg] https://packages.element.io/debian/ default main" | sudo tee /etc/apt/sources.list.d/element-io.list
+
+# sudo apt update
+
+# sudo apt install element-desktop
+
+- name: setup key for element repo
+  apt_key: 
+    state: present
+    keyring: /etc/apt/trusted.gpg.d/keyrings/signal-desktop-keyring.gpg
+    url: https://updates.signal.org/desktop/apt/keys.asc
+
+- name: add element repo 
+  apt_repository: 
+    state: present
+    filename: /etc/apt/sources.list.d/signal-xenial.list
+    repo: "deb https://updates.signal.org/desktop/apt default main" #xenial
+
+- name: install element 
+  apt:  
+    name: signal-desktop
+    state: latest
+
+# wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
+# cat signal-desktop-keyring.gpg | sudo tee /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
+
+# echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
+#   sudo tee /etc/apt/sources.list.d/signal-xenial.list
+
 - name: disable wifi powersave setting
   blockinfile:
     create: true
@@ -234,81 +307,6 @@
         name: "{{ game_apps }}"
         state: latest
 
-- name: setup flatpaks
-  block:
-    - name: create zfs flatpak datasets
-      when: zfs_root|bool == true
-      community.general.zfs:
-        name: "zroot/DATA/{{ item }}"
-        state: present
-        extra_zfs_properties:
-          canmount: on
-          mountpoint: "/{{ item }}"
-          sync: "disabled"
-      loop: "{{ zfs_flatpak_datasets }}"
-
-    - name: create directories or fix ownership on flatpak zfs datasets
-      file:
-        path: "/{{ item }}"
-        state: directory
-        owner: "{{ user }}"
-        group: users
-        mode: '750'
-      loop: "{{ zfs_flatpak_datasets }}"
-
-    - name: install flatpak
-      apt:
-        name: flatpak
-        state: latest
-
-    - name: add the flathub flatpak repository remote to system
-      become_user: "{{ user }}"
-      community.general.flatpak_remote:
-        name: flathub
-        state: present
-        flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-        method: user
-
-    - name: add flatpaks to system
-      become_user: "{{ user }}"
-      community.general.flatpak:
-        state: present
-        remote: flathub
-        method: user
-        name: "{{ item }}"
-      loop: "{{ flatpak_apps }}"
-
-    - name: setup flatpak discovery in /etc/zsh/zprofile
-      lineinfile:
-        state: present
-        path: "/etc/zsh/zprofile"
-        regexp: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
-        line: 'emulate sh -c "source /etc/profile.d/flatpak.sh"'
-
-    - name: copy flatpak update user service
-      copy:
-        src: "../files/flatpak-update.service"
-        dest: "/home/{{ user }}/.config/systemd/user/"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'  
-
-    - name: copy flatpak update user timer
-      copy:
-        src: "../files/flatpak-update.timer"
-        dest: "/home/{{ user }}/.config/systemd/user/"
-        owner: "{{ user }}"
-        group: users
-        mode: '640'  
-
-    - name: enable flatpak update timer for main user
-      file:
-        src: "/home/{{ user }}/.config/systemd/user/flatpak-update.timer"
-        path: "/home/{{ user }}/.config/systemd/user/default.target.wants/flatpak-update.timer"
-        state: link
-        owner: "{{ user }}"
-        group: users
-
 - name: setup dev environment
   block:
     - name: install development packages
@@ -331,8 +329,3 @@
         owner: "{{ user }}"
         group: users
         mode: '640'
-
-- name: packages to remove
-  apt:  
-    name: "{{ remove_packages }}"
-    state: absent
