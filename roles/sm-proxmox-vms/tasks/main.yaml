@@ -9,7 +9,8 @@
   loop: "{{ vms }}"
 
 
-- name: create new VMs with minimal options and given VMID
+- name: create new VMs with minimal options and given VMID with 1 network interface
+  when: item.networkquantity = 1
   community.general.proxmox_kvm:
     api_user: root@pam
     api_password: "{{ root_passwd }}"
@@ -35,6 +36,38 @@
     net:
       net0: "{{ item.network }}"
     state: present 
+    update: true
+  loop: "{{ vms }}"
+
+- name: create new VMs with minimal options and given VMID with 2 network interfaces
+  when: item.networkquantity = 2
+  community.general.proxmox_kvm:
+    api_user: root@pam
+    api_password: "{{ root_passwd }}"
+    api_host: "{{ ansible_default_ipv4.address }}"
+    name: "{{ item.name }}"
+    node: "{{ hostname }}"
+    vmid: "{{ item.id }}"
+    acpi: yes
+    agent: yes
+    cpu: host
+    cores: "{{ item.cores }}"
+    memory: "{{ item.memory }}"
+    ostype: "{{ item.ostype }}"
+    scsihw: virtio-scsi-pci
+    scsi: "{{ item.storage }}" 
+    bios: ovmf
+    efidisk0:
+      storage: local
+      format: qcow2
+      efitype: 4m
+      pre_enrolled_keys: False
+    ide: "{{ item.iso }}"
+    net:
+      net0: "{{ item.network1 }}"
+      net1: "{{ item.network2 }}"
+    state: present 
+    update: true
   loop: "{{ vms }}"
 
 - name: start new VMs
