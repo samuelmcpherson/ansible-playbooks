@@ -10,7 +10,7 @@
 
 
 - name: create new VMs with minimal options and given VMID with 1 network interface
-  when: item.networkquantity = 'one'
+  when: item.networkquantity == 'one'
   community.general.proxmox_kvm:
     api_user: root@pam
     api_password: "{{ root_passwd }}"
@@ -40,7 +40,7 @@
   loop: "{{ vms }}"
 
 - name: create new VMs with minimal options and given VMID with 2 network interfaces
-  when: item.networkquantity = 'two'
+  when: item.networkquantity == 'two'
   community.general.proxmox_kvm:
     api_user: root@pam
     api_password: "{{ root_passwd }}"
